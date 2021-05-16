@@ -12,6 +12,11 @@ const storeReducer = (state = initialState, action) => {
         ...state,
         user: payload.user,
       }
+    case actions.setMenu.toString():
+      return {
+        ...state,
+        menu: payload.menu,
+      }
   }
   return state
 }

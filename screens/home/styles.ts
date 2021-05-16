@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native"
-import { primaryColor, primaryBackgroundColor } from "../../commonUtils"
+import { primaryColor, primaryBackgroundColor, COLORS } from "../../commonUtils"
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -19,8 +19,9 @@ const styles = StyleSheet.create({
   input: {
     width: "100%",
     padding: "0.5rem",
-    borderBottomColor: "black",
-    borderBottomWidth: 1,
+    borderColor: COLORS.GRAY70,
+    borderWidth: 1,
+    borderRadius: "0.2rem",
     marginBottom: "2rem",
   },
   title: {
