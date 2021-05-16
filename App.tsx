@@ -1,24 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { createStore } from "redux"
+import { Provider } from "react-redux"
+import firebase from 'firebase/app'
+import React from 'react'
+import { firebaseConfig } from "./constants"
+import reducer from "./store/reducer"
+import MainApp from "./MainApp"
 
-import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
-import Navigation from './navigation';
-import LoginScreen from './screens/login/LoginScreen';
+const store = createStore(reducer)
 
 export default function App() {
-  const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
-
-  if (!isLoadingComplete) {
-    return null;
-  } else {
-    return (
-      <SafeAreaProvider>
-        <LoginScreen />
-        <StatusBar />
-      </SafeAreaProvider>
-    );
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig)
   }
+
+  return (
+    <Provider store={store}>
+      <MainApp />
+    </Provider>
+  )
 }
