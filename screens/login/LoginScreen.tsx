@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { Button, Image, StyleSheet, TextInput } from 'react-native';
+import { ImageBackground, Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Text, View } from '../../components/Themed';
 import {
   FirebaseRecaptchaVerifierModal,
   FirebaseRecaptchaBanner
 } from 'expo-firebase-recaptcha';
 import firebase from "firebase/app"
-import { notifyMessage } from "../../commonUtils"
+import { notifyMessage, primaryColor } from "../../commonUtils"
 import { useSelector } from 'react-redux';
+import { Input, Button } from "@ui-kitten/components"
 
 
 export default function LoginScreen() {
@@ -51,42 +52,47 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Image
-          style={{ width: 100, height: 80 }}
-          source={require("../../static/images/logo.png")} />
-      </View>
-      <View style={styles.login}>
-        <Text style={styles.title}>
-          Welcome to YOYO Lunchbox!
-        </Text>
-        {!verificationId ? (
-          <>
-            <TextInput
-              style={styles.input}
-              value={phoneNumber}
-              onChangeText={setPhoneNumber}
-              placeholder="Mobile Number" />
-            <Button
-              onPress={handleSendOtp}
-              title="Send OTP" />
-            <FirebaseRecaptchaVerifierModal
-              ref={recaptchaVerifier}
-              firebaseConfig={firebaseConfig} />
-          </>
-        ) : (
-          <>
-            <TextInput
-              style={styles.input}
-              value={otp}
-              onChangeText={setOtp}
-              placeholder="OTP" />
-            <Button
-              onPress={handleVerifyOtp}
-              title="Verify OTP" />
-          </>
-        )}
-      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ImageBackground
+          source={require("../../static/images/background.jpg")}
+          style={styles.background}>
+          {/* <View>
+            <Image
+              style={{ width: 100, height: 80 }}
+              source={require("../../static/images/logo.png")} />
+          </View> */}
+          <Text style={styles.title}>
+            Welcome to YOYO Lunchbox!
+          </Text>
+          {!verificationId ? (
+            <>
+              <Input
+                style={styles.input}
+                value={phoneNumber}
+                keyboardType="numeric"
+                onChangeText={setPhoneNumber}
+                placeholder="Mobile Number" />
+              <Button style={styles.button} onPress={handleSendOtp}>
+                Send OTP
+              </Button>
+              <FirebaseRecaptchaVerifierModal
+                ref={recaptchaVerifier}
+                firebaseConfig={firebaseConfig} />
+            </>
+          ) : (
+            <>
+              <Input
+                style={styles.input}
+                value={otp}
+                onChangeText={setOtp}
+                placeholder="OTP" />
+              <Button style={styles.button} onPress={handleVerifyOtp}>
+                Verify OTP
+              </Button>
+            </>
+          )}
+        </ImageBackground>
+      </TouchableWithoutFeedback>
     </View>
   );
 }
@@ -94,21 +100,29 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: "2rem",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: primaryColor,
+  },
+  background: {
+    flex: 1,
+    padding: 30,
+    paddingTop: 200,
+    resizeMode: "cover",
   },
   input: {
     width: "100%",
-    padding: "1rem",
+    marginBottom: 30,
   },
   title: {
-    fontSize: "1.8rem",
+    fontSize: 35,
     textAlign: "center",
-    fontWeight: "600",
-    marginTop: "3rem",
-    marginBottom: "5rem",
+    fontWeight: "900",
+    marginBottom: 30,
+    color: "white",
   },
-  login: {
-    flex: 1,
-    alignItems: "center",
+  button: {
+    backgroundColor: primaryColor,
+    borderColor: primaryColor,
   }
 });

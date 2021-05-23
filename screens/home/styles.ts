@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     marginBottom: "1rem"
   },
   mainViewStyle: {
-    backgroundColor: primaryBackgroundColor,
+    paddingTop: 20,
     flex: 1,
   },
   innerContainer: {
@@ -18,22 +18,80 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    padding: "0.5rem",
+    padding: 5,
     borderColor: COLORS.GRAY70,
     borderWidth: 1,
-    borderRadius: "0.2rem",
-    marginBottom: "2rem",
+    borderRadius: 2,
+    marginBottom: 20,
   },
   title: {
-    fontSize: "1.8rem",
+    fontSize: 18,
     textAlign: "center",
     fontWeight: "600",
-    marginTop: "3rem",
-    marginBottom: "5rem",
+    marginTop: 30,
+    marginBottom: 50,
   },
   login: {
     flex: 1,
     alignItems: "center",
+  },
+  ordersPageMainView: {
+    flex: 1,
+  },
+  ordersContainer: {
+    flex: 1,
+    marginTop: 20,
+    display: "flex",
+  },
+  sectionHeader: {
+    fontWeight: "600",
+    fontSize: 18,
+    margin: 20,
+    marginBottom: 0,
+    padding: 10,
+    marginTop: 0,
+    backgroundColor: COLORS.GRAY95,
+    borderRadius: 5,
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: COLORS.GRAY95,
+    marginLeft: 20,
+    marginRight: 20,
+    padding: 5,
+    borderRadius: 5,
+  },
+  dateContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  footer: {
+    margin: 20,
+  },
+  confirmButton: {
+    padding: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    shadowColor: COLORS.GRAY60,
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 3.0,
+    elevation: 1,
+    textTransform: "uppercase",
+    textAlign: "center",
+    backgroundColor: "green",
+    borderRadius: 4,
+  },
+  confirmOrderText: {
+    fontWeight: "bold",
+    color: "white",
+    textAlign: "center",
+  },
+  mainButton: {
+    backgroundColor: primaryColor,
+    borderColor: primaryColor,
   }
 })
 

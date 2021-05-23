@@ -2,11 +2,12 @@
   "expo": {
     "name": "yoyolunchbox",
     "slug": "yoyolunchbox",
+    "owner": "mssrivathsan",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -19,6 +20,8 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.yoyolunchbox.app",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {

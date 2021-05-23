@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { DarkTheme, NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from "./HomeScreen"
-import ProfileScreen from "./ProfileScreen"
-import { primaryColor } from "../../commonUtils"
+import { HomeNavigator, OrdersNavigator, ProfileNavigator } from "./StackNavigators"
+import { primaryColorDark } from "../../commonUtils"
 import firebase from "firebase/app"
 import { useDispatch, useSelector } from 'react-redux';
 import { setMenu } from '../../store/actions';
+import { NavigationContainer } from '@react-navigation/native';
 
 const BottomTab = createBottomTabNavigator();
 
-const LoggedInNavigator = () => {
+const LoggedInNavigator = (props) => {
   const dispatch = useDispatch()
+  const user = useSelector(store => store.user)
   const menu = useSelector(store => store.menu)
 
   useEffect(() => {
@@ -31,34 +31,42 @@ const LoggedInNavigator = () => {
   }, [])
 
   return (
-    <NavigationContainer>
-      <BottomTab.Navigator
-        initialRouteName="Home"
-        tabBarOptions={{
-          activeTintColor: primaryColor,
-        }}>
-        <BottomTab.Screen
-          name="Home"
-          options={{
-            tabBarIcon: ({ color }) => {
-              return (
-                <Ionicons size={24} name="home" color={color} />
-              )
-            },
-          }}
-          component={HomeScreen} />
-        <BottomTab.Screen
-          name="Profile"
-          options={{
-            tabBarIcon: ({ color }) => {
-              return (
-                <Ionicons size={24} name="person" color={color} />
-              )
-            },
-          }}
-          component={ProfileScreen} />
-      </BottomTab.Navigator>
-    </NavigationContainer>
+    <BottomTab.Navigator
+      initialRouteName="Home"
+      tabBarOptions={{
+        activeTintColor: primaryColorDark,
+      }}>
+      <BottomTab.Screen
+        name="Home"
+        options={{
+          tabBarIcon: ({ color }) => {
+            return (
+              <Ionicons size={24} name="home" color={color} />
+            )
+          },
+        }}
+        component={HomeNavigator} />
+      <BottomTab.Screen
+        name="Orders"
+        options={{
+          tabBarIcon: ({ color }) => {
+            return (
+              <Ionicons size={24} name="cart" color={color} />
+            )
+          },
+        }}
+        component={OrdersNavigator} />
+      <BottomTab.Screen
+        name="Profile"
+        options={{
+          tabBarIcon: ({ color }) => {
+            return (
+              <Ionicons size={24} name="person" color={color} />
+            )
+          },
+        }}
+        component={ProfileNavigator} />
+    </BottomTab.Navigator>
   );
 };
 
@@ -67,3 +75,4 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']
 }
 
 export default LoggedInNavigator;
+

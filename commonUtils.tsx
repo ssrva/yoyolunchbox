@@ -4,7 +4,8 @@ import {
   Alert,
 } from 'react-native';
 
-export const primaryColor = "#92710A"
+export const primaryColor = "#1A6871"
+export const primaryColorDark = "#134f56"
 export const primaryBackgroundColor = "#F1F1F1"
 
 export function notifyMessage(message: string) {
