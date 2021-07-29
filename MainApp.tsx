@@ -6,7 +6,7 @@ import * as firebase from 'firebase'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import useCachedResources from './hooks/useCachedResources'
-import LoginScreen from './screens/login/LoginScreen'
+import { Auth } from 'aws-amplify';
 import MainNavigator from "./screens/MainNavigator"
 import reducer from "./store/reducer"
 import { setUser } from './store/actions'
@@ -14,6 +14,7 @@ import { Appearance } from "react-native-appearance"
 import * as eva from '@eva-design/eva';
 import { Text } from "react-native"
 import { ApplicationProvider } from '@ui-kitten/components';
+import { RDSClient, AddRoleToDBClusterCommand } from "@aws-sdk/client-rds";
 
 const store = createStore(reducer)
 
@@ -25,21 +26,20 @@ const MainApp = () => {
   Appearance.set({ colorScheme: 'light' })
 
   useEffect(() => {
-    setLoading(true)
-    firebase.auth().onAuthStateChanged(async (user) => {
-      if (user) {
-        const userData = (
-          await firebase.firestore().collection("users").doc(user.uid).get()
-        ).data()
+    setLoading(false)
+    Auth.currentAuthenticatedUser({ bypassCache: false })
+      .then((user) => {
         dispatch(setUser({
           user: {
             ...user,
-            details: userData,
+            details: user,
           }
         }))
-      }
-      setLoading(false)
-    })
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        setLoading(false)
+      })
   }, [])
 
   if (loading || !isLoadingComplete) {

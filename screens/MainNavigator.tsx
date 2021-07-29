@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMenu } from '../store/actions';
 import { NavigationContainer } from '@react-navigation/native';
 import LoggedInNavigator from "./home/LoggedInNavigator"
-import LoginScreen from "./login/LoginScreen"
+import Login from "./login/Login"
 
 const Stack = createStackNavigator();
 
@@ -24,7 +24,7 @@ const MainNavigator = (props) => {
           // No token found, user isn't signed in
           <Stack.Screen
             name="Login"
-            component={LoginScreen}
+            component={Login}
             // options={{
             //   title: 'Sign in',
             //   // When logging out, a pop animation feels intuitive
