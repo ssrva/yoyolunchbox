@@ -3,18 +3,27 @@ const { dbClient } = require("./database-client")
 const client = dbClient()
 
 module.exports.placeOrder = async (event) => {
-  const { quantity, username, menu_id } = JSON.parse(event.body)
+  // each order is expected to have the fields
+  // username, quantity, menu_id.
+  const { orders } = JSON.parse(event.body)
+
+  const usernames = orders.map(order => `'${order.username}'`)
+  const quantities = orders.map(order => order.quantity)
+  const menu_ids = orders.map(order => order.menu_id)
   const query = `
     INSERT INTO
-    orders (quantity, username, menu_id)
-    VALUES ('${quantity}', '${username}', '${menu_id}')
-    RETURNING id
+    orders (username, quantity, menu_id)
+    VALUES (
+      UNNEST(ARRAY[${usernames.join(",")}]),
+      UNNEST(ARRAY[${quantities.join(",")}]),
+      UNNEST(ARRAY[${menu_ids.join(",")}])
+    )
   `
   try {
     const res = await client.query(query)
     return {
       statusCode: 200,
-      body: JSON.stringify(res.rows[0])
+      body: JSON.stringify(res)
     }
   } catch(e) {
     console.error(e.message)

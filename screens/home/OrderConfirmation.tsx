@@ -7,7 +7,6 @@ import commonStyles from "./styles"
 import OrderListItem from './components/OrderListItem';
 import { FlatList } from 'react-native-gesture-handler';
 import { COLORS } from "../../commonUtils"
-import firebase from "firebase/app"
 import { Button } from "@ui-kitten/components"
 
 type TOrderConfirmationProps = {
@@ -35,24 +34,9 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
   const { route, navigation } = props
   const orders = route?.params?.orders || []
   const date = route?.params?.date || ""
-  const user = firebase.auth().currentUser
 
   const confirmOrder = () => {
-    const batch = firebase.firestore().batch()
-    orders.forEach((order) => {
-      const data = {
-        ...order,
-        uid: user?.uid,
-        date: date,
-        createdAt: moment().format(),
-      }
-      const collection = firebase.firestore().collection("orders").doc()
-      batch.set(collection, data)
-    })
-    batch.commit().then(() => {
-      navigation.navigate("Home")
-      console.log("finished update")
-    })
+    console.log(orders)
   }
 
   return (

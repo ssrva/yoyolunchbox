@@ -16,9 +16,9 @@ const HomeScreen = (props) => {
   const { navigation } = props
   const menu = useSelector(store => store.menu)
   // const [selectedDate, setSelectedDate] = useState<string>(moment().format("YYYY-MM-DD"))
-  const [selectedDate, setSelectedDate] = useState<string>("2021-05-16")
+  const [selectedDate, setSelectedDate] = useState<string>("2021-07-27")
   const [orders, setOrders] = useState<Object>({})
-  const selectedMenu = menu && menu[selectedDate]
+  const selectedMenu = (menu && _.groupBy(menu[selectedDate], "type")) || {}
 
   const gotoDate = (offset: number) => {
     const toDate = moment(selectedDate).add(offset, "days")
@@ -30,20 +30,20 @@ const HomeScreen = (props) => {
     if (_.isNil(selectedMenu) || _.isEmpty(selectedMenu)) return []
 
     result.push({
-      title: "Breakfast", data: selectedMenu["breakfast"]
+      title: "Breakfast", data: selectedMenu["breakfast"] || []
     })
     result.push({
-      title: "Lunch", data: selectedMenu["lunch"]
+      title: "Lunch", data: selectedMenu["lunch"] || []
     })
     result.push({
-      title: "Dinner", data: selectedMenu["dinner"]
+      title: "Dinner", data: selectedMenu["dinner"] || []
     })
     return result
   }
 
   const updateOrder = (order) => {
     const currentOrders = orders
-    currentOrders[order.name] = order
+    currentOrders[order.id] = order
     setOrders(currentOrders)
   }
 

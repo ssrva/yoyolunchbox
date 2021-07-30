@@ -6,7 +6,9 @@ import Selector from "./Selector"
 import moment from "moment"
 
 type TOrderListItemProps = {
-  name: string,
+  id: number,
+  title: string,
+  type: string,
   date: string,
   description: string,
   price: string,
@@ -67,7 +69,9 @@ const styles = StyleSheet.create({
 
 const OrderListItem = (props: TOrderListItemProps) => {
   const {
-    name,
+    id,
+    title,
+    type,
     date,
     hideDate,
     description,
@@ -79,7 +83,9 @@ const OrderListItem = (props: TOrderListItemProps) => {
 
   const updateCount = (newCount: number) => {
     onChange({
-      name: name,
+      id: id,
+      type: type,
+      title: title,
       price: price,
       description: description,
       quantity: newCount
@@ -93,7 +99,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
           <Text style={styles.tag}>{moment(date).format("MMMM DD, YYYY")}</Text>
         )}
         <Text style={styles.title}>
-          {name}
+          {title}
           {disabled && (
             <Text> x {quantity}</Text>
           )}

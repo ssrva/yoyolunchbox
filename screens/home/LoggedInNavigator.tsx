@@ -1,12 +1,12 @@
+import _ from "lodash"
 import React, { useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeNavigator, OrdersNavigator, ProfileNavigator } from "./StackNavigators"
 import { primaryColorDark } from "../../commonUtils"
-import firebase from "firebase/app"
 import { useDispatch, useSelector } from 'react-redux';
 import { setMenu } from '../../store/actions';
-import { NavigationContainer } from '@react-navigation/native';
+import * as api from "../../api"
 
 const BottomTab = createBottomTabNavigator();
 
@@ -20,11 +20,8 @@ const LoggedInNavigator = (props) => {
       const datesToFetch = [
         "2021-07-27", "2021-07-28", "2021-07-29"
       ]
-      const menu = {}
-      for (const date of datesToFetch) {
-        const menuForDate = await firebase.firestore().collection("menu").doc(date).get()
-        menu[date] = menuForDate.data()
-      }
+      let menu = await api.getMenu(datesToFetch)
+      menu = _.groupBy(menu, "date")
       dispatch(setMenu({ menu: menu }))
     }
     fetchMenuDetails()
