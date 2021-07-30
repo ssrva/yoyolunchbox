@@ -2,12 +2,13 @@ import * as React from 'react';
 import _ from "lodash"
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Text, View } from '../../components/Themed';
-import moment from "moment"
 import commonStyles from "./styles"
 import OrderListItem from './components/OrderListItem';
 import { FlatList } from 'react-native-gesture-handler';
-import { COLORS } from "../../commonUtils"
+import { COLORS, notifyMessage } from "../../commonUtils"
 import { Button } from "@ui-kitten/components"
+import * as api from "../../api"
+import { useSelector } from 'react-redux';
 
 type TOrderConfirmationProps = {
   route: Object,
@@ -32,11 +33,26 @@ const styles = StyleSheet.create({
 
 const OrderConfirmation = (props: TOrderConfirmationProps) => {
   const { route, navigation } = props
+  const username = useSelector(store => store.user.username)
   const orders = route?.params?.orders || []
-  const date = route?.params?.date || ""
 
-  const confirmOrder = () => {
-    console.log(orders)
+  const confirmOrder = async () => {
+    const apiInput = orders.map(order => {
+      return {
+        username: username,
+        menu_id: order.id,
+        quantity: order.quantity,
+        amount: order.quantity * order.price,
+      }
+    })
+
+    try {
+      await api.placeOrder(apiInput)
+      notifyMessage("Order placed successfully")
+      navigation.navigate("Home")
+    } catch (e) {
+      notifyMessage("Error placing order")
+    }
   }
 
   return (

@@ -15,6 +15,7 @@ type TOrderListItemProps = {
   quantity: string,
   hideDate: boolean,
   disabled: boolean,
+  cancelled: boolean,
   onChange: Function
 }
 
@@ -53,17 +54,28 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 16,
   },
+  tagsContainer: {
+    display: "flex",
+    flexDirection: "row",
+  },
   tag: {
     alignSelf: "flex-start",
     backgroundColor: "#D4F1CA",
     padding: 5,
     marginBottom: 10,
+    marginRight: 10,
     fontWeight: "600",
     borderWidth: 1,
     borderColor: "#418134",
     borderRadius: 5,
     fontSize: 10,
     textTransform: "uppercase",
+    overflow: "hidden"
+  },
+  dangerTag: {
+    backgroundColor: "#F8D7DA",
+    borderColor: "#F5C6CB",
+    color: "#721C24"
   }
 })
 
@@ -79,6 +91,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
     price,
     onChange,
     disabled,
+    cancelled,
   } = props
 
   const updateCount = (newCount: number) => {
@@ -95,9 +108,18 @@ const OrderListItem = (props: TOrderListItemProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.metadata}>
-        {!hideDate && (
-          <Text style={styles.tag}>{moment(date).format("MMMM DD, YYYY")}</Text>
-        )}
+        <View style={styles.tagsContainer}>
+          {!hideDate && (
+            <Text style={styles.tag}>
+              {moment(date).format("MMMM DD, YYYY")}
+            </Text>
+          )}
+          {cancelled && (
+            <Text style={{...styles.tag, ...styles.dangerTag}}>
+              CANCELLED
+            </Text>
+          )}
+        </View>
         <Text style={styles.title}>
           {title}
           {disabled && (

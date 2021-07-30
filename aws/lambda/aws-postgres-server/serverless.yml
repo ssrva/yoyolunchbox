@@ -26,7 +26,7 @@ functions:
     handler: resources/users.getUserOrders
     events:
       - http:
-          path: /users/orders/{username}/{page}
+          path: /user/orders/{username}/{page}
           method: get
           authorizer:
             arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_mLWq9MaYx

@@ -5,6 +5,8 @@ import { Text, View } from '../../components/Themed';
 import { COLORS } from "../../commonUtils"
 import firebase from "firebase/app"
 import OrderListItem from './components/OrderListItem';
+import * as api from "../../api"
+import { useSelector } from 'react-redux';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,24 +26,14 @@ const styles = StyleSheet.create({
 })
 
 const Orders = () => {
-  const user = firebase.auth().currentUser
+  const username = useSelector(store => store.user.username)
   const [loading, setLoading] = useState<boolean>(false)
   const [orders, setOrders] = useState<Array<Object>>([])
 
   const fetchOrders = async () => {
     setLoading(true)
-    const ordersCollection = firebase.firestore().collection("orders")
-    const query = ordersCollection
-      .where("uid", "==", user?.uid)
-      .orderBy("date", "desc")
-      .limit(20)
-    query.get().then((documents) => {
-      const result = []
-      documents.forEach(document => {
-        result.push(document.data())
-      })
-      setOrders(result)
-    })
+    const userOrders = await api.getUserOrders(username, 0)
+    setOrders(userOrders)
     setLoading(false)
   }
 

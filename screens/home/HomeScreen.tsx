@@ -49,8 +49,7 @@ const HomeScreen = (props) => {
 
   const placeOrder = () => {
     navigation.navigate("Confirm Order", {
-      orders: _.values(orders),
-      date: selectedDate,
+      orders: _.values(orders)
     })
   }
 

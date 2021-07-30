@@ -1,16 +1,19 @@
-const { dbClient } = require("./database-client")
-
-const client = dbClient()
+const { siloDbClient } = require("./database-client")
 
 module.exports.placeOrder = async (event) => {
+  const client = siloDbClient();
   // each order is expected to have the fields
-  // username, quantity, menu_id.
-  const { orders } = JSON.parse(event.body)
+  // quantity, menu_id.
+  const { username, orders } = JSON.parse(event.body)
 
-  const usernames = orders.map(order => `'${order.username}'`)
+  const usernames = Array(orders.length).fill(`'${username}'`)
   const quantities = orders.map(order => order.quantity)
   const menu_ids = orders.map(order => order.menu_id)
-  const query = `
+  const amount = orders.map(order => order.amount).reduce((acc, val) => {
+    return acc + val
+  }, 0)
+
+  const placeOrderQuery = `
     INSERT INTO
     orders (username, quantity, menu_id)
     VALUES (
@@ -19,14 +22,26 @@ module.exports.placeOrder = async (event) => {
       UNNEST(ARRAY[${menu_ids.join(",")}])
     )
   `
+  const updateBalanceQuery = `
+    UPDATE users
+    SET balance = users.balance - ${amount}
+    WHERE username = '${username}'
+  `
+
   try {
-    const res = await client.query(query)
+    await client.query("BEGIN")
+    await client.query(placeOrderQuery)
+    await client.query(updateBalanceQuery)
+    await client.query("COMMIT")
+    await client.end()
     return {
       statusCode: 200,
-      body: JSON.stringify(res)
+      body: "Order placed successfully"
     }
   } catch(e) {
     console.error(e.message)
+    await client.query("ROLLBACK")
+    await client.end()
     return {
       statusCode: 400,
       body: e.message
@@ -35,21 +50,39 @@ module.exports.placeOrder = async (event) => {
 }
 
 module.exports.cancelOrder = async (event) => {
-  const { order_id } = JSON.parse(event.body)
-  const query = `
+  const client = siloDbClient();
+  const { username, order_id } = JSON.parse(event.body)
+  const cancelOrderQuery = `
     UPDATE orders
     SET cancelled = true
     WHERE id = ${order_id}
   `
+  const updateBalanceQuery = `
+    UPDATE users
+    SET balance = (
+      SELECT food.price * orders.quantity
+      FROM orders
+      INNER JOIN menu ON menu.id = orders.menu_id
+      INNER JOIN food ON menu.food_id = food.id
+      WHERE orders.id = ${order_id}
+    ) + users.balance
+    WHERE username = '${username}'
+  `
+
   try {
-    const res = await client.query(query)
-    console.log(res)
+    await client.query("BEGIN")
+    await client.query(cancelOrderQuery)
+    await client.query(updateBalanceQuery)
+    await client.query("COMMIT")
+    await client.end()
     return {
       statusCode: 200,
       body: "Order cancelled successfully"
     }
   } catch(e) {
     console.error(e.message)
+    await client.query("ROLLBACK")
+    await client.end()
     return {
       statusCode: 400,
       body: e.message
