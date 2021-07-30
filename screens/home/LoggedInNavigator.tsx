@@ -18,7 +18,7 @@ const LoggedInNavigator = (props) => {
   useEffect(() => {
     const fetchMenuDetails = async () => {
       const datesToFetch = [
-        "2021-05-16", "2021-05-17", "2021-05-18"
+        "2021-07-27", "2021-07-28", "2021-07-29"
       ]
       const menu = {}
       for (const date of datesToFetch) {

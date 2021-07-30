@@ -32,7 +32,6 @@ const MainApp = () => {
         dispatch(setUser({
           user: {
             ...user,
-            details: user,
           }
         }))
       })

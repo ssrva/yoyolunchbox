@@ -31,6 +31,15 @@ functions:
           authorizer:
             arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_mLWq9MaYx
 
+  getMenu:
+    handler: resources/menu.getMenu
+    events:
+      - http:
+          path: /menu
+          method: post
+          authorizer:
+            arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_mLWq9MaYx
+
   placeOrder:
     handler: resources/orders.placeOrder
     events:
