@@ -38,3 +38,27 @@ module.exports.getUserOrders = async (event) => {
     }
   }
 }
+
+module.exports.getUserWalletBalance = async (event) => {
+  const username = event.pathParameters.username
+  const query = `
+    SELECT balance
+    FROM users
+    WHERE username = '${username}'
+  `
+
+  try {
+    const res = await client.query(query)
+    return {
+      statusCode: 200,
+      body: JSON.stringify(res.rows[0])
+    }
+  } catch(e) {
+    console.error(e.message)
+    return {
+      statusCode: 400,
+      body: e.message
+    }
+  }
+}
+

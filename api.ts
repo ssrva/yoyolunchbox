@@ -5,6 +5,11 @@ export const getMenu = async (dates: string[]) => {
   return response.data
 }
 
+export const getUserWalletBalance = async (username: string) => {
+  const response = await axios.get(`/user/balance/${username}`)
+  return response.data
+}
+
 export const getUserOrders = async (username: string, page: number) => {
   const response = await axios.get(`/user/orders/${username}/${page}`);
   return response.data

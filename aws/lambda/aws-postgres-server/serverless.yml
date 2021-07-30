@@ -30,6 +30,15 @@ functions:
           method: get
           authorizer:
             arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_mLWq9MaYx
+  
+  getUserWalletBalance:
+    handler: resources/users.getUserWalletBalance
+    events:
+      - http:
+          path: /user/balance/{username}
+          method: get
+          authorizer:
+            arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_mLWq9MaYx
 
   getMenu:
     handler: resources/menu.getMenu
