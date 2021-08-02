@@ -29,6 +29,7 @@ const Orders = () => {
   const username = useSelector(store => store.user.username)
   const [loading, setLoading] = useState<boolean>(false)
   const [orders, setOrders] = useState<Array<Object>>([])
+  const [balance, setBalance] = useState<Number>(0)
 
   const fetchOrders = async () => {
     setLoading(true)
@@ -38,12 +39,21 @@ const Orders = () => {
   }
 
   useEffect(() => {
-    fetchOrders()
+    const fetchInitialData = async () => {
+      const fetchOrderPromise = fetchOrders()
+      const balancePromise = api.getUserWalletBalance(username)
+      const [_orderData, balanceData] = await Promise.all(
+        [fetchOrderPromise, balancePromise]
+      )
+      setBalance(balanceData?.balance)
+    }
+    fetchInitialData()
   }, [])
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Orders</Text>
+      <Text style={styles.title}>Balance : {balance}</Text>
       <FlatList
         style={{flex: 1}}
         data={orders}

@@ -22,6 +22,27 @@ plugins:
   - serverless-offline
 
 functions:
+  createUser:
+    handler: resources/users.createUser
+
+  getUser:
+    handler: resources/users.getUser
+    events:
+      - http:
+          path: /user/{username}
+          method: get
+          authorizer:
+            arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_mLWq9MaYx
+
+  updateUser:
+    handler: resources/users.updateUser
+    events:
+      - http:
+          path: /user
+          method: put
+          authorizer:
+            arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_mLWq9MaYx
+
   getUserOrders:
     handler: resources/users.getUserOrders
     events:

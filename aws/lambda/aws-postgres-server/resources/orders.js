@@ -13,6 +13,9 @@ module.exports.placeOrder = async (event) => {
     return acc + val
   }, 0)
 
+  console.log(username)
+  console.log(usernames)
+
   const placeOrderQuery = `
     INSERT INTO
     orders (username, quantity, menu_id)

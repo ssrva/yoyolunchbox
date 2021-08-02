@@ -1,6 +1,64 @@
-const { dbClient } = require("./database-client")
+const { siloDbClient, dbClient } = require("./database-client")
 
 const client = dbClient()
+
+module.exports.createUser = async (event) => {
+  const username = event.userName
+  const userAttributes = event.request.userAttributes
+  const query = `
+    INSERT INTO
+    users (username, name, phone)
+    VALUES ('${username}', '${userAttributes.name}', ${userAttributes.phone_number})
+  `
+  try {
+    await client.query(query)
+  } catch(e) {
+    console.error(e.message)
+  }
+}
+
+module.exports.getUser = async (event) => {
+  const username = event.pathParameters.username
+  const query = `
+    SELECT * FROM users WHERE username = '${username}'
+  `
+  try {
+    const response = await client.query(query)
+    return {
+      statusCode: 200,
+      body: JSON.stringify(response.rows[0])
+    }
+  } catch(e) {
+    console.error(e.message)
+    return {
+      statusCode: 400,
+      body: e.message
+    }
+  }
+}
+
+module.exports.updateUser = async (event) => {
+  const { username, address, coordinates } = JSON.parse(event.body)
+  const query = `
+    UPDATE users
+    SET address = '${address}',
+        coordinates = '${JSON.stringify(coordinates)}'::jsonb
+    WHERE username = '${username}'
+  `
+  try {
+    await client.query(query)
+    return {
+      statusCode: 200,
+      body: "User updated successfully"
+    }
+  } catch(e) {
+    console.error(e.message)
+    return {
+      statusCode: 400,
+      body: e.message
+    }
+  }
+}
 
 module.exports.getUserOrders = async (event) => {
   const username = event.pathParameters.username
@@ -61,4 +119,3 @@ module.exports.getUserWalletBalance = async (event) => {
     }
   }
 }
-

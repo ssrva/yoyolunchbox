@@ -39,7 +39,6 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
   const confirmOrder = async () => {
     const apiInput = orders.map(order => {
       return {
-        username: username,
         menu_id: order.id,
         quantity: order.quantity,
         amount: order.quantity * order.price,
@@ -47,7 +46,7 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
     })
 
     try {
-      await api.placeOrder(apiInput)
+      await api.placeOrder(username, apiInput)
       notifyMessage("Order placed successfully")
       navigation.navigate("Home")
     } catch (e) {
