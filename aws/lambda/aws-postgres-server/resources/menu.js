@@ -5,7 +5,13 @@ const client = dbClient()
 module.exports.getMenu = async (event) => {
   const { dates } = JSON.parse(event.body)
   const query = `
-    SELECT menu.id, menu.date, menu.type, food.title, food.description, food.price
+    SELECT menu.id,
+           menu.date,
+           menu.type,
+           food.title,
+           food.description,
+           food.price,
+           food.image
     FROM menu
     INNER JOIN food ON food.id = menu.food_id
     WHERE date = ANY('{${dates}}');

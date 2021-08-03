@@ -10,20 +10,16 @@ import moment from "moment"
 import OrderListItem from './components/OrderListItem';
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from "@ui-kitten/components"
-
+import DateComponent from './components/DateComponent';
 
 const HomeScreen = (props) => {
   const { navigation } = props
   const menu = useSelector(store => store.menu)
+  const user = useSelector(store => store.user.attributes)
   // const [selectedDate, setSelectedDate] = useState<string>(moment().format("YYYY-MM-DD"))
   const [selectedDate, setSelectedDate] = useState<string>("2021-07-27")
   const [orders, setOrders] = useState<Object>({})
   const selectedMenu = (menu && _.groupBy(menu[selectedDate], "type")) || {}
-
-  const gotoDate = (offset: number) => {
-    const toDate = moment(selectedDate).add(offset, "days")
-    setSelectedDate(toDate.format("YYYY-MM-DD"))
-  }
 
   const menuData = () => {
     const result = []
@@ -56,17 +52,16 @@ const HomeScreen = (props) => {
   return (
     <View style={styles.mainViewStyle}>
       <View style={styles.ordersPageMainView}>
-        <View style={styles.dateContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => gotoDate(-1)}>
-            <Ionicons size={18} name="chevron-back-outline" />
-          </TouchableOpacity>
-          <Text style={{ fontWeight: "600" }}>
-            {moment(selectedDate).format("MMMM Do YY")}
+        <View>
+          <Text style={styles.headerWelcome}>
+            <Text style={{ fontFamily: "helvetica-neue" }}>Welcome </Text>
+            <Text style={{ fontFamily: "helvetica-neue-bold" }}>{user?.name}!</Text>
           </Text>
-          <TouchableOpacity style={styles.button} onPress={() => gotoDate(1)}>
-            <Ionicons size={18} name="chevron-forward-outline" />
-          </TouchableOpacity>
+          <Text style={styles.headerWelcome}>
+            <Text style={{ fontFamily: "helvetica-neue-light" }}>What would you like to order?</Text>
+          </Text>
         </View>
+        <DateComponent onDateChange={setSelectedDate} />
         <View style={styles.ordersContainer}>
           {(_.isNil(selectedMenu) || _.isEmpty(selectedMenu)) ? (
             <Text style={{ padding: 20 }}>

@@ -9,8 +9,12 @@ const styles = StyleSheet.create({
     marginBottom: "1rem"
   },
   mainViewStyle: {
-    paddingTop: 20,
+    padding: 10,
     flex: 1,
+  },
+  headerWelcome: {
+    fontSize: 18,
+    marginBottom: 10,
   },
   innerContainer: {
     margin: "1rem",
@@ -46,12 +50,13 @@ const styles = StyleSheet.create({
   sectionHeader: {
     fontWeight: "600",
     fontSize: 18,
-    margin: 20,
-    marginBottom: 0,
     padding: 10,
+    marginBottom: 10,
     marginTop: 0,
     backgroundColor: COLORS.GRAY95,
     borderRadius: 5,
+    textTransform: "uppercase",
+    overflow: "hidden"
   },
   button: {
     alignItems: "center",

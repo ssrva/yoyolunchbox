@@ -11,10 +11,9 @@ import MainNavigator from "./screens/MainNavigator"
 import reducer from "./store/reducer"
 import { setUser } from './store/actions'
 import { Appearance } from "react-native-appearance"
-import * as eva from '@eva-design/eva';
+import * as eva from '@eva-design/eva'
 import { Text } from "react-native"
-import { ApplicationProvider } from '@ui-kitten/components';
-import * as api from "./api"
+import { ApplicationProvider } from '@ui-kitten/components'
 
 const store = createStore(reducer)
 

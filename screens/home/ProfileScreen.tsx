@@ -1,6 +1,6 @@
 import * as React from 'react'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
-import { API, Auth } from 'aws-amplify'
+import { Auth } from 'aws-amplify'
 import { Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { Text, View } from '../../components/Themed'
 import { notifyMessage, primaryColor } from "../../commonUtils"

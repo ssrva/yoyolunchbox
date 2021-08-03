@@ -28,6 +28,11 @@ export const getMenu = async (dates: string[]) => {
   return response.data
 }
 
+export const getFoodimage = async (imageKey: string) => {
+  const response = await axios.get(`/food/image/${imageKey}`)
+  return response.data
+}
+
 export const placeOrder = async (username: string, orders: Object[]) => {
   const response = await axios.post("/orders", { username, orders })
   return response.data

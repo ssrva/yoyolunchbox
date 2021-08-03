@@ -16,6 +16,9 @@ export default function useCachedResources() {
         await Font.loadAsync({
           ...Ionicons.font,
           'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
+          'helvetica-neue': require('../assets/fonts/Helvetica-Neue-Regular.ttf'),
+          'helvetica-neue-light': require('../assets/fonts/Helvetica-Neue-Light.ttf'),
+          'helvetica-neue-bold': require('../assets/fonts/Helvetica-Neue-Bold.ttf')
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service

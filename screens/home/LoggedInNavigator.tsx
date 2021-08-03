@@ -1,19 +1,80 @@
 import _ from "lodash"
-import React, { useEffect } from 'react';
-import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Auth } from 'aws-amplify'
+import React, { useEffect } from 'react'
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native"
+import { Ionicons } from '@expo/vector-icons'
+import {
+  createDrawerNavigator,
+  DrawerItemList
+} from '@react-navigation/drawer'
 import { HomeNavigator, OrdersNavigator, ProfileNavigator } from "./StackNavigators"
-import { primaryColorDark } from "../../commonUtils"
 import { useDispatch, useSelector } from 'react-redux';
-import { setMenu } from '../../store/actions';
+import { setMenu, setUser } from "../../store/actions"
 import * as api from "../../api"
+import { primaryColor, primaryColorDark } from "../../commonUtils"
 
-const BottomTab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator()
+
+const styles = StyleSheet.create({
+  sidebar: {
+    marginTop: 30,
+    marginBottom: 30,
+    display: "flex",
+    flexDirection: "column",
+    height: "100%"
+  },
+  header: {
+    display: "flex",
+    borderBottomColor: "#D1D1D1",
+    marginTop: 0,
+    margin: 20,
+    borderBottomWidth: 1,
+  },
+  name: {
+    paddingBottom: 20,
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  logo: {
+    width: 125,
+    height: 100,
+    resizeMode: "contain",
+  },
+  menu: {
+    flex: 1
+  },
+  footer: {
+    margin: 10,
+    marginBottom: 35
+  },
+  logout: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "#DC3545",
+    marginBottom: 10,
+  },
+  footerText: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  }
+})
 
 const LoggedInNavigator = (props) => {
   const dispatch = useDispatch()
   const user = useSelector(store => store.user)
-  const menu = useSelector(store => store.menu)
+
+  const logout = async () => {
+    await Auth.signOut()
+    dispatch(setUser({ user: {} }))
+  }
 
   useEffect(() => {
     const fetchMenuDetails = async () => {
@@ -28,48 +89,75 @@ const LoggedInNavigator = (props) => {
   }, [])
 
   return (
-    <BottomTab.Navigator
+    <Drawer.Navigator
       initialRouteName="Home"
-      tabBarOptions={{
-        activeTintColor: primaryColorDark,
-      }}>
-      <BottomTab.Screen
+      drawerContent={(props) => (
+        <CustomDrawerContent {...props} user={user} logout={logout} />
+      )}>
+      <Drawer.Screen
         name="Home"
         options={{
-          tabBarIcon: ({ color }) => {
-            return (
-              <Ionicons size={24} name="home" color={color} />
-            )
-          },
+          drawerIcon: ({focused, size}) => (
+            <Ionicons size={20} name="home" color={primaryColorDark} />
+          ),
         }}
         component={HomeNavigator} />
-      <BottomTab.Screen
+      <Drawer.Screen
         name="Orders"
         options={{
-          tabBarIcon: ({ color }) => {
-            return (
-              <Ionicons size={24} name="cart" color={color} />
-            )
-          },
+          drawerIcon: ({focused, size}) => (
+            <Ionicons size={20} name="cart" color={primaryColorDark} />
+          ),
         }}
         component={OrdersNavigator} />
-      <BottomTab.Screen
+      <Drawer.Screen
         name="Profile"
         options={{
-          tabBarIcon: ({ color }) => {
-            return (
-              <Ionicons size={24} name="person" color={color} />
-            )
-          },
+          drawerIcon: ({focused, size}) => (
+            <Ionicons size={20} name="person" color={primaryColorDark} />
+          ),
         }}
         component={ProfileNavigator} />
-    </BottomTab.Navigator>
+    </Drawer.Navigator>
   );
-};
-
-function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
-export default LoggedInNavigator;
+const CustomDrawerContent = (props) => {
+  const { user, logout } = props
+  return (
+    <View style={styles.sidebar}>
+      <View style={styles.header}>
+        <Image
+          style={styles.logo}
+          source={require("../../static/images/logo.png")} />
+        <Text style={styles.name}>
+          Hello {user?.attributes?.name}!
+        </Text>
+      </View>
+      <View style={styles.menu}>
+        <DrawerItemList {...props} />
+      </View>
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.logout} onPress={logout}>
+          <Ionicons
+            size={20}
+            name="power"
+            style={{ marginRight: 10 }}
+            color="white" />
+          <Text style={{ color: "white" }}>LOGOUT</Text>
+        </TouchableOpacity>
+        <View style={styles.footerText}>
+          <Text style={{ color: "#787878" }}>Made with </Text>
+          <Ionicons
+            size={20}
+            name="heart"
+            color="red" />
+          <Text style={{ color: "#787878" }}> in India</Text>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+export default LoggedInNavigator
 
