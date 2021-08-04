@@ -49,7 +49,8 @@ const MainApp = () => {
   } else {
     return (
       <SafeAreaProvider>
-        <ApplicationProvider {...eva} theme={eva.light}>
+        <StatusBar style="dark" />
+        <ApplicationProvider {...eva} theme={eva.dark}>
           <MainNavigator />
         </ApplicationProvider>
       </SafeAreaProvider>

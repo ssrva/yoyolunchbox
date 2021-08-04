@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   totalPrice: {
-    fontWeight: "600",
+    fontWeight: "bold",
     fontSize: 16,
   },
   tagsContainer: {
@@ -121,6 +121,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
       type: type,
       title: title,
       price: price,
+      image: image,
       description: description,
       quantity: newCount
     })
@@ -155,6 +156,11 @@ const OrderListItem = (props: TOrderListItemProps) => {
             <Text> x {quantity}</Text>
           )}
         </Text>
+        {disabled && (
+          <Text style={styles.totalPrice}>
+            Rs. {parseInt(price) * parseInt(quantity)}
+          </Text>
+        )}
         <Text style={styles.description}>{description}</Text>
         {!disabled && (
           <>
@@ -167,9 +173,9 @@ const OrderListItem = (props: TOrderListItemProps) => {
       </View>
       {disabled ? (
         <View>
-          <Text style={styles.totalPrice}>
-            Rs. {parseInt(price) * parseInt(quantity)}
-          </Text>
+          <Image
+            style={styles.image}
+            source={{uri: `data:image/jpg;base64,${imageBase64}`}}/>
         </View>
       ) : (
         <View>

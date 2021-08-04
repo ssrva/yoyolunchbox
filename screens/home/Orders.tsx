@@ -39,21 +39,12 @@ const Orders = () => {
   }
 
   useEffect(() => {
-    const fetchInitialData = async () => {
-      const fetchOrderPromise = fetchOrders()
-      const balancePromise = api.getUserWalletBalance(username)
-      const [_orderData, balanceData] = await Promise.all(
-        [fetchOrderPromise, balancePromise]
-      )
-      setBalance(balanceData?.balance)
-    }
-    fetchInitialData()
+    fetchOrders()
   }, [])
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Orders</Text>
-      <Text style={styles.title}>Balance : {balance}</Text>
       <FlatList
         style={{flex: 1}}
         data={orders}

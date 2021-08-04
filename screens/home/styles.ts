@@ -1,24 +1,15 @@
 import { StyleSheet } from "react-native"
-import { primaryColor, primaryBackgroundColor, COLORS } from "../../commonUtils"
+import { primaryColor, secondaryColor, COLORS } from "../../commonUtils"
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    padding: "1rem",
-    borderBottomWidth: 2,
-    borderBottomColor: primaryColor,
-    marginBottom: "1rem"
-  },
   mainViewStyle: {
-    padding: 10,
+    paddingTop: 0,
+    padding: 15,
     flex: 1,
   },
   headerWelcome: {
     fontSize: 18,
     marginBottom: 10,
-  },
-  innerContainer: {
-    margin: "1rem",
-    padding: "1rem",
   },
   input: {
     width: "100%",
@@ -73,7 +64,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   footer: {
-    margin: 20,
+    borderTopColor: "#F1F1F1",
+    borderTopWidth: 1,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 25,
+    paddingRight: 25,
+    marginLeft: -15,
+    marginRight: -15,
   },
   confirmButton: {
     padding: 10,
@@ -95,8 +93,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   mainButton: {
-    backgroundColor: primaryColor,
-    borderColor: primaryColor,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 10,
+    elevation: 3,
+    backgroundColor: secondaryColor,
+    borderColor: secondaryColor,
   }
 })
 

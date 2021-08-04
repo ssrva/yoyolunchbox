@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     marginBottom: 10,
-    fontWeight: "900"
+    fontWeight: "bold"
   },
   dateString: {
     fontSize: 15,
-    fontWeight: "600"
+    fontWeight: "bold"
   }
 })
 

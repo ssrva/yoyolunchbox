@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { SectionList, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Text, View } from '../../components/Themed';
-import Header from './components/Header';
 import styles from "./styles"
 import moment from "moment"
 import OrderListItem from './components/OrderListItem';
@@ -88,9 +87,9 @@ const HomeScreen = (props) => {
                 }}
               />
               <View style={styles.footer}>
-                <Button style={styles.mainButton} onPress={placeOrder}>
-                  Place Order
-                </Button>
+                <TouchableOpacity style={styles.mainButton} onPress={placeOrder}>
+                  <Text style={{ color: "white" }}>Place Order</Text>
+                </TouchableOpacity>
               </View>
             </>
           )}

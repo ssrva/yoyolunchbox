@@ -29,8 +29,19 @@ export const getMenu = async (dates: string[]) => {
 }
 
 export const getFoodimage = async (imageKey: string) => {
-  const response = await axios.get(`/food/image/${imageKey}`)
-  return response.data
+  const cachedResults = {}
+  return async function () {
+    if (cachedResults[imageKey] == null) {
+      try {
+        const response = await axios.get(`/food/image/${imageKey}`)
+        cachedResults[imageKey] = response.data
+      } catch(e) {
+        console.log("call errored ", e.message)
+        throw e
+      }
+    }
+    return cachedResults[imageKey]
+  }()
 }
 
 export const placeOrder = async (username: string, orders: Object[]) => {
