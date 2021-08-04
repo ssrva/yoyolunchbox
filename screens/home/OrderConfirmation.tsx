@@ -1,14 +1,15 @@
 import * as React from 'react';
 import _ from "lodash"
-import { TouchableOpacity, StyleSheet } from 'react-native';
-import { Text, View } from '../../components/Themed';
+import { ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, View } from '../../components/Themed'
 import commonStyles from "./styles"
-import OrderListItem from './components/OrderListItem';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import OrderListItem from './components/OrderListItem'
+import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { COLORS, notifyMessage } from "../../commonUtils"
 import { Button } from "@ui-kitten/components"
 import * as api from "../../api"
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'
+import { useState } from 'react'
 
 type TOrderConfirmationProps = {
   route: Object,
@@ -74,6 +75,7 @@ const styles = StyleSheet.create({
 
 const OrderConfirmation = (props: TOrderConfirmationProps) => {
   const { route, navigation } = props
+  const [loading, setLoading] = useState<boolean>(false)
   const username = useSelector(store => store.user.username)
   const orders = route?.params?.orders || []
   const itemTotalPrice = orders.reduce((acc, order) => {
@@ -89,12 +91,20 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
       }
     })
 
+    const charges = {
+      delivery: 40,
+      packing: 6,
+    }
+
+    setLoading(true)
     try {
-      await api.placeOrder(username, apiInput)
+      await api.placeOrder(username, charges, apiInput)
       notifyMessage("Order placed successfully")
       navigation.navigate("Home")
     } catch (e) {
       notifyMessage("Error placing order")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -134,9 +144,13 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
         </View>
       </ScrollView>
       <View style={commonStyles.footer}>
-        <Button style={commonStyles.mainButton} onPress={confirmOrder}>
-          Confirm Order
-        </Button>
+        <TouchableOpacity
+          disabled={loading}
+          style={commonStyles.mainButton}
+          onPress={confirmOrder}>
+          {loading && (<ActivityIndicator style={{ marginRight: 10 }} color="white" />)}
+          <Text style={{ color: "white" }}>Confirm Order</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )

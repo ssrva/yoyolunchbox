@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '../../../components/Themed';
-import { COLORS } from "../../../commonUtils"
+import {
+  COLORS,
+  getItemFromAsyncStorage,
+  putItemInAsyncStorage
+} from "../../../commonUtils"
 import Selector from "./Selector"
 import moment from "moment"
 import * as api from "../../../api"
@@ -129,7 +133,11 @@ const OrderListItem = (props: TOrderListItemProps) => {
 
   useEffect(() => {
     const getImage = async () => {
-      const data = await api.getFoodimage(image)
+      let data = await getItemFromAsyncStorage(image)
+      if(!data) {
+        data = await api.getFoodimage(image)
+        await putItemInAsyncStorage(image, data)
+      }
       setImageBase64(data)
     }
     getImage()

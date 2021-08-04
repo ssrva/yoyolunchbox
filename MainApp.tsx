@@ -15,8 +15,6 @@ import * as eva from '@eva-design/eva'
 import { Text } from "react-native"
 import { ApplicationProvider } from '@ui-kitten/components'
 
-const store = createStore(reducer)
-
 const MainApp = () => {
   const isLoadingComplete = useCachedResources()
   const [loading, setLoading] = useState<boolean>(true)
@@ -25,20 +23,31 @@ const MainApp = () => {
 
   axios.defaults.baseURL = "https://uhgsmg1av7.execute-api.us-east-1.amazonaws.com/production";
 
+  const getJwtToken = async () => {
+    const user = await Auth.currentAuthenticatedUser({ bypassCache: false })
+    return user.signInUserSession.idToken.jwtToken
+  }  
+
+  axios.interceptors.request.use((config) => {
+    return getJwtToken().then((token) => {
+      config.headers.common['Authorization'] = token
+      return Promise.resolve(config)
+    })
+  }, (error) => {
+    return Promise.reject(error)
+  })
+
   useEffect(() => {
     const fetchUserData = async () => {
       setLoading(true)
       try {
         const user = await Auth.currentAuthenticatedUser({ bypassCache: false })
         dispatch(setUser({ user }))
-        const jwtToken = user.signInUserSession.idToken.jwtToken
-        axios.defaults.headers.common['Authorization'] = jwtToken
       } catch(e) {
         console.log("Error in Main App", e)
       }
       setLoading(false)
     }
-
     fetchUserData()
   }, [])
 
@@ -50,7 +59,7 @@ const MainApp = () => {
     return (
       <SafeAreaProvider>
         <StatusBar style="dark" />
-        <ApplicationProvider {...eva} theme={eva.dark}>
+        <ApplicationProvider {...eva} theme={eva.light}>
           <MainNavigator />
         </ApplicationProvider>
       </SafeAreaProvider>

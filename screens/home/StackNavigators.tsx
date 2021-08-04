@@ -18,8 +18,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   headerAddress: {
-    marginTop: -15,
-    marginLeft: -15,
     display: "flex",
     flexDirection: "row",
     alignItems: "center"
@@ -67,7 +65,7 @@ const headerOptions = ({route, navigation}) => ({
     elevation: 0,
     shadowOpacity: 0,
     borderBottomWidth: 0,
-    height: 120,
+    height: 80,
   },
   headerTitleAlign: "left",
   headerTitle: () => (
@@ -88,16 +86,13 @@ const headerOptions = ({route, navigation}) => ({
   ),
   headerTintColor: "#000",
   headerTitleContainerStyle: {
-    margin: 0,
+    marginLeft: -10,
   },
   headerLeftContainerStyle: {
-    margin: 15,
-    marginRight: 0,
-    marginTop: 0
+    marginLeft: 15,
   },
   headerRightContainerStyle: {
-    margin: 15,
-    marginTop: 0
+    marginRight: 15,
   }
 })
 

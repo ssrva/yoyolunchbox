@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     display: "flex",
   },
   title: {
-    margin: 10,
     fontWeight: "600",
     fontSize: 18,
     backgroundColor: "white",

@@ -4,17 +4,17 @@ module.exports.placeOrder = async (event) => {
   const client = siloDbClient();
   // each order is expected to have the fields
   // quantity, menu_id.
-  const { username, orders } = JSON.parse(event.body)
+  const { username, charges, orders } = JSON.parse(event.body)
 
   const usernames = Array(orders.length).fill(`'${username}'`)
   const quantities = orders.map(order => order.quantity)
   const menu_ids = orders.map(order => order.menu_id)
-  const amount = orders.map(order => order.amount).reduce((acc, val) => {
+  const itemTotal = orders.map(order => order.amount).reduce((acc, val) => {
     return acc + val
   }, 0)
-
-  console.log(username)
-  console.log(usernames)
+  const otherCharges = Object.values(charges).reduce((acc, val) => {
+    return acc + val
+  }, 0)
 
   const placeOrderQuery = `
     INSERT INTO
@@ -27,7 +27,7 @@ module.exports.placeOrder = async (event) => {
   `
   const updateBalanceQuery = `
     UPDATE users
-    SET balance = users.balance - ${amount}
+    SET balance = users.balance - ${itemTotal + otherCharges}
     WHERE username = '${username}'
   `
 

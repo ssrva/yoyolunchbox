@@ -2,7 +2,8 @@ import {
   ToastAndroid,
   Platform,
   Alert,
-} from 'react-native';
+} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const primaryColor = "#F2C94C"
 export const secondaryColor = "#4F4946"
@@ -17,6 +18,15 @@ export function notifyMessage(message: string) {
   } else {
     console.log(message)
   }
+}
+
+export const getItemFromAsyncStorage = async (key: string) => {
+  const data = await AsyncStorage.getItem(key)
+  return data
+}
+
+export const putItemInAsyncStorage = async (key: string, value: string) => {
+  await AsyncStorage.setItem(key, value)
 }
 
 export const COLORS = {

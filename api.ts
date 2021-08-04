@@ -39,12 +39,16 @@ export const getFoodimage = async (imageKey: string) => {
         console.log("call errored ", e.message)
         throw e
       }
+    } else {
+      console.log("cached call")
     }
+
+    console.log(Object.keys(cachedResults))
     return cachedResults[imageKey]
   }()
 }
 
-export const placeOrder = async (username: string, orders: Object[]) => {
-  const response = await axios.post("/orders", { username, orders })
+export const placeOrder = async (username: string, charges: Object, orders: Object[]) => {
+  const response = await axios.post("/orders", { username, charges, orders })
   return response.data
 }
