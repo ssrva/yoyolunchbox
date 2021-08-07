@@ -57,7 +57,7 @@ module.exports.cancelOrder = async (event) => {
   const { username, order_id } = JSON.parse(event.body)
   const cancelOrderQuery = `
     UPDATE orders
-    SET cancelled = true
+    SET status = 'cancelled'
     WHERE id = ${order_id}
   `
   const updateBalanceQuery = `

@@ -18,8 +18,12 @@ export const getUserWalletBalance = async (username: string) => {
   return response.data
 }
 
-export const getUserOrders = async (username: string, page: number) => {
-  const response = await axios.get(`/user/orders/${username}/${page}`);
+export const getUserOrders = async (
+  status: string,
+  username: string,
+  page: number
+) => {
+  const response = await axios.get(`/user/orders/${username}/${page}/${status}`);
   return response.data
 }
 

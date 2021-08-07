@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image, TouchableOpacity, StyleSheet } from "react-native";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "./HomeScreen"
 import Orders from "./Orders"
@@ -12,6 +13,7 @@ import { useSelector } from 'react-redux';
 import * as api from "../../api"
 
 const Stack = createStackNavigator()
+const Tab = createMaterialTopTabNavigator()
 
 const styles = StyleSheet.create({
   locationIcon: {
@@ -109,10 +111,29 @@ export const HomeNavigator = () => {
 export const OrdersNavigator = () => {
   return (
     <Stack.Navigator screenOptions={headerOptions}>
-      <Stack.Screen name="Orders" component={Orders} />
+      <Stack.Screen name="Orders" component={OrderTabsNavigator} />
     </Stack.Navigator>
   );
 };
+
+const OrderTabsNavigator = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen
+        name="On Route"
+        component={Orders}
+        initialParams={{ status: "on_route" }} />
+      <Tab.Screen
+        name="Upcoming"
+        component={Orders}
+        initialParams={{ status: "upcoming" }} />
+      <Tab.Screen
+        name="Cancelled"
+        component={Orders}
+        initialParams={{ status: "cancelled" }} />
+    </Tab.Navigator>
+  );
+}
 
 export const ProfileNavigator = () => {
   return (

@@ -22,7 +22,7 @@ type TOrderListItemProps = {
   quantity: string,
   hideDate: boolean,
   disabled: boolean,
-  cancelled: boolean,
+  status: string,
   onChange: Function
 }
 
@@ -114,7 +114,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
     price,
     onChange,
     disabled,
-    cancelled,
+    status,
   } = props
 
   const [imageBase64, setImageBase64] = useState<string>();
@@ -124,10 +124,12 @@ const OrderListItem = (props: TOrderListItemProps) => {
       id: id,
       type: type,
       title: title,
+      date: date,
       price: price,
       image: image,
       description: description,
-      quantity: newCount
+      quantity: newCount,
+      status: status
     })
   }
 
@@ -152,7 +154,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
               {moment(date).format("MMMM DD, YYYY")}
             </Text>
           )}
-          {cancelled && (
+          {status === "cancelled" && (
             <Text style={{...styles.tag, ...styles.dangerTag}}>
               CANCELLED
             </Text>

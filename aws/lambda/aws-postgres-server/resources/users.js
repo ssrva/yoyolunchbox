@@ -61,23 +61,26 @@ module.exports.updateUser = async (event) => {
 }
 
 module.exports.getUserOrders = async (event) => {
+  const status = event.pathParameters.status
   const username = event.pathParameters.username
   const page = event.pathParameters.page
   const query = `
     SELECT orders.id,  
            orders.quantity,
            orders.created_on,
-           orders.cancelled,
+           orders.status,
            menu.date,
            menu.type,
            food.price,
            food.title,
+           food.image,
            food.description
     FROM orders
     INNER JOIN menu ON orders.menu_id = menu.id
     INNER JOIN food ON food.id = menu.food_id
-    WHERE username = '${username}'
-    ORDER BY orders.created_on DESC
+    WHERE orders.username = '${username}'
+      AND orders.status = '${status}'
+    ORDER BY menu.date, menu.type ASC
     LIMIT 10
     OFFSET ${page};
   `

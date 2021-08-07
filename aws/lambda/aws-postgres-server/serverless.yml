@@ -54,7 +54,7 @@ functions:
     vpc: ${self:custom.vpc}
     events:
       - http:
-          path: /user/orders/{username}/{page}
+          path: /user/orders/{username}/{page}/{status}
           method: get
           authorizer:
             arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_mLWq9MaYx
