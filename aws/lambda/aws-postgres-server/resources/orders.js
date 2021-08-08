@@ -1,4 +1,6 @@
-const { siloDbClient } = require("./database-client")
+const { siloDbClient, dbClient } = require("./database-client")
+
+const client = dbClient()
 
 module.exports.placeOrder = async (event) => {
   const client = siloDbClient();
@@ -89,6 +91,74 @@ module.exports.cancelOrder = async (event) => {
     return {
       statusCode: 400,
       body: e.message
+    }
+  }
+}
+
+module.exports.getOrders = async (event) => {
+  const date = event.pathParameters.date
+  const getOrdersQuery = `
+    SELECT orders.id,  
+           orders.quantity,
+           orders.username,
+           orders.status,
+           menu.type,
+           food.title,
+           food.description
+    FROM orders
+    INNER JOIN menu ON orders.menu_id = menu.id
+    INNER JOIN food ON food.id = menu.food_id
+    WHERE menu.date = '${date}'
+    ORDER BY orders.id;
+  `
+
+  try {
+    const response = await client.query(getOrdersQuery)
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify(response.rows)
+    }
+  } catch(e) {
+    console.error(e.message)
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: "Query failed"
+    }
+  }
+}
+
+module.exports.updateOrderStatus = async (event) => {
+  const orderId = event.pathParameters.orderId
+  const status = event.pathParameters.status
+  const updateOrderQuery = `
+    UPDATE orders
+    SET status = '${status}'
+    WHERE id = '${orderId}';
+  `
+
+  try {
+    await client.query(updateOrderQuery)
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: "Updated successfully"
+    }
+  } catch(e) {
+    console.error(e.message)
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: "Query failed"
     }
   }
 }

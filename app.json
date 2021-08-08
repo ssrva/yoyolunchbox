@@ -22,7 +22,7 @@
     "ios": {
       "bundleIdentifier": "com.yoyolunchbox.app",
       "buildNumber": "1.0.0",
-      "supportsTablet": true
+      "supportsTablet": false
     },
     "android": {
       "adaptiveIcon": {
