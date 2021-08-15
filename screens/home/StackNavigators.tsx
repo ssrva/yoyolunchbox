@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, TouchableOpacity, StyleSheet } from "react-native";
+import { Image, TouchableOpacity, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "./HomeScreen"
@@ -11,6 +11,7 @@ import { Text, View } from '../../components/Themed';
 import { Ionicons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 import * as api from "../../api"
+import Transactions from "./Transactions"
 
 const Stack = createStackNavigator()
 const Tab = createMaterialTopTabNavigator()
@@ -38,7 +39,8 @@ const styles = StyleSheet.create({
   }
 })
 
-const WalletBalanceComponent = () => {
+const WalletBalanceComponent = (props) => {
+  const { navigation } = props
   const username = useSelector(store => store.user?.username)
   const [balance, setBalance] = useState<Number>(0)
 
@@ -51,14 +53,16 @@ const WalletBalanceComponent = () => {
   }, [])
 
   return (
-    <View style={styles.wallet}>
-      <Ionicons
-        size={20}
-        name="wallet"
-        style={{ marginRight: 10 }}
-        color={"black"} />
-      <Text style={{ fontWeight: "bold" }}>{'\u20B9'}{balance}</Text>
-    </View>
+    <TouchableWithoutFeedback onPress={() => navigation.navigate("Transactions")}>
+      <View style={styles.wallet}>
+        <Ionicons
+          size={20}
+          name="wallet"
+          style={{ marginRight: 10 }}
+          color={"black"} />
+        <Text style={{ fontWeight: "bold" }}>{'\u20B9'}{balance}</Text>
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -84,7 +88,7 @@ const headerOptions = ({route, navigation}) => ({
     </TouchableOpacity>
   ),
   headerRight: () => (
-    <WalletBalanceComponent />
+    <WalletBalanceComponent navigation={navigation} />
   ),
   headerTintColor: "#000",
   headerTitleContainerStyle: {
@@ -103,7 +107,7 @@ export const HomeNavigator = () => {
     <Stack.Navigator screenOptions={headerOptions}>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Confirm Order" component={OrderConfirmation} />
-      <Stack.Screen name="Wallet" component={OrderConfirmation} />
+      <Stack.Screen name="Transactions" component={Transactions} />
     </Stack.Navigator>
   );
 };

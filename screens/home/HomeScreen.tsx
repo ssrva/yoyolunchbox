@@ -7,8 +7,6 @@ import { Text, View } from '../../components/Themed';
 import styles from "./styles"
 import moment from "moment"
 import OrderListItem from './components/OrderListItem';
-import { Ionicons } from '@expo/vector-icons';
-import { Button } from "@ui-kitten/components"
 import DateComponent from './components/DateComponent';
 
 const HomeScreen = (props) => {
@@ -37,8 +35,12 @@ const HomeScreen = (props) => {
   }
 
   const updateOrder = (order) => {
-    const currentOrders = orders
-    currentOrders[order.id] = order
+    const currentOrders = _.clone(orders)
+    if(order.quantity == 0) {
+      delete currentOrders[order.id]
+    } else {
+      currentOrders[order.id] = order
+    }
     setOrders(currentOrders)
   }
 
@@ -87,7 +89,10 @@ const HomeScreen = (props) => {
                 }}
               />
               <View style={styles.footer}>
-                <TouchableOpacity style={styles.mainButton} onPress={placeOrder}>
+                <TouchableOpacity
+                  disabled={Object.keys(orders).length == 0}
+                  style={styles.mainButton}
+                  onPress={placeOrder}>
                   <Text style={{ color: "white" }}>Place Order</Text>
                 </TouchableOpacity>
               </View>

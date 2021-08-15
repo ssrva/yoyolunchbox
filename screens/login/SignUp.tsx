@@ -100,7 +100,7 @@ export default function SignUp(props) {
             disabled={loading}
             style={styles.button}
             onPress={() => confirmUser(username, otp)}>
-            {loading && <ActivityIndicator style={{ marginRight: 10 }} />}
+            {loading && <ActivityIndicator style={{ marginRight: 10 }} color="white" />}
             <Text style={{ color: "white" }}>Verify OTP</Text>
           </TouchableOpacity>
         </>

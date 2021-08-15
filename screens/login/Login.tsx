@@ -76,7 +76,7 @@ export default function Login() {
                   disabled={loading}
                   style={styles.button}
                   onPress={() => login(username, password)}>
-                  {loading && <ActivityIndicator style={{ marginRight: 10 }} />}
+                  {loading && <ActivityIndicator style={{ marginRight: 10 }} color="white" />}
                   <Text style={{ color: "white" }}>Login</Text>
                 </TouchableOpacity>
               </View>

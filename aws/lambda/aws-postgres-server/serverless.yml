@@ -59,6 +59,16 @@ functions:
           authorizer:
             arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_mLWq9MaYx
   
+  getUserTransactions:
+    handler: resources/users.getUserTransactions
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          path: /user/transactions/{username}
+          method: get
+          authorizer:
+            arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_mLWq9MaYx
+  
   getUserWalletBalance:
     handler: resources/users.getUserWalletBalance
     vpc: ${self:custom.vpc}

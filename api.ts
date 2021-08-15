@@ -13,6 +13,11 @@ export const updateUserDetails = async (username: string, details: Object) => {
   return response.data
 }
 
+export const getUserTransactions = async (username: string) => {
+  const response = await axios.get(`/user/transactions/${username}`)
+  return response.data
+}
+
 export const getUserWalletBalance = async (username: string) => {
   const response = await axios.get(`/user/balance/${username}`)
   return response.data

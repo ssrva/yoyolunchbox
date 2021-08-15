@@ -122,3 +122,28 @@ module.exports.getUserWalletBalance = async (event) => {
     }
   }
 }
+
+module.exports.getUserTransactions = async (event) => {
+  const username = event.pathParameters.username
+  const query = `
+    SELECT amount, description, created_at
+    FROM transactions
+    WHERE username = '${username}'
+    ORDER BY created_at DESC
+    LIMIT 20
+  `
+
+  try {
+    const res = await client.query(query)
+    return {
+      statusCode: 200,
+      body: JSON.stringify(res.rows)
+    }
+  } catch(e) {
+    console.error(e.message)
+    return {
+      statusCode: 400,
+      body: e.message
+    }
+  }
+}

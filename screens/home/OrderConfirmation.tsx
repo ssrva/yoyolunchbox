@@ -92,8 +92,8 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
     })
 
     const charges = {
-      delivery: 40,
-      packing: 6,
+      // delivery: 40,
+      // packing: 6,
     }
 
     setLoading(true)
@@ -128,17 +128,17 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
               <Text style={{ fontWeight: "bold" }}>Item Total</Text>
               <Text>{'\u20B9'}{itemTotalPrice}</Text>
             </View>
-            <View style={styles.tableRow}>
+            {/* <View style={styles.tableRow}>
               <Text style={{ fontWeight: "bold" }}>Packing charges</Text>
               <Text>{'\u20B9'}6</Text>
             </View>
             <View style={styles.tableRow}>
               <Text style={{ fontWeight: "bold" }}>Delivery charges</Text>
               <Text>{'\u20B9'}40</Text>
-            </View>
+            </View> */}
             <View style={{...styles.tableRow, ...styles.lastRow}}>
               <Text style={{ fontWeight: "bold" }}>Total</Text>
-              <Text>{'\u20B9'}{itemTotalPrice + 46}</Text>
+              <Text>{'\u20B9'}{itemTotalPrice}</Text>
             </View>
           </View>
         </View>
