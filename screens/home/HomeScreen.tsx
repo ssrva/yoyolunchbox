@@ -13,8 +13,8 @@ const HomeScreen = (props) => {
   const { navigation } = props
   const menu = useSelector(store => store.menu)
   const user = useSelector(store => store.user.attributes)
-  // const [selectedDate, setSelectedDate] = useState<string>(moment().format("YYYY-MM-DD"))
-  const [selectedDate, setSelectedDate] = useState<string>("2021-07-27")
+  const [selectedDate, setSelectedDate] = useState<string>(moment().format("YYYY-MM-DD"))
+  // const [selectedDate, setSelectedDate] = useState<string>("2021-07-27")
   const [orders, setOrders] = useState<Object>({})
   const selectedMenu = (menu && _.groupBy(menu[selectedDate], "type")) || {}
 

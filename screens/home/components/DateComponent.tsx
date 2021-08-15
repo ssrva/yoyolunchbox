@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
 
 const DateComponent = (props) => {
   const { onDateChange } = props
-  // const today = moment().utcOffset(530).format("YYYY-MM-DD")
-  const today = "2021-07-27"
+  const today = moment().utcOffset(530).format("YYYY-MM-DD")
+  // const today = "2021-07-27"
   const tomorrow = moment(today).add(1, 'd').format("YYYY-MM-DD")
   const dayAfter = moment(today).add(2, 'd').format("YYYY-MM-DD")
   const [selectedDate, setSelectedDate] = useState<string>(today)
