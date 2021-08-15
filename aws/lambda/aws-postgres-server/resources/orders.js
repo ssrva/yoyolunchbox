@@ -6,7 +6,6 @@ module.exports.placeOrder = async (event) => {
   const client = siloDbClient();
   // each order is expected to have the fields
   // quantity, menu_id.
-  console.log(JSON.parse(event.body))
   const { username, charges, orders } = JSON.parse(event.body)
 
   const usernames = Array(orders.length).fill(`'${username}'`)
@@ -38,7 +37,6 @@ module.exports.placeOrder = async (event) => {
   try {
     await client.query("BEGIN")
     const response = await client.query(placeOrderQuery)
-    console.log(response)
     const addTransactionQuery = `
       INSERT INTO
       transactions (username, amount, description)
@@ -48,7 +46,6 @@ module.exports.placeOrder = async (event) => {
         'Order id #${response.rows[0].id}'
       )
     `
-    console.log(addTransactionQuery)
     await client.query(addTransactionQuery)
     await client.query(updateBalanceQuery)
     await client.query("COMMIT")

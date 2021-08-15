@@ -26,12 +26,60 @@ module.exports.getUser = async (event) => {
     const response = await client.query(query)
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
       body: JSON.stringify(response.rows[0])
     }
   } catch(e) {
     console.error(e.message)
     return {
       statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: e.message
+    }
+  }
+}
+
+module.exports.addTransaction = async (event) => {
+  const client = siloDbClient();
+  const { username, amount, description } = JSON.parse(event.body)
+  const addTransactionQuery = `
+    INSERT INTO
+    transactions (username, amount, description)
+    VALUES (
+      '${username}', ${parseInt(amount)}, '${description}'
+    )
+  `
+  const updateBalanceQuery = `
+    UPDATE users
+    SET balance = users.balance + ${amount}
+    WHERE username = '${username}'
+  `
+  try {
+    await client.query("BEGIN")
+    await client.query(addTransactionQuery)
+    await client.query(updateBalanceQuery)
+    await client.query("COMMIT")
+    await client.end()
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: "Wallet balance added successfully"
+    }
+  } catch(e) {
+    console.error(e.message)
+    await client.query("ROLLBACK")
+    await client.end()
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
       body: e.message
     }
   }
