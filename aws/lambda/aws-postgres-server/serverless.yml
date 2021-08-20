@@ -216,3 +216,14 @@ functions:
           method: post
           authorizer:
             arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_tWF6ouNKB
+
+  adminExportOrdersToShipDay:
+    handler: resources/orders.exportToShipDay
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          path: /admin/orders/export
+          cors: true
+          method: post
+          authorizer:
+            arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_tWF6ouNKB

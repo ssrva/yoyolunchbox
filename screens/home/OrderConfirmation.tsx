@@ -6,7 +6,7 @@ import commonStyles from "./styles"
 import OrderListItem from './components/OrderListItem'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { COLORS, notifyMessage } from "../../commonUtils"
-import { Button } from "@ui-kitten/components"
+import { Button, Input } from "@ui-kitten/components"
 import * as api from "../../api"
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
 const OrderConfirmation = (props: TOrderConfirmationProps) => {
   const { route, navigation } = props
   const [loading, setLoading] = useState<boolean>(false)
+  const [remarks, setRemarks] = useState<string>("")
   const username = useSelector(store => store.user.username)
   const orders = route?.params?.orders || []
   const itemTotalPrice = orders.reduce((acc, order) => {
@@ -88,6 +89,7 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
         menu_id: order.id,
         quantity: order.quantity,
         amount: order.quantity * order.price,
+        remarks: remarks,
       }
     })
 
@@ -121,6 +123,12 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
             )
           }}
         />
+        <Input
+          value={remarks}
+          multiline
+          placeholder="Any instructions?"
+          numberOfLines={4}
+          onChangeText={setRemarks} />
         <View style={styles.billDetailsContainer}>
           <Text style={styles.billTitle}>Bill Details</Text>
           <View style={styles.tableContainer}>

@@ -10,10 +10,9 @@ import {
 } from 'react-native'
 import { Text, View } from '../../components/Themed'
 import { notifyMessage, primaryColor } from "../../commonUtils"
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { COLORS } from "../../commonUtils"
-import { Button, Input } from '@ui-kitten/components';
+import { Input } from '@ui-kitten/components';
 import commonStyles from "./styles"
 import * as api from "../../api"
 import moment from 'moment'

@@ -1,4 +1,5 @@
 const { siloDbClient, dbClient } = require("./database-client")
+const { exportOrder } = require("./api")
 
 const client = dbClient()
 
@@ -11,6 +12,8 @@ module.exports.placeOrder = async (event) => {
   const usernames = Array(orders.length).fill(`'${username}'`)
   const quantities = orders.map(order => order.quantity)
   const menu_ids = orders.map(order => order.menu_id)
+  const order_costs = orders.map(order => order.amount)
+  const remarks = orders.map(order => `'${order.remarks}'`)
   const itemTotal = orders.map(order => order.amount).reduce((acc, val) => {
     return acc + val
   }, 0)
@@ -20,11 +23,13 @@ module.exports.placeOrder = async (event) => {
 
   const placeOrderQuery = `
     INSERT INTO
-    orders (username, quantity, menu_id)
+    orders (username, quantity, menu_id, cost, remarks)
     VALUES (
       UNNEST(ARRAY[${usernames.join(",")}]),
       UNNEST(ARRAY[${quantities.join(",")}]),
-      UNNEST(ARRAY[${menu_ids.join(",")}])
+      UNNEST(ARRAY[${menu_ids.join(",")}]),
+      UNNEST(ARRAY[${order_costs.join(",")}]),
+      UNNEST(ARRAY[${remarks.join(",")}])
     )
     RETURNING id
   `
@@ -113,6 +118,8 @@ module.exports.getOrders = async (event) => {
            orders.quantity,
            orders.username,
            orders.status,
+           orders.exported,
+           orders.remarks,
            menu.type,
            food.title,
            food.description
@@ -161,6 +168,76 @@ module.exports.updateOrderStatus = async (event) => {
         'Access-Control-Allow-Origin': '*'
       },
       body: "Updated successfully"
+    }
+  } catch(e) {
+    console.error(e.message)
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: "Query failed"
+    }
+  }
+}
+
+module.exports.exportToShipDay = async (event) => {
+  const { date, type } = JSON.parse(event.body)
+  const getOrdersQuery = `
+    SELECT orders.id,
+           orders.cost,
+           orders.remarks,
+           users.name,
+           users.phone,
+           users.address,
+           menu.date,
+           users.coordinates
+    FROM orders
+    INNER JOIN menu ON menu.id = orders.menu_id
+    INNER JOIN users ON users.username = orders.username
+    WHERE menu.date = '${date}'
+    AND menu.type='${type}'
+    AND orders.exported = false;
+  `
+  try {
+    const ordersResponse = await client.query(getOrdersQuery)
+    const orders = ordersResponse.rows
+    const successfulOrders = []
+    const exportPromises = []
+    orders.forEach(order => {
+      exportPromises.push(exportOrder(order))
+    })
+    await Promise.all(exportPromises)
+      .then((value) => {
+        successfulOrders.push(value)
+      })
+      .catch((e) => {
+        console.log(e.message)
+      })
+    
+    const updateExportedFieldQuery = `
+      UPDATE orders
+      SET exported = true
+      WHERE id = ANY('{${successfulOrders.join(",")}}')
+    `
+    await client.query(updateExportedFieldQuery)
+
+    if(successfulOrders[0].length == orders.length) {
+      return {
+        statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: "Updated successfully"
+      }
+    } else {
+      return {
+        statusCode: 400,
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: "Failed pushing few orders, please retry."
+      }
     }
   } catch(e) {
     console.error(e.message)
