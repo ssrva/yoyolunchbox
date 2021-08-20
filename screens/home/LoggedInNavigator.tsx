@@ -1,4 +1,5 @@
 import _ from "lodash"
+import moment from "moment"
 import { Auth } from 'aws-amplify'
 import React, { useEffect } from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native"
@@ -78,9 +79,11 @@ const LoggedInNavigator = (props) => {
 
   useEffect(() => {
     const fetchMenuDetails = async () => {
-      const datesToFetch = [
-        "2021-07-27", "2021-07-28", "2021-07-29"
-      ]
+      const datesToFetch = []
+      const today = moment().format("YYYY-MM-DD")
+      for(let i = 0; i < 2; i++) {
+        datesToFetch.push(moment(today).add(i, 'd').format("YYYY-MM-DD"))
+      }
       let menu = await api.getMenu(datesToFetch)
       menu = _.groupBy(menu, "date")
       dispatch(setMenu({ menu: menu }))

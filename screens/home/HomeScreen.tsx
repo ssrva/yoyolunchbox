@@ -2,34 +2,61 @@ import * as React from 'react';
 import _ from "lodash"
 import { useState } from 'react';
 import { SectionList, TouchableOpacity } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Text, View } from '../../components/Themed';
 import styles from "./styles"
 import moment from "moment"
 import OrderListItem from './components/OrderListItem';
 import DateComponent from './components/DateComponent';
+import { setMenu } from "../../store/actions"
+import * as api from "../../api"
 
 const HomeScreen = (props) => {
   const { navigation } = props
+  const dispatch = useDispatch()
   const menu = useSelector(store => store.menu)
   const user = useSelector(store => store.user.attributes)
+  const today = moment().format("YYYY-MM-DD")
+  const [loading, setLoading] = useState<boolean>(false)
   const [selectedDate, setSelectedDate] = useState<string>(moment().format("YYYY-MM-DD"))
   // const [selectedDate, setSelectedDate] = useState<string>("2021-07-27")
   const [orders, setOrders] = useState<Object>({})
   const selectedMenu = (menu && _.groupBy(menu[selectedDate], "type")) || {}
 
+  const fetchMenuDetails = async () => {
+    const datesToFetch = []
+    setLoading(true)
+    for(let i = 0; i < 2; i++) {
+      datesToFetch.push(moment(today).add(i, 'd').format("YYYY-MM-DD"))
+    }
+    let menu = await api.getMenu(datesToFetch)
+    menu = _.groupBy(menu, "date")
+    dispatch(setMenu({ menu: menu }))
+    setLoading(false)
+  }
+
   const menuData = () => {
     const result = []
     if (_.isNil(selectedMenu) || _.isEmpty(selectedMenu)) return []
+    const currentHour = parseInt(moment().format("HH"))
 
     result.push({
-      title: "Breakfast", data: selectedMenu["breakfast"] || []
+      title: "Breakfast",
+      data: selectedMenu["breakfast"] || [],
+      grayOut: selectedDate === today && currentHour > 7,
+      grayOutDescription: "Book before 7AM"
     })
     result.push({
-      title: "Lunch", data: selectedMenu["lunch"] || []
+      title: "Lunch",
+      data: selectedMenu["lunch"] || [],
+      grayOut: selectedDate === today && currentHour > 11,
+      grayOutDescription: "Book before 11AM"
     })
     result.push({
-      title: "Dinner", data: selectedMenu["dinner"] || []
+      title: "Dinner",
+      data: selectedMenu["dinner"] || [],
+      grayOut: selectedDate === today && currentHour > 17,
+      grayOutDescription: "Book before 5PM"
     })
     return result
   }
@@ -71,14 +98,18 @@ const HomeScreen = (props) => {
           ) : (
             <>
               <SectionList
+                onRefresh={fetchMenuDetails}
+                refreshing={loading}
                 stickySectionHeadersEnabled={true}
                 sections={menuData()}
-                renderItem={({item}) => {
+                renderItem={({item, index, section}) => {
                   return (
                     <OrderListItem
                       key={item.name}
                       hideDate
                       onChange={updateOrder}
+                      grayOut={section.grayOut}
+                      grayOutDescription={section.grayOutDescription}
                       {...item} />
                   )
                 }}

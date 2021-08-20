@@ -23,7 +23,9 @@ type TOrderListItemProps = {
   hideDate: boolean,
   disabled: boolean,
   status: string,
-  onChange: Function
+  onChange: Function,
+  grayOut: boolean,
+  grayOutDescription: string,
 }
 
 const styles = StyleSheet.create({
@@ -98,6 +100,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#F8D7DA",
     borderColor: "#F5C6CB",
     color: "#721C24"
+  },
+  grayOutDescription: {
+    borderWidth: 1,
+    borderColor: "#D1D1D1",
+    borderRadius: 5,
+    marginTop: 5,
+    padding: 5,
+  },
+  grayOutDescriptionText: {
+    textTransform: "uppercase",
+    color: "#555555",
+    textAlign: "center"
   }
 })
 
@@ -115,6 +129,8 @@ const OrderListItem = (props: TOrderListItemProps) => {
     onChange,
     disabled,
     status,
+    grayOut,
+    grayOutDescription,
   } = props
 
   const [imageBase64, setImageBase64] = useState<string>();
@@ -172,7 +188,12 @@ const OrderListItem = (props: TOrderListItemProps) => {
           </Text>
         )}
         <Text style={styles.description}>{description}</Text>
-        {!disabled && (
+        {grayOut && (
+          <View style={styles.grayOutDescription}>
+            <Text style={styles.grayOutDescriptionText}>{grayOutDescription}</Text>
+          </View>
+        )}
+        {(!disabled && !grayOut) && (
           <>
             <Text style={styles.price}>Rs. {price}</Text>
             <View style={styles.selector} >
@@ -181,19 +202,22 @@ const OrderListItem = (props: TOrderListItemProps) => {
           </>
         )}
       </View>
-      {disabled ? (
-        <View>
-          <Image
-            style={styles.image}
-            source={{uri: `data:image/jpg;base64,${imageBase64}`}}/>
-        </View>
-      ) : (
-        <View>
-          <Image
-            style={styles.image}
-            source={{uri: `data:image/jpg;base64,${imageBase64}`}}/>
-        </View>
-      )}
+      <View>
+        {grayOut && (
+          <View style={{
+            width: 100,
+            height: 100,
+            position: "absolute",
+            backgroundColor: "#555555",
+            zIndex: 100,
+            borderRadius: 5,
+            opacity: 0.5
+          }} />
+        )}
+        <Image
+          style={styles.image}
+          source={{uri: `data:image/jpg;base64,${imageBase64}`}}/>
+      </View>
     </View>
   )
 }
