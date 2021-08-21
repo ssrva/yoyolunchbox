@@ -16,6 +16,7 @@ import { Input } from '@ui-kitten/components';
 import commonStyles from "./styles"
 import * as api from "../../api"
 import moment from 'moment'
+import * as Location from 'expo-location'
 
 const styles = StyleSheet.create({
   container: {
@@ -85,25 +86,44 @@ const styles = StyleSheet.create({
 })
 
 const ProfileScreen = (props) => {
-  const defaultCoordinates = {
-    latitude: 13.067439,
-    longitude: 80.237617
-  }
   const [loading, setLoading] = useState<boolean>(false)
   const user = useSelector(store => store.user)
   const [name, setName] = useState<string>(user.attributes?.name || "")
   const [address, setAddress] = useState<string>("")
   const [createdOn, setCreatedOn] = useState<string>()
-  const [userCoordinates, setUserCoordinates] = useState<Object>(
-    defaultCoordinates
-  )
+  const [userCoordinates, setUserCoordinates] = useState<Object>({
+    latitude: 13.067439, longitude: 80.237617
+  })
+
+  const getLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync()
+    if (status !== "granted") {
+      console.log("Permission not granted")
+      // General location in Chennai if user does not grant location permission
+      return {
+        latitude: 13.067439,
+        longitude: 80.237617
+      }
+    }
+
+    let location = await Location.getCurrentPositionAsync({})
+    return {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude
+    }
+  }
 
   useEffect(() => {
     const fetchProfileData = async () => {
       const details = await api.getUserDetails(user.username)
       setAddress(details.address)
       setCreatedOn(details.created_on)
-      setUserCoordinates(details.coordinates || defaultCoordinates)
+      if (!details.coordinates) {
+        const location = await getLocation()
+        setUserCoordinates(location)
+      } else {
+        setUserCoordinates(details.coordinates)
+      }
     }
     fetchProfileData()
   }, [])
@@ -161,11 +181,11 @@ const ProfileScreen = (props) => {
           <View style={styles.mapContainer}>
             <MapView
               provider={PROVIDER_GOOGLE}
-              initialRegion={{
+              region={{
                 latitude: userCoordinates.latitude,
                 longitude: userCoordinates.longitude,
-                latitudeDelta: 0.04,
-                longitudeDelta: 0.05,
+                latitudeDelta: 0.001,
+                longitudeDelta: 0.001,
               }}
               onPress={(coordinates) => {
                 setUserCoordinates({

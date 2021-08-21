@@ -36,6 +36,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
   },
+  logoContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 10
+  },
+  beta: {
+    marginBottom: 15,
+    backgroundColor: "purple",
+    width: 50,
+    color: "white",
+    padding: 5,
+    borderRadius: 5,
+  },
   logo: {
     width: 125,
     height: 100,
@@ -130,9 +145,16 @@ const CustomDrawerContent = (props) => {
   return (
     <View style={styles.sidebar}>
       <View style={styles.header}>
-        <Image
-          style={styles.logo}
-          source={require("../../static/images/logo.png")} />
+        <View style={styles.logoContainer}>
+          <Image
+            style={styles.logo}
+            source={require("../../static/images/logo.png")} />
+          <View style={styles.beta}>
+            <Text style={{ color: "white", textAlign: "center" }}>
+              BETA
+            </Text>
+          </View>
+        </View>
         <Text style={styles.name}>
           Hello {user?.attributes?.name}!
         </Text>

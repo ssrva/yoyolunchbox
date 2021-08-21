@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "yoyolunchbox",
+    "name": "YOYO Lunchbox",
     "slug": "yoyolunchbox",
     "owner": "mssrivathsan",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon.jpg",
     "scheme": "myapp",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/splash.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,12 +22,22 @@
     "ios": {
       "bundleIdentifier": "com.yoyolunchbox.app",
       "buildNumber": "1.0.0",
-      "supportsTablet": false
+      "supportsTablet": false,
+      "config": {
+        "googleMapsApiKey": "AIzaSyDdVku9DIVs4HIoxLJECrXafza3LQgtPcY"
+      }
     },
     "android": {
+      "package": "com.yoyolunchbox.app",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDnyWbdj_q7rV45eqE9O8EAiTOEztYB1pg"
+        }
       }
     },
     "web": {
