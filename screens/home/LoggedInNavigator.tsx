@@ -2,7 +2,14 @@ import _ from "lodash"
 import moment from "moment"
 import { Auth } from 'aws-amplify'
 import React, { useEffect } from 'react'
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native"
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Linking
+} from "react-native"
 import { Ionicons } from '@expo/vector-icons'
 import {
   createDrawerNavigator,
@@ -163,6 +170,20 @@ const CustomDrawerContent = (props) => {
         <DrawerItemList {...props} />
       </View>
       <View style={styles.footer}>
+        <TouchableOpacity
+          style={{ ...styles.logout, backgroundColor: "green" }}
+          onPress={() => {
+            Linking.openURL(
+              "https://api.whatsapp.com/send/?phone=919916699112&text=I+am+a+customer+of+YOYO+LunchBox+and+want+help+with+my+order.&app_absent=0"
+            )
+          }}>
+          <Ionicons
+            size={20}
+            name="logo-whatsapp"
+            style={{ marginRight: 10 }}
+            color="white" />
+          <Text style={{ color: "white" }}>Talk to us</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.logout} onPress={logout}>
           <Ionicons
             size={20}

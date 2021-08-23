@@ -45,19 +45,19 @@ const HomeScreen = (props) => {
       title: "Breakfast",
       data: selectedMenu["breakfast"] || [],
       grayOut: selectedDate === today && currentHour > 7,
-      grayOutDescription: "Book before 7AM"
+      grayOutDescription: "Order before 7AM"
     })
     result.push({
       title: "Lunch",
       data: selectedMenu["lunch"] || [],
-      grayOut: selectedDate === today && currentHour > 11,
-      grayOutDescription: "Book before 11AM"
+      grayOut: selectedDate === today && currentHour >= 9,
+      grayOutDescription: "Order before 9AM"
     })
     result.push({
       title: "Dinner",
       data: selectedMenu["dinner"] || [],
-      grayOut: selectedDate === today && currentHour > 17,
-      grayOutDescription: "Book before 5PM"
+      grayOut: selectedDate === today && currentHour >= 16,
+      grayOutDescription: "Order before 4PM"
     })
     return result
   }

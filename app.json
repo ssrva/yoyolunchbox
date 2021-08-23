@@ -5,11 +5,11 @@
     "owner": "mssrivathsan",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.jpg",
+    "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/splash.jpg",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -39,6 +39,9 @@
           "apiKey": "AIzaSyDnyWbdj_q7rV45eqE9O8EAiTOEztYB1pg"
         }
       }
+    },
+    "androidStatusBar": {
+      "hidden": true
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
