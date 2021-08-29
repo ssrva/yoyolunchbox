@@ -15,6 +15,7 @@ module.exports.createUser = async (event) => {
   } catch(e) {
     console.error(e.message)
   }
+  return event
 }
 
 module.exports.getUser = async (event) => {

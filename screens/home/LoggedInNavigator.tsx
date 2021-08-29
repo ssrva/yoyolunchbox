@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
   beta: {
     marginBottom: 15,
     backgroundColor: "purple",
-    width: 50,
+    width: 60,
+    fontSize: 12,
     color: "white",
     padding: 5,
     borderRadius: 5,

@@ -15,15 +15,15 @@ import { setUser } from '../../store/actions'
 
 export default function Login() {
   const [showSignUp, setShowSignUp] = useState<boolean>(true)
-  const [username, setUsername] = useState<string>()
+  const [phone, setPhone] = useState<string>()
   const [password, setPassword] = useState<string>()
   const dispatch = useDispatch()
   const [loading, setLoading] = useState<boolean>(false)
 
-  const login = async(username: string, password: string) => {
+  const login = async(phone: string, password: string) => {
     try {
       setLoading(true)
-      const user = await Auth.signIn(username, password);
+      const user = await Auth.signIn(phone, password);
       const jwtToken = user.signInUserSession.idToken.jwtToken
       axios.defaults.headers.common['Authorization'] = jwtToken
       dispatch(setUser({
@@ -63,9 +63,10 @@ export default function Login() {
               <View style={{ backgroundColor: "transparent" }}>
                 <Input
                   style={styles.input}
-                  value={username}
-                  onChangeText={setUsername}
-                  placeholder="Username" />
+                  value={phone}
+                  keyboardType="numeric"
+                  onChangeText={setPhone}
+                  placeholder="Phone Number" />
                 <Input
                   style={styles.input}
                   value={password}
@@ -75,7 +76,7 @@ export default function Login() {
                 <TouchableOpacity
                   disabled={loading}
                   style={styles.button}
-                  onPress={() => login(username, password)}>
+                  onPress={() => login(phone, password)}>
                   {loading && <ActivityIndicator style={{ marginRight: 10 }} color="white" />}
                   <Text style={{ color: "white" }}>Login</Text>
                 </TouchableOpacity>

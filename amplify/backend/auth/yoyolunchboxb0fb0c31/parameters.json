@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "yoyolunchboxd7287209_identitypool_d7287209",
+    "identityPoolName": "yoyolunchboxb0fb0c31_identitypool_b0fb0c31",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "yoyolud7287209",
-    "userPoolName": "yoyolunchboxd7287209_userpool_d7287209",
+    "resourceNameTruncated": "yoyolub0fb0c31",
+    "userPoolName": "yoyolunchboxb0fb0c31_userpool_b0fb0c31",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -18,11 +18,12 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-        "name",
         "phone_number"
     ],
     "aliasAttributes": [
-        "email"
+        "email",
+        "preferred_username",
+        "phone_number"
     ],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
@@ -32,10 +33,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "yoyolud7287209_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "yoyolub0fb0c31_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "d7287209",
-    "resourceName": "yoyolunchboxd7287209",
+    "sharedId": "b0fb0c31",
+    "resourceName": "yoyolunchboxb0fb0c31",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [

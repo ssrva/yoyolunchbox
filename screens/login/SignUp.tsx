@@ -18,11 +18,11 @@ export default function SignUp(props) {
   const [otpSent, setOtpSent] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
 
-  const signUp = async(username: string, password: string, name: string, phone: string) => {
+  const signUp = async(name: string, phone: string, password: string) => {
     try {
       setLoading(true)
       await Auth.signUp({
-        username,
+        username: phone.toString(),
         password,
         attributes: {
           name,
@@ -37,18 +37,14 @@ export default function SignUp(props) {
     }
   }
   
-  const confirmUser = async(username: string, code: string) => {
+  const confirmUser = async(phone: string, code: string) => {
     try {
       setLoading(true)
-      await Auth.confirmSignUp(username, code)
+      await Auth.confirmSignUp(phone, code)
       signUpSuccess()
     } catch (error) {
-      if(error.code !== "InvalidLambdaResponseException") {
-        console.log(error)
-        notifyMessage(error.message)
-      } else {
-        signUpSuccess()
-      }
+      console.log(error)
+      notifyMessage(error.message)
     } finally {
       setLoading(false)
     }
@@ -65,25 +61,20 @@ export default function SignUp(props) {
             placeholder="Name" />
           <Input
             style={styles.input}
-            value={username}
-            onChangeText={setUsername}
-            placeholder="Username" />
+            value={phoneNumber}
+            keyboardType="numeric"
+            onChangeText={setPhoneNumber}
+            placeholder="Mobile Number" />
           <Input
             style={styles.input}
             value={password}
             secureTextEntry
             onChangeText={setPassword}
             placeholder="Password" />
-          <Input
-            style={styles.input}
-            value={phoneNumber}
-            keyboardType="numeric"
-            onChangeText={setPhoneNumber}
-            placeholder="Mobile Number" />
           <TouchableOpacity
             disabled={loading}
             style={styles.button}
-            onPress={() => signUp(username, password, name, phoneNumber)}>
+            onPress={() => signUp(name, phoneNumber, password)}>
             {loading && <ActivityIndicator style={{ marginRight: 10 }} />}
             <Text style={{ color: "white" }}>Register</Text>
           </TouchableOpacity>
@@ -99,7 +90,7 @@ export default function SignUp(props) {
           <TouchableOpacity
             disabled={loading}
             style={styles.button}
-            onPress={() => confirmUser(username, otp)}>
+            onPress={() => confirmUser(phoneNumber, otp)}>
             {loading && <ActivityIndicator style={{ marginRight: 10 }} color="white" />}
             <Text style={{ color: "white" }}>Verify OTP</Text>
           </TouchableOpacity>
