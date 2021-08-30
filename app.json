@@ -29,7 +29,7 @@
     },
     "android": {
       "package": "com.yoyolunchbox.app",
-      "versionCode": 2,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
