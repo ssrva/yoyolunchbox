@@ -40,6 +40,7 @@ module.exports.addFood = async (event) => {
     VALUES (
       '${title}', '${description}', ${price}, '${image}'
     )
+    RETURNING id
   `
 
   try {
@@ -49,7 +50,7 @@ module.exports.addFood = async (event) => {
       headers: {
         'Access-Control-Allow-Origin': '*'
       },
-      body: "Food added"
+      body: JSON.stringify(res.rows[0])
     }
   } catch(e) {
     console.error(e.message)

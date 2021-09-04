@@ -29,9 +29,9 @@
     },
     "android": {
       "package": "com.yoyolunchbox.app",
-      "versionCode": 4,
+      "versionCode": 5,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon.png",
+        "foregroundImage": "./assets/images/ic_launcher_foreground.png",
         "backgroundColor": "#ffffff"
       },
       "config": {
