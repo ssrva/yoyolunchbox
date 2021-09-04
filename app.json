@@ -3,7 +3,7 @@
     "name": "YOYO Lunchbox",
     "slug": "yoyolunchbox",
     "owner": "mssrivathsan",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -29,7 +29,7 @@
     },
     "android": {
       "package": "com.yoyolunchbox.app",
-      "versionCode": 5,
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/ic_launcher_foreground.png",
         "backgroundColor": "#ffffff"
