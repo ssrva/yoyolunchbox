@@ -173,28 +173,6 @@ functions:
           authorizer:
             arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_tWF6ouNKB
 
-  adminAddFood:
-    handler: resources/food.addFood
-    vpc: ${self:custom.vpc}
-    events:
-      - http:
-          path: /admin/food
-          cors: true
-          method: post
-          authorizer:
-            arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_tWF6ouNKB
-
-  adminGetFood:
-    handler: resources/food.getFood
-    vpc: ${self:custom.vpc}
-    events:
-      - http:
-          path: /admin/food
-          cors: true
-          method: get
-          authorizer:
-            arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_tWF6ouNKB
-
   adminGetUser:
     handler: resources/users.getUser
     vpc: ${self:custom.vpc}
@@ -225,5 +203,16 @@ functions:
           path: /admin/orders/export
           cors: true
           method: post
+          authorizer:
+            arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_tWF6ouNKB
+
+  adminGetAllUsers:
+    handler: resources/users.getAllUsers
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          path: /admin/users
+          cors: true
+          method: get
           authorizer:
             arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_tWF6ouNKB

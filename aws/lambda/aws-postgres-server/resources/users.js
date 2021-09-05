@@ -120,13 +120,12 @@ module.exports.getUserOrders = async (event) => {
            orders.status,
            menu.date,
            menu.type,
-           food.price,
-           food.title,
-           food.image,
-           food.description
+           menu.price,
+           menu.title,
+           menu.image,
+           menu.description
     FROM orders
     INNER JOIN menu ON orders.menu_id = menu.id
-    INNER JOIN food ON food.id = menu.food_id
     WHERE orders.username = '${username}'
       AND orders.status = '${status}'
     ORDER BY menu.date, menu.type ASC
@@ -192,6 +191,32 @@ module.exports.getUserTransactions = async (event) => {
     console.error(e.message)
     return {
       statusCode: 400,
+      body: e.message
+    }
+  }
+}
+
+module.exports.getAllUsers = async (event) => {
+  const query = `
+    SELECT * FROM users
+  `
+
+  try {
+    const res = await client.query(query)
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify(res.rows)
+    }
+  } catch(e) {
+    console.error(e.message)
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
       body: e.message
     }
   }

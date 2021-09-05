@@ -8,12 +8,11 @@ module.exports.getMenu = async (event) => {
     SELECT menu.id,
            menu.date,
            menu.type,
-           food.title,
-           food.description,
-           food.price,
-           food.image
+           menu.title,
+           menu.description,
+           menu.price,
+           menu.image
     FROM menu
-    INNER JOIN food ON food.id = menu.food_id
     WHERE date = ANY('{${dates}}');
   `
 
@@ -39,14 +38,14 @@ module.exports.getMenu = async (event) => {
 }
 
 module.exports.addMenu = async (event) => {
-  const { date, food_id, type } = JSON.parse(event.body)
+  const { date, title, description, image, price, type } = JSON.parse(event.body)
   const query = `
     INSERT INTO
     menu (
-      date, food_id, type
+      date, title, description, image, price, type
     )
     VALUES (
-      '${date}', ${food_id}, '${type}'
+      '${date}', '${title}', '${description}', '${image}', ${price}, '${type}'
     )
   `
 

@@ -81,10 +81,9 @@ module.exports.cancelOrder = async (event) => {
   const updateBalanceQuery = `
     UPDATE users
     SET balance = (
-      SELECT food.price * orders.quantity
+      SELECT menu.price * orders.quantity
       FROM orders
       INNER JOIN menu ON menu.id = orders.menu_id
-      INNER JOIN food ON menu.food_id = food.id
       WHERE orders.id = ${order_id}
     ) + users.balance
     WHERE username = '${username}'
@@ -116,16 +115,17 @@ module.exports.getOrders = async (event) => {
   const getOrdersQuery = `
     SELECT orders.id,  
            orders.quantity,
+           users.name,
            orders.username,
            orders.status,
            orders.exported,
            orders.remarks,
            menu.type,
-           food.title,
-           food.description
+           menu.title,
+           menu.description
     FROM orders
     INNER JOIN menu ON orders.menu_id = menu.id
-    INNER JOIN food ON food.id = menu.food_id
+    INNER JOIN users ON orders.username = users.username
     WHERE menu.date = '${date}'
     ORDER BY orders.id;
   `
