@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     marginTop: 10,
-    marginBottom: 30,
+    marginBottom: 10,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     color: "black",
     textDecorationLine: "underline",
     textAlign: "center",
+    marginTop: 20,
   }
 });
 

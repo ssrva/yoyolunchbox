@@ -11,10 +11,12 @@ import { useState } from 'react'
 import SignUp from './SignUp'
 import styles from "./styles"
 import { setUser } from '../../store/actions'
+import ForgotPassword from './ForgotPassword'
 
 
 export default function Login() {
-  const [showSignUp, setShowSignUp] = useState<boolean>(true)
+  const [showSignUp, setShowSignUp] = useState<boolean>(false)
+  const [showForgotPassword, setShowForgotPassword] = useState<boolean>(false)
   const [phone, setPhone] = useState<string>()
   const [password, setPassword] = useState<string>()
   const dispatch = useDispatch()
@@ -61,30 +63,42 @@ export default function Login() {
                 signUpSuccess={() => setShowSignUp(false)} />
             ) : (
               <View style={{ backgroundColor: "transparent" }}>
-                <Input
-                  style={styles.input}
-                  value={phone}
-                  keyboardType="numeric"
-                  onChangeText={setPhone}
-                  placeholder="Phone Number" />
-                <Input
-                  style={styles.input}
-                  value={password}
-                  secureTextEntry
-                  onChangeText={setPassword}
-                  placeholder="Password" />
-                <TouchableOpacity
-                  disabled={loading}
-                  style={styles.button}
-                  onPress={() => login(phone, password)}>
-                  {loading && <ActivityIndicator style={{ marginRight: 10 }} color="white" />}
-                  <Text style={{ color: "white" }}>Login</Text>
-                </TouchableOpacity>
+                {showForgotPassword ? (
+                  <ForgotPassword
+                    showLoginScreen={() => setShowForgotPassword(false)} />
+                ) : (
+                  <View style={{ backgroundColor: "transparent" }}>
+                    <Input
+                      style={styles.input}
+                      value={phone}
+                      keyboardType="numeric"
+                      onChangeText={setPhone}
+                      placeholder="Phone Number" />
+                    <Input
+                      style={styles.input}
+                      value={password}
+                      secureTextEntry
+                      onChangeText={setPassword}
+                      placeholder="Password" />
+                    <TouchableOpacity
+                      disabled={loading}
+                      style={styles.button}
+                      onPress={() => login(phone, password)}>
+                      {loading && <ActivityIndicator style={{ marginRight: 10 }} color="white" />}
+                      <Text style={{ color: "white" }}>Login</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+                <Text style={styles.link} onPress={() => setShowForgotPassword(!showForgotPassword)}>
+                  {!showForgotPassword ? "Forgot Password? Click Here" : "Login Here"}
+                </Text>
               </View>
             )}
-            <Text style={styles.link} onPress={() => setShowSignUp(!showSignUp)}>
-              {showSignUp ? "Existing User? Login here" : "New User? Sign up here"}
-            </Text>
+            {!showForgotPassword && (
+              <Text style={styles.link} onPress={() => setShowSignUp(!showSignUp)}>
+                {showSignUp ? "Existing User? Login here" : "New User? Sign up here"}
+              </Text>
+            )}
           </View>
         </KeyboardAwareScrollView>
       </TouchableWithoutFeedback>
