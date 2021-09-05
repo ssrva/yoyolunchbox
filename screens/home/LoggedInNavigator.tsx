@@ -104,7 +104,7 @@ const LoggedInNavigator = (props) => {
     const fetchMenuDetails = async () => {
       const datesToFetch = []
       const today = moment().format("YYYY-MM-DD")
-      for(let i = 0; i < 2; i++) {
+      for(let i = 0; i < 3; i++) {
         datesToFetch.push(moment(today).add(i, 'd').format("YYYY-MM-DD"))
       }
       let menu = await api.getMenu(datesToFetch)
