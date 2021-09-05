@@ -27,7 +27,7 @@ const HomeScreen = (props) => {
   const fetchMenuDetails = async () => {
     const datesToFetch = []
     setLoading(true)
-    for(let i = 0; i < 2; i++) {
+    for(let i = 0; i < 3; i++) {
       datesToFetch.push(moment(today).add(i, 'd').format("YYYY-MM-DD"))
     }
     let menu = await api.getMenu(datesToFetch)
@@ -41,12 +41,6 @@ const HomeScreen = (props) => {
     if (_.isNil(selectedMenu) || _.isEmpty(selectedMenu)) return []
     const currentHour = parseInt(moment().format("HH"))
 
-    result.push({
-      title: "Breakfast",
-      data: selectedMenu["breakfast"] || [],
-      grayOut: selectedDate === today && currentHour > 7,
-      grayOutDescription: "Order before 7AM"
-    })
     result.push({
       title: "Lunch",
       data: selectedMenu["lunch"] || [],

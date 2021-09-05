@@ -1,3 +1,4 @@
+import _ from "lodash"
 import * as React from 'react';
 import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '../../../components/Themed';
@@ -202,22 +203,24 @@ const OrderListItem = (props: TOrderListItemProps) => {
           </>
         )}
       </View>
-      <View>
-        {grayOut && (
-          <View style={{
-            width: 100,
-            height: 100,
-            position: "absolute",
-            backgroundColor: "#555555",
-            zIndex: 100,
-            borderRadius: 5,
-            opacity: 0.5
-          }} />
-        )}
-        <Image
-          style={styles.image}
-          source={{uri: `data:image/jpg;base64,${imageBase64}`}}/>
-      </View>
+      {!_.isNil(imageBase64) && (
+        <View>
+          {grayOut && (
+            <View style={{
+              width: 100,
+              height: 100,
+              position: "absolute",
+              backgroundColor: "#555555",
+              zIndex: 100,
+              borderRadius: 5,
+              opacity: 0.5
+            }} />
+          )}
+          <Image
+            style={styles.image}
+            source={{uri: `data:image/jpg;base64,${imageBase64}`}}/>
+        </View>
+      )}
     </View>
   )
 }

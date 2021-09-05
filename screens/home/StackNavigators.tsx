@@ -70,8 +70,7 @@ const headerOptions = ({route, navigation}) => ({
   headerStyle: {
     elevation: 0,
     shadowOpacity: 0,
-    borderBottomWidth: 0,
-    height: 80,
+    borderBottomWidth: 0
   },
   headerTitleAlign: "left",
   headerTitle: () => (
@@ -80,13 +79,24 @@ const headerOptions = ({route, navigation}) => ({
       <Text style={styles.locationText}>Home</Text>
     </View>
   ),
-  headerLeft: () => (
-    <TouchableOpacity
-      style={{ marginRight: 10 }}
-      onPress={() => navigation.openDrawer()}>
-      <Ionicons size={24} name="menu" color={"#4F4946"} />
-    </TouchableOpacity>
-  ),
+  headerLeft: () => {
+    const routes = navigation?.getState()?.routes
+    const currentRoute = routes?.[routes.length - 1]?.name
+    const backButtonScreens = ["Transactions"]
+    return backButtonScreens.includes(currentRoute) ? (
+      <TouchableOpacity
+        style={{ marginRight: 10 }}
+        onPress={() => navigation.pop()}>
+        <Ionicons size={24} name="chevron-back" color={"#4F4946"} />
+      </TouchableOpacity>
+    ) : (
+      <TouchableOpacity
+        style={{ marginRight: 10 }}
+        onPress={() => navigation.openDrawer()}>
+        <Ionicons size={24} name="menu" color={"#4F4946"} />
+      </TouchableOpacity>
+    )
+  },
   headerRight: () => (
     <WalletBalanceComponent navigation={navigation} />
   ),
