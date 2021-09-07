@@ -17,7 +17,7 @@ const HomeScreen = (props) => {
   const dispatch = useDispatch()
   const menu = useSelector(store => store.menu)
   const user = useSelector(store => store.user.attributes)
-  const today = moment().format("YYYY-MM-DD")
+  const today = moment().utcOffset("530").format("YYYY-MM-DD")
   const [loading, setLoading] = useState<boolean>(false)
   const [selectedDate, setSelectedDate] = useState<string>(moment().format("YYYY-MM-DD"))
   // const [selectedDate, setSelectedDate] = useState<string>("2021-07-27")
