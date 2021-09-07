@@ -21,7 +21,7 @@ const MainApp = () => {
   const dispatch = useDispatch()
   Appearance.set({ colorScheme: 'light' })
 
-  axios.defaults.baseURL = "https://uhgsmg1av7.execute-api.us-east-1.amazonaws.com/production";
+  axios.defaults.baseURL = "https://api.yoyolunchbox.in";
 
   const getJwtToken = async () => {
     const user = await Auth.currentAuthenticatedUser({ bypassCache: false })
