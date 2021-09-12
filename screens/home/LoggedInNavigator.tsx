@@ -1,5 +1,6 @@
 import _ from "lodash"
 import moment from "moment"
+import Constants from "expo-constants"
 import { Auth } from 'aws-amplify'
 import React, { useEffect } from 'react'
 import {
@@ -104,7 +105,7 @@ const LoggedInNavigator = (props) => {
     const fetchMenuDetails = async () => {
       const datesToFetch = []
       const today = moment().format("YYYY-MM-DD")
-      for(let i = 0; i < 3; i++) {
+      for(let i = 0; i < 7; i++) {
         datesToFetch.push(moment(today).add(i, 'd').format("YYYY-MM-DD"))
       }
       let menu = await api.getMenu(datesToFetch)
@@ -199,7 +200,7 @@ const CustomDrawerContent = (props) => {
             size={20}
             name="heart"
             color="red" />
-          <Text style={{ color: "#787878" }}> in India</Text>
+          <Text style={{ color: "#787878" }}> in India (v{Constants.manifest.extra?.jsPackageVersion})</Text>
         </View>
       </View>
     </View>

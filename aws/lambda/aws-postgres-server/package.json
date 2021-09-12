@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "async-retry": "1.3.3"
   },
   "devDependencies": {
     "serverless-offline": "^8.0.0"

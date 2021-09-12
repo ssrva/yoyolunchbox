@@ -1,3 +1,4 @@
+import _ from "lodash"
 import * as React from 'react'
 import moment from 'moment'
 import { useState } from 'react'
@@ -40,8 +41,12 @@ const styles = StyleSheet.create({
 const DateComponent = (props) => {
   const { onDateChange } = props
   const today = moment().utcOffset("530").format("YYYY-MM-DD")
-  // const today = "2021-07-27"
   const tomorrow = moment(today).add(1, 'd').format("YYYY-MM-DD")
+  const otherDates = []
+  _.range(2, 7).forEach(gap => {
+    otherDates.push(moment(today).add(gap, 'd').format("YYYY-MM-DD"))
+  });
+
   const dayAfter = moment(today).add(2, 'd').format("YYYY-MM-DD")
   const [selectedDate, setSelectedDate] = useState<string>(today)
 
@@ -55,6 +60,19 @@ const DateComponent = (props) => {
       ...styles.date,
       ...(date === selectedDate) ? styles.selectedDate : {}
     }
+  }
+
+  const allDatesDom = () => {
+    return otherDates.map(date => (
+      <TouchableWithoutFeedback onPress={() => setDate(date)}>
+        <View style={getDateContainerStyles(date)}>
+          <Text style={styles.title}>{moment(date).format("dddd")}</Text>
+          <Text style={styles.dateString}>
+            {moment(date).format("ddd DD, MMM")}
+          </Text>
+        </View>
+      </TouchableWithoutFeedback>
+    ))
   }
 
   return (
@@ -79,14 +97,7 @@ const DateComponent = (props) => {
             </Text>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => setDate(dayAfter)}>
-          <View style={getDateContainerStyles(dayAfter)}>
-            <Text style={styles.title}>{moment(dayAfter).format("dddd")}</Text>
-            <Text style={styles.dateString}>
-              {moment(dayAfter).format("ddd DD, MMM")}
-            </Text>
-          </View>
-        </TouchableWithoutFeedback>
+        {allDatesDom()}
       </ScrollView>
     </View>
   )

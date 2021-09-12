@@ -3,7 +3,10 @@
     "name": "YOYO Lunchbox",
     "slug": "yoyolunchbox",
     "owner": "mssrivathsan",
-    "version": "1.0.1",
+    "version": "1.0.2",
+    "extra": {
+      "jsPackageVersion": "1.0.3"
+    },
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -14,7 +17,7 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 5000
     },
     "assetBundlePatterns": [
       "**/*"
@@ -29,7 +32,7 @@
     },
     "android": {
       "package": "com.yoyolunchbox.app",
-      "versionCode": 6,
+      "versionCode": 7,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/ic_launcher_foreground.png",
         "backgroundColor": "#ffffff"

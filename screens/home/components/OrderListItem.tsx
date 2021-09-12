@@ -153,7 +153,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
   useEffect(() => {
     const getImage = async () => {
       let data = await getItemFromAsyncStorage(image)
-      if(!data) {
+      if(_.isNil(data)) {
         data = await api.getFoodimage(image)
         await putItemInAsyncStorage(image, data)
       }

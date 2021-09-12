@@ -27,7 +27,7 @@ const HomeScreen = (props) => {
   const fetchMenuDetails = async () => {
     const datesToFetch = []
     setLoading(true)
-    for(let i = 0; i < 3; i++) {
+    for(let i = 0; i < 7; i++) {
       datesToFetch.push(moment(today).add(i, 'd').format("YYYY-MM-DD"))
     }
     let menu = await api.getMenu(datesToFetch)
