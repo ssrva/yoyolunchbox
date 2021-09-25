@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "./HomeScreen"
 import Orders from "./Orders"
 import ProfileScreen from "./ProfileScreen"
+import AddMoneyScreen from "./AddMoneyScreen"
 import OrderConfirmation from "./OrderConfirmation";
 import { primaryColor } from "../../commonUtils"
 import { Text, View } from '../../components/Themed';
@@ -153,6 +154,14 @@ export const ProfileNavigator = () => {
   return (
     <Stack.Navigator screenOptions={headerOptions}>
       <Stack.Screen name="Profile" component={ProfileScreen} />
+    </Stack.Navigator>
+  );
+};
+
+export const AddMoneyNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={headerOptions}>
+      <Stack.Screen name="Add Money" component={AddMoneyScreen} />
     </Stack.Navigator>
   );
 };

@@ -46,3 +46,11 @@ export const placeOrder = async (username: string, charges: Object, orders: Obje
   const response = await axios.post("/orders", { username, charges, orders })
   return response.data
 }
+
+export const getCashfreeOrderToken = async (orderId: string, amount: string) => {
+  const response = await axios.post("/payments/order", {
+    id: orderId,
+    amount: amount
+  })
+  return response.data
+}

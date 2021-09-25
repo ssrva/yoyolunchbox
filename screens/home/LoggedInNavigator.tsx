@@ -16,7 +16,12 @@ import {
   createDrawerNavigator,
   DrawerItemList
 } from '@react-navigation/drawer'
-import { HomeNavigator, OrdersNavigator, ProfileNavigator } from "./StackNavigators"
+import {
+  HomeNavigator,
+  OrdersNavigator,
+  ProfileNavigator,
+  AddMoneyNavigator
+} from "./StackNavigators"
 import { useDispatch, useSelector } from 'react-redux';
 import { setMenu, setUser } from "../../store/actions"
 import * as api from "../../api"
@@ -145,6 +150,14 @@ const LoggedInNavigator = (props) => {
           ),
         }}
         component={ProfileNavigator} />
+      <Drawer.Screen
+        name="Add Money"
+        options={{
+          drawerIcon: ({focused, size}) => (
+            <Ionicons size={20} name="wallet" color={primaryColorDark} />
+          ),
+        }}
+        component={AddMoneyNavigator} />
     </Drawer.Navigator>
   );
 }
