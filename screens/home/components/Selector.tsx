@@ -11,6 +11,7 @@ type TSelectorProps = {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "white",
     alignSelf: "flex-start",
     display: "flex",
     justifyContent: "center",
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   countStyle: {
+    color: "black",
     padding: 5,
     fontWeight: "600",
   }

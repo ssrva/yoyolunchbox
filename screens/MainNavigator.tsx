@@ -1,22 +1,31 @@
 import _ from "lodash"
-import React, { useEffect } from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { primaryColorDark } from "../commonUtils"
-import firebase from "firebase/app"
 import { useDispatch, useSelector } from 'react-redux';
-import { setMenu } from '../store/actions';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import LoggedInNavigator from "./home/LoggedInNavigator"
 import Login from "./login/Login"
 
 const Stack = createStackNavigator();
 
+const MyTheme = {
+  ...DefaultTheme,
+  dark: false,
+  colors: {
+    primary: 'rgb(255, 45, 85)',
+    background: 'rgb(242, 242, 242)',
+    card: 'rgb(255, 255, 255)',
+    text: 'rgb(28, 28, 30)',
+    border: 'rgb(199, 199, 204)',
+    notification: 'rgb(255, 69, 58)',
+  },
+};
+
 const MainNavigator = (props) => {
   const user = useSelector(store => store.user)
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <Stack.Navigator screenOptions={{
         headerShown: false
       }}>
@@ -33,10 +42,6 @@ const MainNavigator = (props) => {
     </NavigationContainer>
   );
 };
-
-function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-}
 
 export default MainNavigator;
 

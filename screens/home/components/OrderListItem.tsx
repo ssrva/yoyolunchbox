@@ -45,9 +45,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     borderRadius: 5,
-    padding: 15
+    padding: 15,
+    backgroundColor: "white"
   },
   metadata: {
+    backgroundColor: "white",
     flex: 1,
     marginRight: 10,
   },
@@ -55,6 +57,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 16,
     marginBottom: 15,
+    color: "black"
   },
   image: {
     width: 100,
@@ -63,6 +66,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   description: {
+    color: "black",
     fontWeight: "500",
     marginBottom: 10,
     lineHeight: 20,
@@ -73,17 +77,21 @@ const styles = StyleSheet.create({
     color: COLORS.GRAY40,
   },
   selector: {
+    backgroundColor: "white",
     marginTop: 20,
   },
   totalPrice: {
+    color: "black",
     fontWeight: "bold",
     fontSize: 16,
   },
   tagsContainer: {
+    backgroundColor: "white",
     display: "flex",
     flexDirection: "row",
   },
   tag: {
+    color: "black",
     alignSelf: "flex-start",
     backgroundColor: "#D4F1CA",
     padding: 5,
@@ -180,7 +188,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
         <Text style={styles.title}>
           {title}
           {disabled && (
-            <Text> x {quantity}</Text>
+            <Text style={{ color: "black" }}> x {quantity}</Text>
           )}
         </Text>
         {disabled && (
@@ -204,7 +212,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
         )}
       </View>
       {!_.isNil(imageBase64) && (
-        <View>
+        <View style={{ backgroundColor: "white" }}>
           {grayOut && (
             <View style={{
               width: 100,

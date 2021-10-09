@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
 import * as api from "../../api"
 import { useSelector } from 'react-redux';
+import { secondaryColor } from "../../commonUtils";
 
 const styles = StyleSheet.create({
   container: {
@@ -39,6 +40,24 @@ const styles = StyleSheet.create({
   },
   credit: {
     color: "green"
+  },
+  addToWalletContainer: {
+    padding: 10,
+    marginBottom: 20,
+    borderRadius: 5,
+    backgroundColor: "white",
+    display: "flex",
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: secondaryColor,
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 10,
+    marginBottom: 10,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
   }
 })
 

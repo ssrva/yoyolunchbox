@@ -5,13 +5,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "./HomeScreen"
 import Orders from "./Orders"
 import ProfileScreen from "./ProfileScreen"
+import AddMoneyScreen from "./AddMoneyScreen"
 import OrderConfirmation from "./OrderConfirmation";
 import { primaryColor } from "../../commonUtils"
 import { Text, View } from '../../components/Themed';
 import { Ionicons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as api from "../../api"
 import Transactions from "./Transactions"
+import { setBalance } from '../../store/actions'
 
 const Stack = createStackNavigator()
 const Tab = createMaterialTopTabNavigator()
@@ -23,11 +25,13 @@ const styles = StyleSheet.create({
   headerAddress: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: "white"
   },
   locationText: {
     fontSize: 18,
-    textDecorationLine: "underline"
+    textDecorationLine: "underline",
+    color: "black"
   },
   wallet: {
     backgroundColor: "#C4C4C4",
@@ -41,12 +45,14 @@ const styles = StyleSheet.create({
 
 const WalletBalanceComponent = (props) => {
   const { navigation } = props
+  const balance = useSelector(store => store.balance)
   const username = useSelector(store => store.user?.username)
-  const [balance, setBalance] = useState<Number>(0)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const getBalance = async () => {
       const balance = await api.getUserWalletBalance(username)
+      dispatch(setBalance({ balance: balance?.balance || 0 }))
       setBalance(balance?.balance)
     }
     getBalance()
@@ -60,7 +66,7 @@ const WalletBalanceComponent = (props) => {
           name="wallet"
           style={{ marginRight: 10 }}
           color={"black"} />
-        <Text style={{ fontWeight: "bold" }}>{'\u20B9'}{balance}</Text>
+        <Text style={{ fontWeight: "bold", color: "black" }}>{'\u20B9'}{balance}</Text>
       </View>
     </TouchableWithoutFeedback>
   )
@@ -153,6 +159,14 @@ export const ProfileNavigator = () => {
   return (
     <Stack.Navigator screenOptions={headerOptions}>
       <Stack.Screen name="Profile" component={ProfileScreen} />
+    </Stack.Navigator>
+  );
+};
+
+export const AddMoneyNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={headerOptions}>
+      <Stack.Screen name="Add Money" component={AddMoneyScreen} />
     </Stack.Navigator>
   );
 };

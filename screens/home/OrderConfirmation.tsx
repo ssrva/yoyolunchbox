@@ -18,18 +18,21 @@ type TOrderConfirmationProps = {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "white",
     flex: 1,
     display: "flex",
     paddingTop: 0,
     padding: 15,
   },
   title: {
+    color: "black",
     marginBottom: 0,
     fontWeight: "600",
     fontSize: 18,
     backgroundColor: "white",
   },
   billDetailsContainer: {
+    backgroundColor: "white",
     marginTop: 10,
     marginBottom: 10,
     borderWidth: 1,
@@ -45,6 +48,7 @@ const styles = StyleSheet.create({
     padding: 15
   },
   billTitle: {
+    color: "black",
     fontSize: 15,
     textTransform: "uppercase",
     paddingBottom: 5,
@@ -53,10 +57,12 @@ const styles = StyleSheet.create({
     borderColor: "#D1D1D1"
   },
   tableContainer: {
+    backgroundColor: "white",
     display: "flex",
     flexDirection: "column"
   },
   tableRow: {
+    backgroundColor: "white",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -112,7 +118,7 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: "white" }}>
         <Text style={styles.title}>Order Summary</Text>
         <FlatList
           style={{flex: 1}}
@@ -133,8 +139,8 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
           <Text style={styles.billTitle}>Bill Details</Text>
           <View style={styles.tableContainer}>
             <View style={styles.tableRow}>
-              <Text style={{ fontWeight: "bold" }}>Item Total</Text>
-              <Text>{'\u20B9'}{itemTotalPrice}</Text>
+              <Text style={{ fontWeight: "bold", color: "black" }}>Item Total</Text>
+              <Text style={{ color: "black" }}>{'\u20B9'}{itemTotalPrice}</Text>
             </View>
             {/* <View style={styles.tableRow}>
               <Text style={{ fontWeight: "bold" }}>Packing charges</Text>
@@ -145,8 +151,8 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
               <Text>{'\u20B9'}40</Text>
             </View> */}
             <View style={{...styles.tableRow, ...styles.lastRow}}>
-              <Text style={{ fontWeight: "bold" }}>Total</Text>
-              <Text>{'\u20B9'}{itemTotalPrice}</Text>
+              <Text style={{ fontWeight: "bold", color: "black" }}>Total</Text>
+              <Text style={{ color: "black" }}>{'\u20B9'}{itemTotalPrice}</Text>
             </View>
           </View>
         </View>

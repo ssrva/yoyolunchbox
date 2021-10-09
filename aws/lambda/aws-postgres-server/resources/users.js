@@ -87,10 +87,11 @@ module.exports.addTransaction = async (event) => {
 }
 
 module.exports.updateUser = async (event) => {
-  const { username, address, coordinates } = JSON.parse(event.body)
+  const { username, address, meal_preference, coordinates } = JSON.parse(event.body)
   const query = `
     UPDATE users
     SET address = '${address}',
+        meal_preference = '${meal_preference}',
         coordinates = '${JSON.stringify(coordinates)}'::jsonb
     WHERE username = '${username}'
   `

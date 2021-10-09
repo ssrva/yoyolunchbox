@@ -9,11 +9,11 @@ import useCachedResources from './hooks/useCachedResources'
 import { Auth } from 'aws-amplify'
 import MainNavigator from "./screens/MainNavigator"
 import reducer from "./store/reducer"
-import { setUser } from './store/actions'
-import { Appearance } from "react-native-appearance"
+import { setUser, setUserPreferences } from './store/actions'
 import * as eva from '@eva-design/eva'
 import { Text } from "react-native"
 import { ApplicationProvider } from '@ui-kitten/components'
+import { Appearance, AppearanceProvider } from 'react-native-appearance';
 
 const MainApp = () => {
   const isLoadingComplete = useCachedResources()

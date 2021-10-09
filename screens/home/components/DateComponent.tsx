@@ -30,11 +30,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     marginBottom: 10,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "black"
   },
   dateString: {
     fontSize: 15,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "black"
   }
 })
 
@@ -78,7 +80,7 @@ const DateComponent = (props) => {
   return (
     <View style={styles.container}>
       <ScrollView
-        style={{ paddingBottom: 10 }}
+        style={{ paddingBottom: 10, backgroundColor: "white" }}
         showsHorizontalScrollIndicator={false} 
         horizontal>
         <TouchableWithoutFeedback onPress={() => setDate(today)}>

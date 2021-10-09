@@ -32,8 +32,11 @@ export const getUserOrders = async (
   return response.data
 }
 
-export const getMenu = async (dates: string[]) => {
-  const response = await axios.post("/menu", { dates: dates.join(",") })
+export const getMenu = async (username: string, dates: string[]) => {
+  const response = await axios.post("/menu", {
+    username,
+    dates: dates.join(","),
+  })
   return response.data
 }
 
@@ -44,5 +47,24 @@ export const getFoodimage = async (imageKey: string) => {
 
 export const placeOrder = async (username: string, charges: Object, orders: Object[]) => {
   const response = await axios.post("/orders", { username, charges, orders })
+  return response.data
+}
+
+export const getCashfreeOrderToken = async (orderId: string, amount: string) => {
+  const response = await axios.post("/payments/order", {
+    id: orderId,
+    amount: amount
+  })
+  return response.data
+}
+
+export const updateUserWalletBalance = async (
+  username: string,
+  amount: string,
+  metadata: Object
+) => {
+  const response = await axios.post("/payments/user/wallet", {
+    username, amount, metadata
+  })
   return response.data
 }

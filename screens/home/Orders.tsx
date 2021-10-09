@@ -13,6 +13,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "white",
     padding: 10,
     flex: 1,
     display: "flex",

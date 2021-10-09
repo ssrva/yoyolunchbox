@@ -3,27 +3,43 @@ const { dbClient } = require("./database-client")
 const client = dbClient()
 
 module.exports.getMenu = async (event) => {
-  const { dates } = JSON.parse(event.body)
-  const query = `
-    SELECT menu.id,
-           menu.date,
-           menu.type,
-           menu.title,
-           menu.description,
-           menu.price,
-           menu.image
-    FROM menu
-    WHERE date = ANY('{${dates}}');
+  const { dates, username } = JSON.parse(event.body)
+
+  const mealPreferenceQuery = `
+    SELECT meal_preference
+    FROM   users
+    WHERE  username = '${username}'
   `
 
   try {
-    const res = await client.query(query)
+    const mealPreferenceResult = await client.query(mealPreferenceQuery)
+    const mealPreference = mealPreferenceResult.rows[0].meal_preference
+
+    let foodTypeFilter = "ANY('{veg, non-veg, egg}')";
+    if (mealPreference === "veg") {
+      foodTypeFilter = "ANY('{veg}')";
+    } else if (mealPreference === "egg") {
+      foodTypeFilter = "ANY('{veg, egg}')";
+    }
+    const query = `
+      SELECT menu.id,
+            menu.date,
+            menu.type,
+            menu.title,
+            menu.description,
+            menu.price,
+            menu.image
+      FROM menu
+      WHERE date = ANY('{${dates}}')
+      AND   food_type = ${foodTypeFilter};
+    `
+    const menuResults = await client.query(query)
     return {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify(res.rows)
+      body: JSON.stringify(menuResults.rows)
     }
   } catch(e) {
     console.error(e.message)
@@ -38,14 +54,14 @@ module.exports.getMenu = async (event) => {
 }
 
 module.exports.addMenu = async (event) => {
-  const { date, title, description, image, price, type } = JSON.parse(event.body)
+  const { date, title, description, image, price, type, food_type } = JSON.parse(event.body)
   const query = `
     INSERT INTO
     menu (
-      date, title, description, image, price, type
+      date, title, description, image, price, type, food_type
     )
     VALUES (
-      '${date}', '${title}', '${description}', '${image}', ${price}, '${type}'
+      '${date}', '${title}', '${description}', '${image}', ${price}, '${type}', '${food_type}'
     )
   `
 

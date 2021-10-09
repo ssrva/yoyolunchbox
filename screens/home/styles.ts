@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     paddingTop: 0,
     padding: 15,
     flex: 1,
+    backgroundColor: "white"
   },
   headerWelcome: {
     fontSize: 18,
@@ -31,14 +32,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   ordersPageMainView: {
+    backgroundColor: "white",
     flex: 1,
   },
   ordersContainer: {
+    backgroundColor: "white",
     flex: 1,
     marginTop: 20,
     display: "flex",
   },
   sectionHeader: {
+    color: "black",
     fontWeight: "600",
     fontSize: 18,
     padding: 10,
@@ -64,6 +68,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   footer: {
+    backgroundColor: "white",
     borderTopColor: "#F1F1F1",
     borderTopWidth: 1,
     paddingTop: 10,

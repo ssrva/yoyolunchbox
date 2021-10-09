@@ -12,38 +12,45 @@ import { Text, View } from '../../components/Themed'
 import { notifyMessage, primaryColor } from "../../commonUtils"
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { Input } from '@ui-kitten/components';
+import { Input, RadioGroup, Radio } from '@ui-kitten/components';
 import commonStyles from "./styles"
 import * as api from "../../api"
 import moment from 'moment'
 import * as Location from 'expo-location'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "white",
     padding: 20,
     flex: 1,
     display: "flex",
   },
   label: {
+    color: "black",
     marginBottom: 10,
     fontWeight: "bold"
   },
   title: {
+    color: "black",
     fontWeight: "bold",
     fontSize: 24,
     marginBottom: 10,
   },
   profileMetadata: {
+    backgroundColor: "white",
     display: "flex",
     justifyContent: "center",
   },
   formElements: {
+    backgroundColor: "white",
     flex: 1,
   },
   input: {
     marginBottom: 20,
   },
   header: {
+    backgroundColor: "white",
     display: "flex",
     flexDirection: "row",
     marginBottom: 20,
@@ -64,6 +71,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   profileMetadataText: {
+    color: "black",
     fontStyle: "italic"
   },
   logoutButton: {
@@ -72,7 +80,7 @@ const styles = StyleSheet.create({
     backgroundColor: primaryColor,
   },
   mapContainer: {
-    flex: 1,
+    height: 300,
     backgroundColor: '#fff',
     marginBottom: 20,
   },
@@ -82,6 +90,12 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 1,
     borderRadius: 4
+  },
+  mealPreferenceContainer: {
+    marginBottom: 20,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
   }
 })
 
@@ -91,6 +105,7 @@ const ProfileScreen = (props) => {
   const [name, setName] = useState<string>(user.attributes?.name || "")
   const [address, setAddress] = useState<string>("")
   const [createdOn, setCreatedOn] = useState<string>()
+  const [mealPreferenceIndex, setMealPreferenceIndex] = useState<number>(3)
   const [userCoordinates, setUserCoordinates] = useState<Object>({
     latitude: 13.067439, longitude: 80.237617
   })
@@ -124,6 +139,7 @@ const ProfileScreen = (props) => {
       } else {
         setUserCoordinates(details.coordinates)
       }
+      setMealPreferenceIndex(mealPreferenceToIndex(details.meal_preference))
     }
     fetchProfileData()
   }, [])
@@ -133,6 +149,7 @@ const ProfileScreen = (props) => {
       coordinates: userCoordinates,
       address: address,
       phone: user.attributes.phone_number,
+      meal_preference: indexToMealPreference(mealPreferenceIndex)
     }
     setLoading(true)
     try {
@@ -146,14 +163,29 @@ const ProfileScreen = (props) => {
     }
   }
 
+  const mealPreferenceToIndex = (mealPreference) => {
+    if (mealPreference === "all") {
+      return 0;
+    } else if (mealPreference === "veg") {
+      return 1;
+    } else {
+      return 2;
+    }
+  }
+
+  const indexToMealPreference = (index) => {
+    if (index == 0) {
+      return "all";
+    } else if (index == 1) {
+      return "veg";
+    } else {
+      return "egg"
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.profilePictureContainer}>
-          <Image
-            style={styles.profilePicture}
-            source={require("../../static/images/logo.png")} />
-        </View>
         <View style={styles.profileMetadata}>
           <Text style={styles.title}>{name}</Text>
           {createdOn && (
@@ -164,45 +196,58 @@ const ProfileScreen = (props) => {
         </View>
       </View>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.formElements}>
-          <Text style={styles.label}>
-            Address
-          </Text>
-          <Input
-            value={address}
-            textStyle={{ height: 100 }}
-            multiline
-            numberOfLines={4}
-            style={styles.input}
-            onChangeText={setAddress} />
-          <Text style={styles.label}>
-            Choose Location on Map
-          </Text>
-          <View style={styles.mapContainer}>
-            <MapView
-              provider={PROVIDER_GOOGLE}
-              region={{
-                latitude: userCoordinates.latitude,
-                longitude: userCoordinates.longitude,
-                latitudeDelta: 0.001,
-                longitudeDelta: 0.001,
-              }}
-              onPress={(coordinates) => {
-                setUserCoordinates({
-                  latitude: coordinates.nativeEvent.coordinate.latitude,
-                  longitude: coordinates.nativeEvent.coordinate.longitude
-                })
-              }}
-              style={styles.map}>
-              <Marker
-                coordinate={{
-                  latitude : userCoordinates.latitude ,
-                  longitude : userCoordinates.longitude
+        <ScrollView>
+          <View style={styles.formElements}>
+            <Text style={styles.label}>
+              Address
+            </Text>
+            <Input
+              value={address}
+              textStyle={{ height: 100 }}
+              multiline
+              numberOfLines={4}
+              style={styles.input}
+              onChangeText={setAddress} />
+            <Text style={styles.label}>
+              Meal Preference
+            </Text>
+            <RadioGroup
+              style={styles.mealPreferenceContainer}
+              onChange={setMealPreferenceIndex}
+              selectedIndex={mealPreferenceIndex}>
+              <Radio>All (Non Veg)</Radio>
+              <Radio>Veg</Radio>
+              <Radio>Egg</Radio>
+            </RadioGroup>
+            <Text style={styles.label}>
+              Choose Location on Map
+            </Text>
+            <View style={styles.mapContainer}>
+              <MapView
+                provider={PROVIDER_GOOGLE}
+                region={{
+                  latitude: userCoordinates.latitude,
+                  longitude: userCoordinates.longitude,
+                  latitudeDelta: 0.001,
+                  longitudeDelta: 0.001,
                 }}
-                title="User Location"/>
-            </MapView>
+                onPress={(coordinates) => {
+                  setUserCoordinates({
+                    latitude: coordinates.nativeEvent.coordinate.latitude,
+                    longitude: coordinates.nativeEvent.coordinate.longitude
+                  })
+                }}
+                style={styles.map}>
+                <Marker
+                  coordinate={{
+                    latitude : userCoordinates.latitude ,
+                    longitude : userCoordinates.longitude
+                  }}
+                  title="User Location"/>
+              </MapView>
+            </View>
           </View>
-        </View>
+        </ScrollView>
       </TouchableWithoutFeedback>
       <TouchableOpacity
         disabled={loading}

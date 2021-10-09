@@ -34,3 +34,9 @@ and beta is used for testing purposes. For any code changes related to beta, ple
     - `expo publish --release-channel production` for publishing to prod. (NOTE - This will push directly to production customer's phones. Be careful while running this).
     - `expo build:android --release-channel production` or `expo build:ios --release-channel production` to build bundles for android or ios. This is needed to publish updates to the respective stores.
     - `expo build:android -t apk --release-channel production` to build an APK file.
+
+- To build local debug apk follow the steps below
+    - Run this command to generate JS bundle used in debug apk `npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res`
+    - Make sure you create assets folder in `android/app/src/main/` before running above command
+    - cd into android folder and run `./gradlew assembleDebug` to generate the APK.
+    - Generated apk can be found in `android/app/build/outputs/apk`

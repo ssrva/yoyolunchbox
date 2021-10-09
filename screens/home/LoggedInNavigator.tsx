@@ -16,11 +16,17 @@ import {
   createDrawerNavigator,
   DrawerItemList
 } from '@react-navigation/drawer'
-import { HomeNavigator, OrdersNavigator, ProfileNavigator } from "./StackNavigators"
+import {
+  HomeNavigator,
+  OrdersNavigator,
+  ProfileNavigator,
+  AddMoneyNavigator
+} from "./StackNavigators"
 import { useDispatch, useSelector } from 'react-redux';
-import { setMenu, setUser } from "../../store/actions"
+import { setMenu, setUser, setUserPreferences } from "../../store/actions"
 import * as api from "../../api"
 import { primaryColor, primaryColorDark } from "../../commonUtils"
+import { AppearanceProvider } from "react-native-appearance"
 
 const Drawer = createDrawerNavigator()
 
@@ -108,7 +114,7 @@ const LoggedInNavigator = (props) => {
       for(let i = 0; i < 7; i++) {
         datesToFetch.push(moment(today).add(i, 'd').format("YYYY-MM-DD"))
       }
-      let menu = await api.getMenu(datesToFetch)
+      let menu = await api.getMenu(user.username, datesToFetch)
       menu = _.groupBy(menu, "date")
       dispatch(setMenu({ menu: menu }))
     }
@@ -116,36 +122,46 @@ const LoggedInNavigator = (props) => {
   }, [])
 
   return (
-    <Drawer.Navigator
-      initialRouteName="Home"
-      drawerContent={(props) => (
-        <CustomDrawerContent {...props} user={user} logout={logout} />
-      )}>
-      <Drawer.Screen
-        name="Home"
-        options={{
-          drawerIcon: ({focused, size}) => (
-            <Ionicons size={20} name="home" color={primaryColorDark} />
-          ),
-        }}
-        component={HomeNavigator} />
-      <Drawer.Screen
-        name="Orders"
-        options={{
-          drawerIcon: ({focused, size}) => (
-            <Ionicons size={20} name="cart" color={primaryColorDark} />
-          ),
-        }}
-        component={OrdersNavigator} />
-      <Drawer.Screen
-        name="Profile"
-        options={{
-          drawerIcon: ({focused, size}) => (
-            <Ionicons size={20} name="person" color={primaryColorDark} />
-          ),
-        }}
-        component={ProfileNavigator} />
-    </Drawer.Navigator>
+    <AppearanceProvider>
+      <Drawer.Navigator
+        initialRouteName="Home"
+        drawerContent={(props) => (
+          <CustomDrawerContent {...props} user={user} logout={logout} />
+        )}>
+        <Drawer.Screen
+          name="Home"
+          options={{
+            drawerIcon: ({focused, size}) => (
+              <Ionicons size={20} name="home" color={primaryColorDark} />
+            ),
+          }}
+          component={HomeNavigator} />
+        <Drawer.Screen
+          name="Orders"
+          options={{
+            drawerIcon: ({focused, size}) => (
+              <Ionicons size={20} name="cart" color={primaryColorDark} />
+            ),
+          }}
+          component={OrdersNavigator} />
+        <Drawer.Screen
+          name="Profile"
+          options={{
+            drawerIcon: ({focused, size}) => (
+              <Ionicons size={20} name="person" color={primaryColorDark} />
+            ),
+          }}
+          component={ProfileNavigator} />
+        <Drawer.Screen
+          name="Add Money"
+          options={{
+            drawerIcon: ({focused, size}) => (
+              <Ionicons size={20} name="wallet" color={primaryColorDark} />
+            ),
+          }}
+          component={AddMoneyNavigator} />
+      </Drawer.Navigator>
+    </AppearanceProvider>
   );
 }
 

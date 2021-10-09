@@ -16,6 +16,7 @@ const HomeScreen = (props) => {
   const { navigation } = props
   const dispatch = useDispatch()
   const menu = useSelector(store => store.menu)
+  const username = useSelector(store => store.user.username)
   const user = useSelector(store => store.user.attributes)
   const today = moment().utcOffset("530").format("YYYY-MM-DD")
   const [loading, setLoading] = useState<boolean>(false)
@@ -23,14 +24,14 @@ const HomeScreen = (props) => {
   // const [selectedDate, setSelectedDate] = useState<string>("2021-07-27")
   const [orders, setOrders] = useState<Object>({})
   const selectedMenu = (menu && _.groupBy(menu[selectedDate], "type")) || {}
-
+  
   const fetchMenuDetails = async () => {
     const datesToFetch = []
     setLoading(true)
     for(let i = 0; i < 7; i++) {
       datesToFetch.push(moment(today).add(i, 'd').format("YYYY-MM-DD"))
     }
-    let menu = await api.getMenu(datesToFetch)
+    let menu = await api.getMenu(username, datesToFetch)
     menu = _.groupBy(menu, "date")
     dispatch(setMenu({ menu: menu }))
     setLoading(false)
@@ -75,19 +76,19 @@ const HomeScreen = (props) => {
   return (
     <View style={styles.mainViewStyle}>
       <View style={styles.ordersPageMainView}>
-        <View>
+        <View style={{ backgroundColor: "white" }}>
           <Text style={styles.headerWelcome}>
-            <Text style={{ fontFamily: "helvetica-neue" }}>Welcome </Text>
-            <Text style={{ fontFamily: "helvetica-neue-bold" }}>{user?.name}!</Text>
+            <Text style={{ fontFamily: "helvetica-neue", color: "black" }}>Welcome </Text>
+            <Text style={{ fontFamily: "helvetica-neue-bold", color: "black" }}>{user?.name}!</Text>
           </Text>
           <Text style={styles.headerWelcome}>
-            <Text style={{ fontFamily: "helvetica-neue-light" }}>What would you like to order?</Text>
+            <Text style={{ fontFamily: "helvetica-neue-light", color: "black" }}>What would you like to order?</Text>
           </Text>
         </View>
         <DateComponent onDateChange={setSelectedDate} />
         <View style={styles.ordersContainer}>
           {(_.isNil(selectedMenu) || _.isEmpty(selectedMenu)) ? (
-            <Text style={{ padding: 20 }}>
+            <Text style={{ padding: 20, color: "black" }}>
               Menu not yet available for this date :(
             </Text>
           ) : (

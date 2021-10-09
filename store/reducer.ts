@@ -17,6 +17,11 @@ const storeReducer = (state = initialState, action) => {
         ...state,
         menu: payload.menu,
       }
+    case actions.setBalance.toString():
+      return {
+        ...state,
+        balance: payload.balance,
+      }
   }
   return state
 }

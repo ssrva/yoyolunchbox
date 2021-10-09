@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain"
   },
   tagline: {
+    color: "black",
     fontWeight: "600",
     fontSize: 16,
   },
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
     zIndex: 21,
   },
   topBackground: {
+    backgroundColor: "white",
     position: "absolute",
     top: -1200,
     left: -550,
