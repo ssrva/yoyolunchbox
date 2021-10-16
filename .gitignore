@@ -91,4 +91,10 @@ buck-out/
 .expo/
 web-build/
 
+# Gradle
+android/wrapper/dists/*
+android/caches/*
+android/daemon/*
+android/native/*
+
 # @end expo-cli

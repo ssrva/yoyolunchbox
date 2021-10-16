@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     color: "#721C24"
   },
   grayOutDescription: {
+    backgroundColor: "white",
     borderWidth: 1,
     borderColor: "#D1D1D1",
     borderRadius: 5,

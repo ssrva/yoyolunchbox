@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     padding: 10,
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "column"
   },
   messageBoxRed: {
     backgroundColor: "#F8D7DA",
@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   },
   offerTitle: {
     fontWeight: "bold",
-    marginBottom: 10,
     fontSize: 16
   },
   button: {
@@ -187,17 +186,20 @@ const AddMoneyComponent = (props) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.messageBoxGreen}>
-            <Ionicons
-              size={35}
-              style={{ marginRight: 15 }}
-              name="pricetags-outline"
-              color={"black"} />
-            <View style={{ maxWidth: "95%" }}>
+            <View style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center" }}>
+              <Ionicons
+                size={30}
+                style={{ marginRight: 15 }}
+                name="pricetags-outline"
+                color={"black"} />
               <Text style={styles.offerTitle}>Limited Time Offer!</Text>
-              <Text>
-                Recharge over Rs. 3000 to get a 10% cashback added to your YOYO wallet
-              </Text>
             </View>
+            <Text>
+              Recharge over Rs. 3000 to get a 10% cashback added to your YOYO wallet
+            </Text>
           </View>
           <View style={styles.innerContainer}>
             <View style={{ flex: 1 }}>

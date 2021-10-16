@@ -12,15 +12,20 @@ module.exports.getMenu = async (event) => {
   `
 
   try {
-    const mealPreferenceResult = await client.query(mealPreferenceQuery)
-    const mealPreference = mealPreferenceResult.rows[0].meal_preference
 
     let foodTypeFilter = "ANY('{veg, non-veg, egg}')";
-    if (mealPreference === "veg") {
-      foodTypeFilter = "ANY('{veg}')";
-    } else if (mealPreference === "egg") {
-      foodTypeFilter = "ANY('{veg, egg}')";
+
+    if(username) {
+      const mealPreferenceResult = await client.query(mealPreferenceQuery)
+      const mealPreference = mealPreferenceResult.rows[0].meal_preference
+      
+      if (mealPreference === "veg") {
+        foodTypeFilter = "ANY('{veg}')";
+      } else if (mealPreference === "egg") {
+        foodTypeFilter = "ANY('{veg, egg}')";
+      }
     }
+
     const query = `
       SELECT menu.id,
             menu.date,

@@ -137,8 +137,8 @@ android {
         applicationId 'com.yoyolunchbox.app'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.0.2"
+        versionCode 8
+        versionName "1.0.4"
     }
     splits {
         abi {
@@ -155,6 +155,16 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file(YOYOLUNCHBOX_UPLOAD_STORE_FILE)
+            storePassword YOYOLUNCHBOX_UPLOAD_STORE_PASSWORD
+            keyAlias 'QG1zc3JpdmF0aHNhbi95b3lvbHVuY2hib3g='
+            keyPassword YOYOLUNCHBOX_UPLOAD_KEY_PASSWORD
+            // storeFile file('your_key_name.keystore')
+            // storePassword System.console().readLine("\nKeystore password:")
+            // keyAlias System.console().readLine("\nAlias: ")
+            // keyPassword System.console().readLine("\Alias password: ")
+        }
     }
     buildTypes {
         debug {
@@ -163,7 +173,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }

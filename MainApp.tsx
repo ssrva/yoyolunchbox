@@ -14,6 +14,7 @@ import * as eva from '@eva-design/eva'
 import { Text } from "react-native"
 import { ApplicationProvider } from '@ui-kitten/components'
 import { Appearance, AppearanceProvider } from 'react-native-appearance';
+import * as Updates from 'expo-updates';
 
 const MainApp = () => {
   const isLoadingComplete = useCachedResources()
@@ -37,8 +38,24 @@ const MainApp = () => {
     return Promise.reject(error)
   })
 
+  const checkJsBundleUpdate = async () => {
+    try {
+      console.log("YOYO Lunchbox JS Bundle update available")
+      const update = await Updates.checkForUpdateAsync();
+      console.log(update)
+      if (update.isAvailable) {
+        console.log("YOYO Lunchbox JS Bundle update available")
+        await Updates.fetchUpdateAsync();
+        Updates.reloadAsync();
+      }
+    } catch (e) {
+      // handle or log error
+    }
+  }
+
   useEffect(() => {
     const fetchUserData = async () => {
+      console.log("Fetching user data");
       setLoading(true)
       try {
         const user = await Auth.currentAuthenticatedUser({ bypassCache: false })
@@ -49,6 +66,7 @@ const MainApp = () => {
       setLoading(false)
     }
     fetchUserData()
+    checkJsBundleUpdate()
   }, [])
 
   if (loading || !isLoadingComplete) {

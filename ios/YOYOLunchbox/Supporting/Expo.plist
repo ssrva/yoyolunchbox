@@ -12,5 +12,7 @@
     <string>ALWAYS</string>
     <key>EXUpdatesLaunchWaitMs</key>
     <integer>5000</integer>
+    <key>EXUpdatesReleaseChannel</key>
+    <string>production</string>
   </dict>
 </plist>
