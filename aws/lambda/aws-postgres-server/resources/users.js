@@ -199,7 +199,7 @@ module.exports.getUserTransactions = async (event) => {
 
 module.exports.getAllUsers = async (event) => {
   const query = `
-    SELECT * FROM users
+    SELECT * FROM users ORDER BY id DESC
   `
 
   try {
@@ -210,6 +210,36 @@ module.exports.getAllUsers = async (event) => {
         'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify(res.rows)
+    }
+  } catch(e) {
+    console.error(e.message)
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: e.message
+    }
+  }
+}
+
+module.exports.adminUpdateUser = async (event) => {
+  const { username, address, meal_preference, coordinates } = JSON.parse(event.body)
+  const query = `
+    UPDATE users
+    SET address = '${address}',
+        meal_preference = '${meal_preference}',
+        coordinates = '${JSON.stringify(coordinates)}'::jsonb
+    WHERE username = '${username}'
+  `
+  try {
+    await client.query(query)
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: "User updated successfully"
     }
   } catch(e) {
     console.error(e.message)

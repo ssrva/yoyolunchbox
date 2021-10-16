@@ -203,6 +203,17 @@ functions:
           authorizer:
             arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_tWF6ouNKB
 
+  adminUpdateUser:
+    handler: resources/users.adminUpdateUser
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          path: /admin/user/{username}
+          cors: true
+          method: put
+          authorizer:
+            arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_tWF6ouNKB
+
   adminAddUserTransaction:
     handler: resources/users.addTransaction
     vpc: ${self:custom.vpc}
