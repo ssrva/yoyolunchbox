@@ -90,13 +90,13 @@ module.exports.updateUser = async (event) => {
   const { username, address, meal_preference, coordinates } = JSON.parse(event.body)
   const query = `
     UPDATE users
-    SET address = '${address}',
-        meal_preference = '${meal_preference}',
+    SET address = $1,
+        meal_preference = $2,
         coordinates = '${JSON.stringify(coordinates)}'::jsonb
     WHERE username = '${username}'
   `
   try {
-    await client.query(query)
+    await client.query(query, [address, meal_preference])
     return {
       statusCode: 200,
       body: "User updated successfully"
@@ -227,13 +227,13 @@ module.exports.adminUpdateUser = async (event) => {
   const { username, address, meal_preference, coordinates } = JSON.parse(event.body)
   const query = `
     UPDATE users
-    SET address = '${address}',
-        meal_preference = '${meal_preference}',
+    SET address = $1,
+        meal_preference = $2,
         coordinates = '${JSON.stringify(coordinates)}'::jsonb
     WHERE username = '${username}'
   `
   try {
-    await client.query(query)
+    await client.query(query, [address, meal_preference])
     return {
       statusCode: 200,
       headers: {

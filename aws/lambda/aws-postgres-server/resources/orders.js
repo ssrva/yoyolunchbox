@@ -115,6 +115,7 @@ module.exports.getOrders = async (event) => {
   const getOrdersQuery = `
     SELECT orders.id,  
            orders.quantity,
+           orders.created_on,
            users.name,
            orders.username,
            orders.status,
