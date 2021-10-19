@@ -40,7 +40,7 @@ const HomeScreen = (props) => {
   const menuData = () => {
     const result = []
     if (_.isNil(selectedMenu) || _.isEmpty(selectedMenu)) return []
-    const currentHour = parseInt(moment().format("HH"))
+    const currentHour = parseInt(moment().utcOffset("530").format("HH"))
 
     result.push({
       title: "Lunch",
