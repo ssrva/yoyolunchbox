@@ -33,10 +33,12 @@ module.exports.getMenu = async (event) => {
             menu.title,
             menu.description,
             menu.price,
-            menu.image
+            menu.image,
+            menu.food_type
       FROM menu
       WHERE date = ANY('{${dates}}')
-      AND   food_type = ${foodTypeFilter};
+      AND   food_type = ${foodTypeFilter}
+      ORDER BY menu.id DESC;
     `
     const menuResults = await client.query(query)
     return {
@@ -78,6 +80,40 @@ module.exports.addMenu = async (event) => {
         'Access-Control-Allow-Origin': '*'
       },
       body: "Menu added"
+    }
+  } catch(e) {
+    console.error(e.message)
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: e.message
+    }
+  }
+}
+
+module.exports.editMenu = async (event) => {
+  const { id, title, description, image, food_type, type, date } = JSON.parse(event.body)
+  const query = `
+    UPDATE menu SET
+    title = '${title}',
+    description = '${description}',
+    image = '${image}',
+    food_type = '${food_type}',
+    type = '${type}',
+    date = '${date}'
+    WHERE id = ${id}
+  `
+
+  try {
+    await client.query(query)
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: "Menu updated"
     }
   } catch(e) {
     console.error(e.message)

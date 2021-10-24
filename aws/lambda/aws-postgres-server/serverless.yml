@@ -181,6 +181,17 @@ functions:
           authorizer:
             arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_tWF6ouNKB
 
+  adminEditMenu:
+    handler: resources/menu.editMenu
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          path: /admin/menu/edit
+          cors: true
+          method: post
+          authorizer:
+            arn: arn:aws:cognito-idp:us-east-1:321082332978:userpool/us-east-1_tWF6ouNKB
+
   adminDeleteMenu:
     handler: resources/menu.deleteMenu
     vpc: ${self:custom.vpc}
