@@ -5,7 +5,7 @@
     "owner": "mssrivathsan",
     "version": "1.0.2",
     "extra": {
-      "jsPackageVersion": "1.0.5"
+      "jsPackageVersion": "1.0.6"
     },
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -53,6 +53,18 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "yoyo-lunchbox",
+            "project": "yoyo-lunchbox",
+            "authToken": "f8b9d5acfc354c0cb315d162c44bbfbc1bb02030b82c405c9bf1852cae220c28"
+          }
+        }
+      ]
     }
   }
 }

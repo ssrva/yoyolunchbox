@@ -12,6 +12,7 @@ import { notifyMessage, secondaryColor } from "../../commonUtils";
 import RNPgReactNativeSdk from "react-native-pg-react-native-sdk/bridge";
 import Spinner from "./components/Spinner"
 import { setBalance } from "../../store/actions"
+import * as Sentry from "@sentry/browser"
 
 const styles = StyleSheet.create({
   container: {
@@ -152,7 +153,7 @@ const AddMoneyComponent = (props) => {
       }
       fetchNewBalance()
     } catch (error) {
-      console.log(error.message)
+      Sentry.captureException(error)
       setResponseMessageStyle("messageBoxRed")
       setResponseMessage("Transaction failed. Please contact YOYO Lunchbox team if you think this is a mistake.")
     }

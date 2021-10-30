@@ -18,6 +18,7 @@ import * as api from "../../api"
 import moment from 'moment'
 import * as Location from 'expo-location'
 import { ScrollView } from 'react-native-gesture-handler'
+import * as Sentry from "@sentry/browser";
 
 const styles = StyleSheet.create({
   container: {
@@ -156,7 +157,8 @@ const ProfileScreen = (props) => {
       await api.updateUserDetails(user.username, details)
       notifyMessage("Updated user successfully")
     } catch (e) {
-      console.log(e.message)
+      Sentry.captureException(e)
+      console.log("Sri - " + e.message)
       notifyMessage("Failed to update user")
     } finally {
       setLoading(false)

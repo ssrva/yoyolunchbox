@@ -1,20 +1,19 @@
 import _ from "lodash"
 import axios from "axios"
 import { StatusBar } from 'expo-status-bar'
-import { createStore } from "redux"
-import { Provider, useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import React, { useEffect, useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import useCachedResources from './hooks/useCachedResources'
 import { Auth } from 'aws-amplify'
 import MainNavigator from "./screens/MainNavigator"
-import reducer from "./store/reducer"
-import { setUser, setUserPreferences } from './store/actions'
+import { setUser } from './store/actions'
 import * as eva from '@eva-design/eva'
 import { Text } from "react-native"
 import { ApplicationProvider } from '@ui-kitten/components'
-import { Appearance, AppearanceProvider } from 'react-native-appearance';
+import { Appearance } from 'react-native-appearance';
 import * as Updates from 'expo-updates';
+import * as Sentry from "@sentry/browser"
 
 const MainApp = () => {
   const isLoadingComplete = useCachedResources()
@@ -49,7 +48,7 @@ const MainApp = () => {
         Updates.reloadAsync();
       }
     } catch (e) {
-      // handle or log error
+      Sentry.captureException(e)
     }
   }
 

@@ -7,6 +7,7 @@ import { Input, Button } from "@ui-kitten/components"
 import { Auth } from 'aws-amplify';
 import styles from "./styles"
 import { useState } from 'react';
+import * as Sentry from "@sentry/browser"
 
 export default function SignUp(props) {
   const { signUpSuccess } = props
@@ -32,6 +33,7 @@ export default function SignUp(props) {
       setOtpSent(true)
     } catch (error) {
       notifyMessage(error.message)
+      Sentry.captureException(error)
     } finally {
       setLoading(false)
     }
@@ -43,7 +45,7 @@ export default function SignUp(props) {
       await Auth.confirmSignUp(phone, code)
       signUpSuccess()
     } catch (error) {
-      console.log(error)
+      Sentry.captureException(error)
       notifyMessage(error.message)
     } finally {
       setLoading(false)

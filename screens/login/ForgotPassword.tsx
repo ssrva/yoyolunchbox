@@ -7,6 +7,7 @@ import { Input, Button } from "@ui-kitten/components"
 import { Auth } from 'aws-amplify';
 import styles from "./styles"
 import { useState } from 'react';
+import * as Sentry from "@sentry/browser"
 
 export default function ForgotPassword(props) {
   const { showLoginScreen } = props
@@ -24,7 +25,7 @@ export default function ForgotPassword(props) {
       setOtpSent(true)
       setLoading(false)
     } catch (e) {
-      console.log(e)
+      Sentry.captureException(e)
       notifyMessage(e.message)
     }
   }
@@ -36,7 +37,7 @@ export default function ForgotPassword(props) {
       setLoading(false)
       showLoginScreen()
     } catch (e) {
-      console.log(e)
+      Sentry.captureException(e)
       notifyMessage(e.message)
     }
   }

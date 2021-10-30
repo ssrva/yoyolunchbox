@@ -38,6 +38,7 @@ and beta is used for testing purposes. For any code changes related to beta, ple
 - To build local debug apk follow the steps below
     - Run this command to generate the initial JS bundle to use `npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res`
     - Make sure you create assets folder in `android/app/src/main/` before running above command
+    - Delete `android/app/src/main/res/drawable-*` and `raw` folder inside it.
     - cd into android folder and run `./gradlew assembleDebug` to generate the APK.
     - Generated apk can be found in `android/app/build/outputs/apk`
 

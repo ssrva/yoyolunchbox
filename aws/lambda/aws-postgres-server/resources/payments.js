@@ -1,7 +1,6 @@
 const axios = require("axios")
-const { siloDbClient } = require("./database-client")
+const { siloDbClient, dbClient } = require("./database-client")
 var AWS = require('aws-sdk')
-
 
 getCashfreeCredentials = async () => {
   const client = new AWS.SecretsManager({
@@ -110,6 +109,43 @@ module.exports.updateWalletBalance = async(event) => {
     await client.end()
     return {
       statusCode: 400,
+      body: e.message
+    }
+  }
+}
+
+module.exports.getTransactions = async(event) => {
+  const client = dbClient()
+  const { start_date, end_date } = JSON.parse(event.body)
+  const query = `
+    SELECT
+      transactions.id,
+      transactions.username,
+      transactions.created_at,
+      transactions.metadata,
+      users.name
+    FROM transactions
+    INNER JOIN users ON users.username = transactions.username
+    WHERE created_at >= '${start_date}'
+    AND   created_at <= '${end_date}'
+    AND   metadata IS NOT NULL;
+  `
+  try {
+    const response = await client.query(query)
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify(response.rows)
+    }
+  } catch(e) {
+    console.error(e.message)
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
       body: e.message
     }
   }

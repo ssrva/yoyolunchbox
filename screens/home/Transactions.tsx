@@ -6,6 +6,7 @@ import { FlatList, View, Text, StyleSheet } from 'react-native';
 import * as api from "../../api"
 import { useSelector } from 'react-redux';
 import { secondaryColor } from "../../commonUtils";
+import * as Sentry from "@sentry/browser"
 
 const styles = StyleSheet.create({
   container: {
@@ -72,7 +73,7 @@ const Transactions = (props) => {
       const data = await api.getUserTransactions(user.username)
       setTransactions(data)
     } catch (e) {
-      console.log(e)
+      Sentry.captureException(e)
     }
     setLoading(false)
   }

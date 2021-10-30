@@ -12,7 +12,7 @@ import SignUp from './SignUp'
 import styles from "./styles"
 import { setUser } from '../../store/actions'
 import ForgotPassword from './ForgotPassword'
-
+import * as Sentry from "@sentry/browser"
 
 export default function Login() {
   const [showSignUp, setShowSignUp] = useState<boolean>(false)
@@ -36,6 +36,7 @@ export default function Login() {
       }))
     } catch (error) {
       notifyMessage(error.message)
+      Sentry.captureException(error)
     } finally {
       setLoading(false)
     }
