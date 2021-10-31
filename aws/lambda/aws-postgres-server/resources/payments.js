@@ -128,7 +128,8 @@ module.exports.getTransactions = async(event) => {
     INNER JOIN users ON users.username = transactions.username
     WHERE created_at >= '${start_date}'
     AND   created_at <= '${end_date}'
-    AND   metadata IS NOT NULL;
+    AND   metadata IS NOT NULL
+    ORDER BY transactions.created_at ASC;
   `
   try {
     const response = await client.query(query)
