@@ -1,4 +1,10 @@
 rootProject.name = 'YOYO Lunchbox'
+include ':react-native-vector-icons'
+project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
+include ':react-native-pg-react-native-sdk'
+project(':react-native-pg-react-native-sdk').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-pg-react-native-sdk/android')
+include ':react-native-vector-icons'
+project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
 include ':react-native-appearance'
 project(':react-native-appearance').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-appearance/android')
 include ':react-native-appearance'

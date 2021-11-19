@@ -23,4 +23,8 @@ target 'YOYOLunchbox' do
   # end
   pod 'react-native-appearance', :path => '../node_modules/react-native-appearance'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'RNPgReactNativeSdkBridge', :path => '../node_modules/react-native-pg-react-native-sdk'
+
 end
