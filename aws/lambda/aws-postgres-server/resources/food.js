@@ -19,6 +19,10 @@ module.exports.getFoodImage = async (event) => {
           // don't retry upon 403
           bail(new Error('Unauthorized'));
           return;
+        } else if (200 !== res.status) {
+          bail(new Error('some other error'))
+          console.log(res)
+          return;
         }
     
         return res

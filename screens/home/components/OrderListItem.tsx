@@ -11,6 +11,8 @@ import Selector from "./Selector"
 import moment from "moment"
 import * as api from "../../../api"
 import { useEffect, useState } from 'react';
+import * as Sentry from "@sentry/browser"
+import { Storage } from 'aws-amplify';
 
 type TOrderListItemProps = {
   id: number,
@@ -144,6 +146,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
   } = props
 
   const [imageBase64, setImageBase64] = useState<string>();
+  const [imageUrl, setImageUrl] = useState<string>();
 
   const updateCount = (newCount: number) => {
     onChange({
@@ -161,12 +164,28 @@ const OrderListItem = (props: TOrderListItemProps) => {
 
   useEffect(() => {
     const getImage = async () => {
-      let data = await getItemFromAsyncStorage(image)
-      if(_.isNil(data)) {
-        data = await api.getFoodimage(image)
-        await putItemInAsyncStorage(image, data)
-      }
-      setImageBase64(data)
+      let url = `https://yoyo-food-images.s3.ap-south-1.amazonaws.com/${image}`
+      setImageUrl(encodeURI(url))
+
+      // Commenting this out for now. Figure out a better way for
+      // fetching images without having to make then public.
+      //
+      // let data = await getItemFromAsyncStorage(image)
+      // if(_.isNil(data)) {
+      //   try {
+      //     let data = await api.getFoodimage(image)
+      //     console.log("FETCHED DATA " + data)
+      //     if (!_.isNil(data)) {
+      //       await putItemInAsyncStorage(image, data)
+      //       setImageBase64(data)
+      //     }
+      //   } catch (e) {
+      //     console.log("Error fetching/storing image " + e)
+      //     Sentry.captureException(e)
+      //   }
+      // } else {
+      //   setImageBase64(data)
+      // } 
     }
     getImage()
   }, [])
@@ -212,7 +231,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
           </>
         )}
       </View>
-      {!_.isNil(imageBase64) && (
+      {!_.isNil(imageUrl) && (
         <View style={{ backgroundColor: "white" }}>
           {grayOut && (
             <View style={{
@@ -226,8 +245,9 @@ const OrderListItem = (props: TOrderListItemProps) => {
             }} />
           )}
           <Image
-            style={styles.image}
-            source={{uri: `data:image/jpg;base64,${imageBase64}`}}/>
+            source={{ uri: imageUrl }}
+            style={styles.image}/>
+            {/* // source={{uri: `data:image/jpg;base64,${imageBase64}`}}/> */}
         </View>
       )}
     </View>

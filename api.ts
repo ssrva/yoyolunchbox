@@ -41,7 +41,7 @@ export const getMenu = async (username: string, dates: string[]) => {
 }
 
 export const getFoodimage = async (imageKey: string) => {
-  const response = await axios.get(`/menu/image/${imageKey}`)
+  const response = await axios.get(`/food/image/${imageKey}`)
   return response.data
 }
 

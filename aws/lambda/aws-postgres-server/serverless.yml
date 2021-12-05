@@ -1,3 +1,5 @@
+org: ssrva
+app: aws-postgres-server
 service: aws-postgres-server
 
 frameworkVersion: '2'
