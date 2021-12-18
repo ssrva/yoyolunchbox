@@ -5,7 +5,7 @@
     "owner": "mssrivathsan",
     "version": "1.0.2",
     "extra": {
-      "jsPackageVersion": "1.0.7"
+      "jsPackageVersion": "1.1.0"
     },
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

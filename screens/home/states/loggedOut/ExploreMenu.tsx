@@ -1,23 +1,27 @@
 import * as React from 'react';
 import _ from "lodash"
 import { useState } from 'react';
-import { SectionList, TouchableOpacity } from 'react-native';
+import { SectionList, TouchableOpacity, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Text, View } from '../../components/Themed';
-import styles from "./styles"
+import { Text, View } from '../../../../components/Themed';
+import styles from "../../styles"
 import moment from "moment"
-import OrderListItem from './components/OrderListItem';
-import DateComponent from './components/DateComponent';
-import { setMenu } from "../../store/actions"
-import * as api from "../../api"
-import { useEffect } from 'react';
+import OrderListItem from '../../components/OrderListItem';
+import DateComponent from '../../components/DateComponent';
+import { setMenu } from "../../../../store/actions"
+import * as api from "../../../../api"
 
-const HomeScreen = (props) => {
+const exploreStyles = StyleSheet.create({
+  mainView: {
+    paddingTop: 20
+  }
+})
+
+// Read-only version of HomeScreen
+const ExploreMenu = (props) => {
   const { navigation } = props
   const dispatch = useDispatch()
   const menu = useSelector(store => store.menu)
-  const username = useSelector(store => store.user.username)
-  const user = useSelector(store => store.user.attributes)
   const today = moment().utcOffset("530").format("YYYY-MM-DD")
   const [loading, setLoading] = useState<boolean>(false)
   const [selectedDate, setSelectedDate] = useState<string>(moment().format("YYYY-MM-DD"))
@@ -30,28 +34,30 @@ const HomeScreen = (props) => {
     for(let i = 0; i < 7; i++) {
       datesToFetch.push(moment(today).add(i, 'd').format("YYYY-MM-DD"))
     }
-    let menu = await api.getMenu(datesToFetch, username)
+    let menu = await api.getMenu(datesToFetch)
     menu = _.groupBy(menu, "date")
     dispatch(setMenu({ menu: menu }))
     setLoading(false)
   }
 
+  React.useEffect(() => {
+    fetchMenuDetails()
+  }, [])
+
   const menuData = () => {
     const result = []
     if (_.isNil(selectedMenu) || _.isEmpty(selectedMenu)) return []
-    const currentHour = parseInt(moment().utcOffset("530").format("HH"))
-
     result.push({
       title: "Lunch",
       data: selectedMenu["lunch"] || [],
-      grayOut: selectedDate === today && currentHour >= 9,
-      grayOutDescription: "Order before 9AM"
+      grayOut: true,
+      grayOutDescription: null
     })
     result.push({
       title: "Dinner",
       data: selectedMenu["dinner"] || [],
-      grayOut: selectedDate === today && currentHour >= 16,
-      grayOutDescription: "Order before 4PM"
+      grayOut: true,
+      grayOutDescription: null
     })
     return result
   }
@@ -66,22 +72,15 @@ const HomeScreen = (props) => {
     setOrders(currentOrders)
   }
 
-  const placeOrder = () => {
-    navigation.navigate("Confirm Order", {
-      orders: _.values(orders)
-    })
-  }
-
   return (
-    <View style={styles.mainViewStyle}>
+    <View style={{ ...styles.mainViewStyle, ...exploreStyles.mainView}}>
       <View style={styles.ordersPageMainView}>
         <View style={{ backgroundColor: "white" }}>
           <Text style={styles.headerWelcome}>
-            <Text style={{ fontFamily: "helvetica-neue", color: "black" }}>Welcome </Text>
-            <Text style={{ fontFamily: "helvetica-neue-bold", color: "black" }}>{user?.name}!</Text>
+            <Text style={{ fontFamily: "helvetica-neue", color: "black" }}>Hello there!</Text>
           </Text>
           <Text style={styles.headerWelcome}>
-            <Text style={{ fontFamily: "helvetica-neue-light", color: "black" }}>What would you like to order?</Text>
+            <Text style={{ fontFamily: "helvetica-neue-light", color: "black" }}>Explore the menu for upcoming days</Text>
           </Text>
         </View>
         <DateComponent onDateChange={setSelectedDate} />
@@ -116,10 +115,9 @@ const HomeScreen = (props) => {
               />
               <View style={styles.footer}>
                 <TouchableOpacity
-                  disabled={Object.keys(orders).length == 0}
                   style={styles.mainButton}
-                  onPress={placeOrder}>
-                  <Text style={{ color: "white" }}>Place Order</Text>
+                  onPress={() => navigation.pop()}>
+                  <Text style={{ color: "white" }}>Login to place an order</Text>
                 </TouchableOpacity>
               </View>
             </>
@@ -130,4 +128,4 @@ const HomeScreen = (props) => {
   );
 }
 
-export default HomeScreen
+export default ExploreMenu

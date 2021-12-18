@@ -32,7 +32,7 @@ export const getUserOrders = async (
   return response.data
 }
 
-export const getMenu = async (username: string, dates: string[]) => {
+export const getMenu = async (dates: string[], username?: string) => {
   const response = await axios.post("/menu", {
     username,
     dates: dates.join(","),

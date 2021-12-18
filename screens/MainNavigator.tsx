@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import LoggedInNavigator from "./home/LoggedInNavigator"
 import Login from "./login/Login"
+import LoggedOutNavigator from "./home/states/loggedOut/LoggedOutNavigator";
 
 const Stack = createStackNavigator();
 
@@ -31,9 +32,7 @@ const MainNavigator = (props) => {
       }}>
         {_.isNil(user) || _.isEmpty(user) ? (
           // No token found, user isn't signed in
-          <Stack.Screen
-            name="Login"
-            component={Login} />
+          <Stack.Screen name="Login" component={LoggedOutNavigator} />
         ) : (
           // User is signed in
           <Stack.Screen name="LoggedIn" component={LoggedInNavigator} />

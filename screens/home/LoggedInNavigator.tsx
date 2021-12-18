@@ -25,7 +25,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { setMenu, setUser, setUserPreferences } from "../../store/actions"
 import * as api from "../../api"
-import { primaryColor, primaryColorDark } from "../../commonUtils"
+import { primaryColorDark } from "../../commonUtils"
 import { AppearanceProvider } from "react-native-appearance"
 
 const Drawer = createDrawerNavigator()
@@ -56,15 +56,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: 10
-  },
-  beta: {
-    marginBottom: 15,
-    backgroundColor: "purple",
-    width: 60,
-    fontSize: 12,
-    color: "white",
-    padding: 5,
-    borderRadius: 5,
   },
   logo: {
     width: 125,
@@ -114,7 +105,7 @@ const LoggedInNavigator = (props) => {
       for(let i = 0; i < 7; i++) {
         datesToFetch.push(moment(today).add(i, 'd').format("YYYY-MM-DD"))
       }
-      let menu = await api.getMenu(user.username, datesToFetch)
+      let menu = await api.getMenu(datesToFetch, user.username)
       menu = _.groupBy(menu, "date")
       dispatch(setMenu({ menu: menu }))
     }
@@ -174,11 +165,6 @@ const CustomDrawerContent = (props) => {
           <Image
             style={styles.logo}
             source={require("../../static/images/logo.png")} />
-          <View style={styles.beta}>
-            <Text style={{ color: "white", textAlign: "center" }}>
-              BETA
-            </Text>
-          </View>
         </View>
         <Text style={styles.name}>
           Hello {user?.attributes?.name}!

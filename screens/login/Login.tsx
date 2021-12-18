@@ -1,3 +1,4 @@
+import _ from "lodash"
 import * as React from 'react'
 import axios from "axios"
 import { ActivityIndicator, Keyboard, TouchableOpacity, TouchableWithoutFeedback, Image } from 'react-native'
@@ -13,8 +14,10 @@ import styles from "./styles"
 import { setUser } from '../../store/actions'
 import ForgotPassword from './ForgotPassword'
 import * as Sentry from "@sentry/browser"
+import ExploreMenu from "../home/states/loggedOut/ExploreMenu"
 
-export default function Login() {
+export default function Login(props) {
+  const { navigation } = props
   const [showSignUp, setShowSignUp] = useState<boolean>(false)
   const [showForgotPassword, setShowForgotPassword] = useState<boolean>(false)
   const [phone, setPhone] = useState<string>()
@@ -23,6 +26,10 @@ export default function Login() {
   const [loading, setLoading] = useState<boolean>(false)
 
   const login = async(phone: string, password: string) => {
+    if (_.isNil(phone) || _.isNil(password)) {
+      notifyMessage("Please enter phone number and password")
+      return;
+    }
     try {
       setLoading(true)
       const user = await Auth.signIn(phone, password);
@@ -40,6 +47,10 @@ export default function Login() {
     } finally {
       setLoading(false)
     }
+  }
+
+  const exploreMenu = () => {
+    navigation.navigate("Explore")
   }
 
   return (
@@ -87,6 +98,12 @@ export default function Login() {
                       onPress={() => login(phone, password)}>
                       {loading && <ActivityIndicator style={{ marginRight: 10 }} color="white" />}
                       <Text style={{ color: "white" }}>Login</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      disabled={loading}
+                      style={styles.button}
+                      onPress={exploreMenu}>
+                      <Text style={{ color: "white" }}>Explore the Menu</Text>
                     </TouchableOpacity>
                   </View>
                 )}
