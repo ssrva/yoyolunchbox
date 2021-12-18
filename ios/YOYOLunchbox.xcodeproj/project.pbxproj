@@ -15,60 +15,44 @@
 		96905EF65AED1B983A6B3ABC /* libPods-YOYOLunchbox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-YOYOLunchbox.a */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		F2D5DC7F7ED7469A8F48C840 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786AE7BE6A0430E91B41721 /* noop-file.swift */; };
-		73A379DD837446A69F365063 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F95B25DC76E24FE0B0756590 /* AntDesign.ttf */; };
-		1B8575D7F0E440ADB47CFC8E /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0580C3EB322740D196B5ACC1 /* Entypo.ttf */; };
-		E02C10A2CE94448FB1ADD0C4 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D0CA442DF2A4934A457011A /* EvilIcons.ttf */; };
-		F3C1139606A64CEE8649C7B5 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC5B36380FD243E0BFD9514F /* Feather.ttf */; };
-		8E7B74E1A0754C77A583AC4F /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6F924859BBAB49598FD9793B /* FontAwesome.ttf */; };
-		15C9CD7A4547499BA5E52A52 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D209FD23B9E5445D88451193 /* FontAwesome5_Brands.ttf */; };
-		B32F9832A337408B8FE11C64 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 605EA6C68B5F41BDB809A1A5 /* FontAwesome5_Regular.ttf */; };
-		ED23577B3A2640D6A543563D /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B4FD1FD59E864822868E090F /* FontAwesome5_Solid.ttf */; };
-		957FFC0D47CE456F942FC574 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A42F9F6444548809171405D /* Fontisto.ttf */; };
-		4F7BC0B042A74414AA39317D /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1102536A44C74430B9374D30 /* Foundation.ttf */; };
-		786DEFD0530B4C0090A3AC57 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 330B0C93455442BDB31F193F /* Ionicons.ttf */; };
-		0DE518A14BE04AF99C259DA9 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D901CF53FC024BD9AF2DC046 /* MaterialCommunityIcons.ttf */; };
-		12BE0324E0F142778B76F553 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 048C9B7755CE46B5AF267591 /* MaterialIcons.ttf */; };
-		C70F6D9018164F4EA35BFFFF /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C1C4CED8ADA4EEFA88E35E6 /* Octicons.ttf */; };
-		C82F3B008A504F7D96C7294B /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 45487ACD77F44EC0B637AA0D /* SimpleLineIcons.ttf */; };
-		F6BC678158F34A1AAF4EEDC0 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC43089F8C1D4FAFB12BC96F /* Zocial.ttf */; };
-		F243ACFFF99D4DA28C2A1F6D /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6611D453309B48E483F569FB /* Ionicons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* YOYOLunchbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YOYOLunchbox.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		048C9B7755CE46B5AF267591 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		0580C3EB322740D196B5ACC1 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		107BD1FE27650E7E0004FD3C /* YOYOLunchboxRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = YOYOLunchboxRelease.entitlements; path = YOYOLunchbox/YOYOLunchboxRelease.entitlements; sourceTree = "<group>"; };
+		1102536A44C74430B9374D30 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = YOYOLunchbox/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = YOYOLunchbox/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = YOYOLunchbox/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = YOYOLunchbox/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = YOYOLunchbox/main.m; sourceTree = "<group>"; };
+		1D0CA442DF2A4934A457011A /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		330B0C93455442BDB31F193F /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		45487ACD77F44EC0B637AA0D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		4C1C4CED8ADA4EEFA88E35E6 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		5786AE7BE6A0430E91B41721 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "YOYOLunchbox/noop-file.swift"; sourceTree = "<group>"; };
 		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-YOYOLunchbox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YOYOLunchbox.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A42F9F6444548809171405D /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
+		605EA6C68B5F41BDB809A1A5 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		6611D453309B48E483F569FB /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-ionicons/fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		6C2E3173556A471DD304B334 /* Pods-YOYOLunchbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YOYOLunchbox.debug.xcconfig"; path = "Target Support Files/Pods-YOYOLunchbox/Pods-YOYOLunchbox.debug.xcconfig"; sourceTree = "<group>"; };
+		6F924859BBAB49598FD9793B /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-YOYOLunchbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YOYOLunchbox.release.xcconfig"; path = "Target Support Files/Pods-YOYOLunchbox/Pods-YOYOLunchbox.release.xcconfig"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = YOYOLunchbox/SplashScreen.storyboard; sourceTree = "<group>"; };
+		B4FD1FD59E864822868E090F /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		CC43089F8C1D4FAFB12BC96F /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		D209FD23B9E5445D88451193 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		D901CF53FC024BD9AF2DC046 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		E7BFF5D3F01043E998C75591 /* YOYOLunchbox-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "YOYOLunchbox-Bridging-Header.h"; path = "YOYOLunchbox/YOYOLunchbox-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		5786AE7BE6A0430E91B41721 /* noop-file.swift */ = {isa = PBXFileReference; name = "noop-file.swift"; path = "YOYOLunchbox/noop-file.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
-		E7BFF5D3F01043E998C75591 /* YOYOLunchbox-Bridging-Header.h */ = {isa = PBXFileReference; name = "YOYOLunchbox-Bridging-Header.h"; path = "YOYOLunchbox/YOYOLunchbox-Bridging-Header.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		F95B25DC76E24FE0B0756590 /* AntDesign.ttf */ = {isa = PBXFileReference; name = "AntDesign.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0580C3EB322740D196B5ACC1 /* Entypo.ttf */ = {isa = PBXFileReference; name = "Entypo.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		1D0CA442DF2A4934A457011A /* EvilIcons.ttf */ = {isa = PBXFileReference; name = "EvilIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		FC5B36380FD243E0BFD9514F /* Feather.ttf */ = {isa = PBXFileReference; name = "Feather.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6F924859BBAB49598FD9793B /* FontAwesome.ttf */ = {isa = PBXFileReference; name = "FontAwesome.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D209FD23B9E5445D88451193 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Brands.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		605EA6C68B5F41BDB809A1A5 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Regular.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		B4FD1FD59E864822868E090F /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Solid.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		5A42F9F6444548809171405D /* Fontisto.ttf */ = {isa = PBXFileReference; name = "Fontisto.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		1102536A44C74430B9374D30 /* Foundation.ttf */ = {isa = PBXFileReference; name = "Foundation.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		330B0C93455442BDB31F193F /* Ionicons.ttf */ = {isa = PBXFileReference; name = "Ionicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D901CF53FC024BD9AF2DC046 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; name = "MaterialCommunityIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		048C9B7755CE46B5AF267591 /* MaterialIcons.ttf */ = {isa = PBXFileReference; name = "MaterialIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4C1C4CED8ADA4EEFA88E35E6 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		45487ACD77F44EC0B637AA0D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CC43089F8C1D4FAFB12BC96F /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6611D453309B48E483F569FB /* Ionicons.ttf */ = {isa = PBXFileReference; name = "Ionicons.ttf"; path = "../node_modules/react-native-ionicons/fonts/Ionicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F95B25DC76E24FE0B0756590 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
+		FC5B36380FD243E0BFD9514F /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,9 +67,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03EC83A2B3CA497392C8AEFF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F95B25DC76E24FE0B0756590 /* AntDesign.ttf */,
+				0580C3EB322740D196B5ACC1 /* Entypo.ttf */,
+				1D0CA442DF2A4934A457011A /* EvilIcons.ttf */,
+				FC5B36380FD243E0BFD9514F /* Feather.ttf */,
+				6F924859BBAB49598FD9793B /* FontAwesome.ttf */,
+				D209FD23B9E5445D88451193 /* FontAwesome5_Brands.ttf */,
+				605EA6C68B5F41BDB809A1A5 /* FontAwesome5_Regular.ttf */,
+				B4FD1FD59E864822868E090F /* FontAwesome5_Solid.ttf */,
+				5A42F9F6444548809171405D /* Fontisto.ttf */,
+				1102536A44C74430B9374D30 /* Foundation.ttf */,
+				330B0C93455442BDB31F193F /* Ionicons.ttf */,
+				D901CF53FC024BD9AF2DC046 /* MaterialCommunityIcons.ttf */,
+				048C9B7755CE46B5AF267591 /* MaterialIcons.ttf */,
+				4C1C4CED8ADA4EEFA88E35E6 /* Octicons.ttf */,
+				45487ACD77F44EC0B637AA0D /* SimpleLineIcons.ttf */,
+				CC43089F8C1D4FAFB12BC96F /* Zocial.ttf */,
+				6611D453309B48E483F569FB /* Ionicons.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* YOYOLunchbox */ = {
 			isa = PBXGroup;
 			children = (
+				107BD1FE27650E7E0004FD3C /* YOYOLunchboxRelease.entitlements */,
 				BB2F792B24A3F905000567C9 /* Supporting */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -136,7 +145,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* YOYOLunchbox.app */,
+				13B07F961A680F5B00A75B9A /* app.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,31 +168,6 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		03EC83A2B3CA497392C8AEFF /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				F95B25DC76E24FE0B0756590 /* AntDesign.ttf */,
-				0580C3EB322740D196B5ACC1 /* Entypo.ttf */,
-				1D0CA442DF2A4934A457011A /* EvilIcons.ttf */,
-				FC5B36380FD243E0BFD9514F /* Feather.ttf */,
-				6F924859BBAB49598FD9793B /* FontAwesome.ttf */,
-				D209FD23B9E5445D88451193 /* FontAwesome5_Brands.ttf */,
-				605EA6C68B5F41BDB809A1A5 /* FontAwesome5_Regular.ttf */,
-				B4FD1FD59E864822868E090F /* FontAwesome5_Solid.ttf */,
-				5A42F9F6444548809171405D /* Fontisto.ttf */,
-				1102536A44C74430B9374D30 /* Foundation.ttf */,
-				330B0C93455442BDB31F193F /* Ionicons.ttf */,
-				D901CF53FC024BD9AF2DC046 /* MaterialCommunityIcons.ttf */,
-				048C9B7755CE46B5AF267591 /* MaterialIcons.ttf */,
-				4C1C4CED8ADA4EEFA88E35E6 /* Octicons.ttf */,
-				45487ACD77F44EC0B637AA0D /* SimpleLineIcons.ttf */,
-				CC43089F8C1D4FAFB12BC96F /* Zocial.ttf */,
-				6611D453309B48E483F569FB /* Ionicons.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -199,6 +183,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
 				60D0B0FEBC874FDF840F1000 /* Upload Debug Symbols to Sentry */,
+				B7595510CBD11EC381D6CE1A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -206,7 +191,7 @@
 			);
 			name = YOYOLunchbox;
 			productName = YOYOLunchbox;
-			productReference = 13B07F961A680F5B00A75B9A /* YOYOLunchbox.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* app.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -218,7 +203,9 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = C9XN4VWN8Q;
 						LastSwiftMigration = 1120;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -249,24 +236,6 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				308D8FE48B424E2E8BDA523D /* YOYOLunchbox-Bridging-Header.h in Resources */,
-				73A379DD837446A69F365063 /* AntDesign.ttf in Resources */,
-				1B8575D7F0E440ADB47CFC8E /* Entypo.ttf in Resources */,
-				E02C10A2CE94448FB1ADD0C4 /* EvilIcons.ttf in Resources */,
-				F3C1139606A64CEE8649C7B5 /* Feather.ttf in Resources */,
-				8E7B74E1A0754C77A583AC4F /* FontAwesome.ttf in Resources */,
-				15C9CD7A4547499BA5E52A52 /* FontAwesome5_Brands.ttf in Resources */,
-				B32F9832A337408B8FE11C64 /* FontAwesome5_Regular.ttf in Resources */,
-				ED23577B3A2640D6A543563D /* FontAwesome5_Solid.ttf in Resources */,
-				957FFC0D47CE456F942FC574 /* Fontisto.ttf in Resources */,
-				4F7BC0B042A74414AA39317D /* Foundation.ttf in Resources */,
-				786DEFD0530B4C0090A3AC57 /* Ionicons.ttf in Resources */,
-				0DE518A14BE04AF99C259DA9 /* MaterialCommunityIcons.ttf in Resources */,
-				12BE0324E0F142778B76F553 /* MaterialIcons.ttf in Resources */,
-				C70F6D9018164F4EA35BFFFF /* Octicons.ttf in Resources */,
-				C82F3B008A504F7D96C7294B /* SimpleLineIcons.ttf in Resources */,
-				F6BC678158F34A1AAF4EEDC0 /* Zocial.ttf in Resources */,
-				F243ACFFF99D4DA28C2A1F6D /* Ionicons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +278,20 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		60D0B0FEBC874FDF840F1000 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Debug Symbols to Sentry";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
+		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -316,15 +299,67 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-YOYOLunchbox/Pods-YOYOLunchbox-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fontisto.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YOYOLunchbox/Pods-YOYOLunchbox-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B7595510CBD11EC381D6CE1A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YOYOLunchbox/Pods-YOYOLunchbox-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/CFSDK/CFSDK.framework/CFSDK",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CFSDK.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YOYOLunchbox/Pods-YOYOLunchbox-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -345,20 +380,6 @@
 			shellPath = /bin/sh;
 			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
 			showEnvVarsInLog = 0;
-		};
-		60D0B0FEBC874FDF840F1000 /* Upload Debug Symbols to Sentry */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			name = "Upload Debug Symbols to Sentry";
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			shellPath = /bin/sh;
-			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -392,10 +413,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6C2E3173556A471DD304B334 /* Pods-YOYOLunchbox.debug.xcconfig */;
 			buildSettings = {
+				"ARCHS[sdk=iphonesimulator*]" = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = YOYOLunchbox/app.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C9XN4VWN8Q;
 				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=*]" = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
@@ -408,14 +435,14 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.yoyolunchbox.app";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yoyolunchbox.app;
 				PRODUCT_NAME = app;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "YOYOLunchbox/YOYOLunchbox-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
-				TARGETED_DEVICE_FAMILY = "1";
-				SWIFT_OBJC_BRIDGING_HEADER = YOYOLunchbox/YOYOLunchbox-Bridging-Header.h;
-				CODE_SIGN_ENTITLEMENTS = YOYOLunchbox/app.entitlements;
 			};
 			name = Debug;
 		};
@@ -425,7 +452,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = YOYOLunchbox/YOYOLunchboxRelease.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C9XN4VWN8Q;
 				INFOPLIST_FILE = YOYOLunchbox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -434,13 +463,12 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.yoyolunchbox.app";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yoyolunchbox.app;
 				PRODUCT_NAME = app;
+				SWIFT_OBJC_BRIDGING_HEADER = "YOYOLunchbox/YOYOLunchbox-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
-				TARGETED_DEVICE_FAMILY = "1";
-				SWIFT_OBJC_BRIDGING_HEADER = YOYOLunchbox/YOYOLunchbox-Bridging-Header.h;
-				CODE_SIGN_ENTITLEMENTS = YOYOLunchbox/app.entitlements;
 			};
 			name = Release;
 		};
@@ -448,6 +476,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"ARCHS[sdk=iphonesimulator*]" = (
+					"i386,",
+					x86_64,
+				);
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -472,10 +504,12 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = YOYOLunchbox/app.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -493,13 +527,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(inherited)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				CODE_SIGN_ENTITLEMENTS = YOYOLunchbox/app.entitlements;
 			};
 			name = Debug;
 		};
@@ -531,6 +562,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = YOYOLunchbox/app.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -545,13 +577,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(inherited)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
-				CODE_SIGN_ENTITLEMENTS = YOYOLunchbox/app.entitlements;
 			};
 			name = Release;
 		};

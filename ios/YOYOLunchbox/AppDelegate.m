@@ -4,7 +4,6 @@
 #import <GoogleMaps/GoogleMaps.h>
 #endif
 // @generated end react-native-maps-import
-@import Firebase;
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -51,7 +50,6 @@ static void InitializeFlipper(UIApplication *application) {
   InitializeFlipper(application);
 #endif
   
-  [FIRApp configure];
 // @generated begin react-native-maps-init - expo prebuild (DO NOT MODIFY) sync-5a7582a9e446460a4ef88cb8df963d74b6ab398d
 #if __has_include(<GoogleMaps/GoogleMaps.h>)
   [GMSServices provideAPIKey:@"AIzaSyDdVku9DIVs4HIoxLJECrXafza3LQgtPcY"];

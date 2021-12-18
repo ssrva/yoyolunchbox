@@ -49,3 +49,9 @@ and beta is used for testing purposes. For any code changes related to beta, ple
     - Run `./gradlew bundleRelease` from inside android folder to generate aab file to upload to playstore.
     - If you're facing `Duplicate Resource` issue while building, delete `drawable-*` and `raw` folders from `android/app/src/main/res`
     - Run `./gradlew assembleRelease` to generate a signed apk.
+
+iOS development guide
+
+1. Instal cocoapods on your mac - `brew install cocoapods`
+2. Run `sudo xcode-select --switch /Applications/Xcode.app`
+3. cd into `ios` folder and run `pod install` to install the pods
