@@ -76,6 +76,11 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: "#D1D1D1"
+  },
+  warningText: {
+    color: "red",
+    fontStyle: "italic",
+    marginBottom: 10
   }
 })
 
@@ -85,9 +90,11 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
   const [remarks, setRemarks] = useState<string>("")
   const username = useSelector(store => store.user.username)
   const orders = route?.params?.orders || []
+  const balance = useSelector(store => store.balance)
   const itemTotalPrice = orders.reduce((acc, order) => {
     return acc + (order.price * order.quantity)
   }, 0)
+  const hasSufficientBalance = itemTotalPrice < balance
 
   const confirmOrder = async () => {
     const apiInput = orders.map(order => {
@@ -158,8 +165,15 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
         </View>
       </ScrollView>
       <View style={commonStyles.footer}>
+        {!hasSufficientBalance && (
+          <View>
+            <Text style={styles.warningText}>
+              Your balance is insufficient to place this order. Please recharge your wallet to continue ordering.
+            </Text>
+          </View>
+        )}
         <TouchableOpacity
-          disabled={loading}
+          disabled={loading || !hasSufficientBalance}
           style={commonStyles.mainButton}
           onPress={confirmOrder}>
           {loading && (<ActivityIndicator style={{ marginRight: 10 }} color="white" />)}
