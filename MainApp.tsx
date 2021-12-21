@@ -23,19 +23,19 @@ const MainApp = () => {
 
   axios.defaults.baseURL = "https://baqg6112pd.execute-api.us-east-1.amazonaws.com/production";
 
-  // const getJwtToken = async () => {
-  //   const user = await Auth.currentAuthenticatedUser({ bypassCache: false })
-  //   return user.signInUserSession.idToken.jwtToken
-  // }  
+  const getJwtToken = async () => {
+    const user = await Auth.currentAuthenticatedUser({ bypassCache: false })
+    return user.signInUserSession.idToken.jwtToken
+  }
 
-  // axios.interceptors.request.use((config) => {
-  //   return getJwtToken().then((token) => {
-  //     config.headers.common['Authorization'] = token
-  //     return Promise.resolve(config)
-  //   })
-  // }, (error) => {
-  //   return Promise.reject(error)
-  // })
+  axios.interceptors.request.use((config) => {
+    return getJwtToken().then((token) => {
+      config.headers.common['Authorization'] = token
+      return Promise.resolve(config)
+    })
+  }, (error) => {
+    return Promise.reject(error)
+  })
 
   const checkJsBundleUpdate = async () => {
     try {
