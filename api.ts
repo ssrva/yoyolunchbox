@@ -33,7 +33,9 @@ export const getUserOrders = async (
 }
 
 export const getMenu = async (dates: string[], username?: string) => {
-  const response = await axios.post("/menu", {
+  // should not pass jwt token for getMenu call. Hence using new instance of axios.
+  const uninterceptedAxiosInstance = axios.create();
+  const response = await uninterceptedAxiosInstance.post("/menu", {
     username,
     dates: dates.join(","),
   })
