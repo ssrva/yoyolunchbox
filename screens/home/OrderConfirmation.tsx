@@ -94,7 +94,7 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
   const itemTotalPrice = orders.reduce((acc, order) => {
     return acc + (order.price * order.quantity)
   }, 0)
-  const hasSufficientBalance = itemTotalPrice < balance
+  const hasSufficientBalance = itemTotalPrice <= balance
 
   const confirmOrder = async () => {
     const apiInput = orders.map(order => {
@@ -166,7 +166,7 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
       </ScrollView>
       <View style={commonStyles.footer}>
         {!hasSufficientBalance && (
-          <View>
+          <View style={{ backgroundColor: "white" }}>
             <Text style={styles.warningText}>
               Your balance is insufficient to place this order. Please recharge your wallet to continue ordering.
             </Text>
