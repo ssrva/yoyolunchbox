@@ -39,8 +39,11 @@ const styles = StyleSheet.create({
   }
 })
 
+const UPCOMING_ORDERS = "upcoming"
+const CANCELLED_ORDERS = "cancelled"
+
 const Orders = (props) => {
-  const status = props.route.params.status || "upcoming"
+  const status = props.route.params.status || UPCOMING_ORDERS
   const username = useSelector(store => store.user.username)
   const [loading, setLoading] = useState<boolean>(false)
   const [orders, setOrders] = useState<Array<Object>>([])
@@ -61,6 +64,16 @@ const Orders = (props) => {
     }, [status])
   )
 
+  const isOrderCancellable = () => {
+    return status == UPCOMING_ORDERS
+  }
+
+  const refreshDataAfterCancellation = () => {
+    if (isOrderCancellable()) {
+      fetchOrders()
+    }
+  }
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -69,7 +82,10 @@ const Orders = (props) => {
         data={orders}
         renderItem={({item}) => {
           return (
-            <OrderListItem disabled {...item} />
+            <OrderListItem
+              cancellable={isOrderCancellable()}
+              onChange={refreshDataAfterCancellation}
+              disabled {...item} />
           )
         }}
       />

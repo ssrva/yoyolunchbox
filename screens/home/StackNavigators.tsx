@@ -13,7 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import * as api from "../../api"
 import Transactions from "./Transactions"
-import { setBalance } from '../../store/actions'
+import { refreshBalance } from '../../store/actions'
 
 const Stack = createStackNavigator()
 const Tab = createMaterialTopTabNavigator()
@@ -50,12 +50,7 @@ const WalletBalanceComponent = (props) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const getBalance = async () => {
-      const balance = await api.getUserWalletBalance(username)
-      dispatch(setBalance({ balance: balance?.balance || 0 }))
-      setBalance(balance?.balance)
-    }
-    getBalance()
+    dispatch(refreshBalance())
   }, [])
 
   return (

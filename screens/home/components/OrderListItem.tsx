@@ -1,18 +1,17 @@
 import _ from "lodash"
 import * as React from 'react';
 import { StyleSheet, Image } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import { Text, View } from '../../../components/Themed';
-import {
-  COLORS,
-  getItemFromAsyncStorage,
-  putItemInAsyncStorage
-} from "../../../commonUtils"
+import { COLORS, notifyMessage } from "../../../commonUtils"
 import Selector from "./Selector"
 import moment from "moment"
-import * as api from "../../../api"
 import { useEffect, useState } from 'react';
-import * as Sentry from "@sentry/browser"
-import { Storage } from 'aws-amplify';
+import { Ionicons } from '@expo/vector-icons';
+import { Button } from "@ui-kitten/components";
+import Constants from "yoyoconstants/Constants"
+import * as api from "api"
+import { refreshBalance } from "store/actions"
 
 type TOrderListItemProps = {
   id: number,
@@ -24,6 +23,7 @@ type TOrderListItemProps = {
   price: string,
   quantity: string,
   hideDate: boolean,
+  cancellable: boolean,
   disabled: boolean,
   status: string,
   onChange: Function,
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 5,
     resizeMode: "cover",
+    marginBottom: 10
   },
   description: {
     color: "black",
@@ -140,13 +141,17 @@ const OrderListItem = (props: TOrderListItemProps) => {
     price,
     onChange,
     disabled,
+    cancellable,
     status,
     grayOut,
     grayOutDescription,
   } = props
 
+  const dispatch = useDispatch()
+  const username = useSelector(store => store.user.username)
   const [imageBase64, setImageBase64] = useState<string>();
   const [imageUrl, setImageUrl] = useState<string>();
+  const [cancelling, setCancelling] = useState<boolean>(false);
 
   const updateCount = (newCount: number) => {
     onChange({
@@ -189,6 +194,43 @@ const OrderListItem = (props: TOrderListItemProps) => {
     }
     getImage()
   }, [])
+
+
+  /**
+   * The user can cancel the order anytime before the date of delivery. We allow cancellation
+   * only before the cutoff hours on date of delivery.
+   * @returns boolean
+   */
+  const canCancelOrder = () => {
+    if (!cancellable) {
+      return false;
+    }
+    const today = moment().utcOffset("530").format("YYYY-MM-DD");
+    const currentHour = parseInt(moment().utcOffset("530").format("HH"));
+    if (today == date) {
+      const cutoffHour = type == Constants.lunch
+        ? Constants.lunchCutoffHour : Constants.dinnerCutoffHour;
+      return currentHour < cutoffHour;
+    }
+    return true;
+  }
+
+  /**
+   * This method MUST be called only after checking canCancelOrder.
+   */
+  const cancelOrder = async (orderId: number, username: string) => {
+    try {
+      setCancelling(true)
+      await api.cancelOrder(orderId, username)
+      dispatch(refreshBalance())
+      onChange()
+      notifyMessage("Order cancelled")
+    } catch (error) {
+      notifyMessage("Failed to cancel order, please reach out to us on whatsapp")
+    } finally {
+      setCancelling(false)
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -248,10 +290,23 @@ const OrderListItem = (props: TOrderListItemProps) => {
             source={{ uri: imageUrl }}
             style={styles.image}/>
             {/* // source={{uri: `data:image/jpg;base64,${imageBase64}`}}/> */}
+          {canCancelOrder() && (
+            <Button status='danger'
+              accessoryLeft={CancelIcon}
+              size={"small"}
+              disabled={cancelling}
+              onPress={() => cancelOrder(id, username)}>
+              Cancel
+            </Button>
+          )}
         </View>
       )}
     </View>
   )
 }
+
+const CancelIcon = () => (
+  <Ionicons name='close-circle' size={18} color={"white"}/>
+);
 
 export default OrderListItem

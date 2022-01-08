@@ -1,4 +1,5 @@
-import { createStore } from "redux"
+import { createStore, applyMiddleware } from 'redux'
+import createSagaMiddleware from 'redux-saga'
 import { Provider } from "react-redux"
 import React from 'react'
 import reducer from "./store/reducer"
@@ -6,8 +7,11 @@ import MainApp from "./MainApp"
 import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
 import * as Sentry from 'sentry-expo';
+import sagas from "store/saga";
 
-const store = createStore(reducer)
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(reducer, applyMiddleware(sagaMiddleware))
+sagaMiddleware.run(sagas);
 
 const App = () => {
   Amplify.configure(awsconfig);

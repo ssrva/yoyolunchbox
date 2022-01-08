@@ -32,6 +32,16 @@ export const getUserOrders = async (
   return response.data
 }
 
+export const cancelOrder = async(orderId: number, username: string) => {
+  const response = await axios.delete("/orders", {
+    data: {
+      order_id: orderId,
+      username: username
+    }
+  });
+  return response.data
+}
+
 export const getMenu = async (dates: string[], username?: string) => {
   // should not pass jwt token for getMenu call. Hence using new instance of axios.
   const uninterceptedAxiosInstance = axios.create();

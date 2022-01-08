@@ -10,7 +10,7 @@ import OrderListItem from './components/OrderListItem';
 import DateComponent from './components/DateComponent';
 import { setMenu } from "../../store/actions"
 import * as api from "../../api"
-import { useEffect } from 'react';
+import Constants from "yoyoconstants/Constants"
 
 const HomeScreen = (props) => {
   const { navigation } = props
@@ -44,13 +44,13 @@ const HomeScreen = (props) => {
     result.push({
       title: "Lunch",
       data: selectedMenu["lunch"] || [],
-      grayOut: selectedDate === today && currentHour >= 9,
+      grayOut: selectedDate === today && currentHour >= Constants.lunchCutoffHour,
       grayOutDescription: "Order before 9AM"
     })
     result.push({
       title: "Dinner",
       data: selectedMenu["dinner"] || [],
-      grayOut: selectedDate === today && currentHour >= 16,
+      grayOut: selectedDate === today && currentHour >= Constants.dinnerCutoffHour,
       grayOutDescription: "Order before 4PM"
     })
     return result

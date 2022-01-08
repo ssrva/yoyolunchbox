@@ -1,6 +1,8 @@
 import * as React from 'react';
 import _ from "lodash"
 import { ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native'
+import { useDispatch } from 'react-redux';
+import { refreshBalance } from 'store/actions';
 import { Text, View } from '../../components/Themed'
 import commonStyles from "./styles"
 import OrderListItem from './components/OrderListItem'
@@ -95,6 +97,7 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
     return acc + (order.price * order.quantity)
   }, 0)
   const hasSufficientBalance = itemTotalPrice <= balance
+  const dispatch = useDispatch();
 
   const confirmOrder = async () => {
     const apiInput = orders.map(order => {
@@ -115,6 +118,7 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
     try {
       await api.placeOrder(username, charges, apiInput)
       notifyMessage("Order placed successfully")
+      dispatch(refreshBalance())
       navigation.navigate("Home")
     } catch (e) {
       notifyMessage("Error placing order")
