@@ -83,6 +83,9 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     textAlign: "center",
     marginTop: 20,
+  },
+  unConfirmedUserView: {
+    backgroundColor: "transparent"
   }
 });
 
