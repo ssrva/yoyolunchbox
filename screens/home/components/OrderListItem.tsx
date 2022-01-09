@@ -211,6 +211,8 @@ const OrderListItem = (props: TOrderListItemProps) => {
       const cutoffHour = type == Constants.lunch
         ? Constants.lunchCutoffHour : Constants.dinnerCutoffHour;
       return currentHour < cutoffHour;
+    } else if (today > date) {
+      return false;
     }
     return true;
   }
