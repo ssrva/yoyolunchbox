@@ -1,4 +1,5 @@
 import _ from "lodash"
+import moment from "moment"
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { FlatList, SectionList, StyleSheet } from 'react-native';
@@ -47,10 +48,16 @@ const Orders = (props) => {
   const username = useSelector(store => store.user.username)
   const [loading, setLoading] = useState<boolean>(false)
   const [orders, setOrders] = useState<Array<Object>>([])
+  const today = moment().utcOffset("530").format("YYYY-MM-DD");
 
   const fetchOrders = async () => {
     setLoading(true)
-    const userOrders = await api.getUserOrders(status, username, 0)
+    let userOrders = await api.getUserOrders(status, username, 0)
+    if (status == UPCOMING_ORDERS) {
+      userOrders = userOrders.filter(order => {
+        return order.date >= today
+      })
+    }
     setOrders(userOrders)
     setLoading(false)
   }
