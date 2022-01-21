@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "./HomeScreen"
 import Orders from "./Orders"
 import ProfileScreen from "./ProfileScreen"
+import AddAddress from './AddAddress';
 import AddMoneyScreen from "./AddMoneyScreen"
 import OrderConfirmation from "./OrderConfirmation";
 import { primaryColor } from "../../commonUtils"
@@ -14,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as api from "../../api"
 import Transactions from "./Transactions"
 import { refreshBalance } from '../../store/actions'
+import Colors from 'yoyoconstants/Colors';
 
 const Stack = createStackNavigator()
 const Tab = createMaterialTopTabNavigator()
@@ -26,16 +28,18 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "white"
+    backgroundColor: Colors.theme.background
   },
   locationText: {
     fontSize: 18,
     textDecorationLine: "underline",
-    color: "black"
+    color: Colors.theme.textColor
   },
   wallet: {
-    backgroundColor: "#C4C4C4",
+    backgroundColor: Colors.theme.backgroundDark,
     padding: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
     borderRadius: 5,
     display: "flex",
     flexDirection: "row",
@@ -59,9 +63,9 @@ const WalletBalanceComponent = (props) => {
         <Ionicons
           size={20}
           name="wallet"
-          style={{ marginRight: 10 }}
-          color={"black"} />
-        <Text style={{ fontWeight: "bold", color: "black" }}>{'\u20B9'}{balance}</Text>
+          style={{ marginRight: 5 }}
+          color={Colors.theme.secondary} />
+        <Text style={{ fontWeight: "bold", color: Colors.theme.textDark }}>{'\u20B9'}{balance}</Text>
       </View>
     </TouchableWithoutFeedback>
   )
@@ -71,12 +75,13 @@ const headerOptions = ({route, navigation}) => ({
   headerStyle: {
     elevation: 0,
     shadowOpacity: 0,
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
+    backgroundColor: Colors.theme.background
   },
   headerTitleAlign: "left",
   headerTitle: () => (
     <View style={styles.headerAddress}>
-      <Ionicons size={20} name="location" color={"#4F4946"} style={styles.locationIcon} />
+      <Ionicons size={20} name="location" color={Colors.theme.secondary} style={styles.locationIcon} />
       <Text style={styles.locationText}>Home</Text>
     </View>
   ),
@@ -94,7 +99,7 @@ const headerOptions = ({route, navigation}) => ({
       <TouchableOpacity
         style={{ marginRight: 10 }}
         onPress={() => navigation.openDrawer()}>
-        <Ionicons size={24} name="menu" color={"#4F4946"} />
+        <Ionicons size={24} name="menu" color={Colors.theme.secondary} />
       </TouchableOpacity>
     )
   },
@@ -152,8 +157,9 @@ const OrderTabsNavigator = () => {
 
 export const ProfileNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={headerOptions}>
+    <Stack.Navigator screenOptions={headerOptions} initialRouteName="Profile">
       <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="AddAddress" component={AddAddress} />
     </Stack.Navigator>
   );
 };

@@ -41,6 +41,14 @@ const HomeScreen = (props) => {
     if (_.isNil(selectedMenu) || _.isEmpty(selectedMenu)) return []
     const currentHour = parseInt(moment().utcOffset("530").format("HH"))
 
+    if (selectedMenu["breakfast"] && selectedMenu["breakfast"].length > 0) {
+      result.push({
+        title: "Brunch",
+        data: selectedMenu["breakfast"] || [],
+        grayOut: selectedDate === today && currentHour >= Constants.lunchCutoffHour,
+        grayOutDescription: "Order before 6AM"
+      })
+    }
     result.push({
       title: "Lunch",
       data: selectedMenu["lunch"] || [],

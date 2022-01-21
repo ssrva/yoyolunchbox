@@ -22,6 +22,7 @@ const MainApp = () => {
   Appearance.set({ colorScheme: 'light' })
 
   axios.defaults.baseURL = "https://baqg6112pd.execute-api.us-east-1.amazonaws.com/production";
+  // axios.defaults.baseURL = "http://localhost:3000/dev";
 
   const getJwtToken = async () => {
     const user = await Auth.currentAuthenticatedUser({ bypassCache: false })

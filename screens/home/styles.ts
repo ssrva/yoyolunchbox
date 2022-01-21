@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native"
 import { primaryColor, secondaryColor, COLORS } from "../../commonUtils"
+import Colors from "yoyoconstants/Colors"
 
 const styles = StyleSheet.create({
   mainViewStyle: {
@@ -42,8 +43,8 @@ const styles = StyleSheet.create({
     display: "flex",
   },
   sectionHeader: {
-    color: "black",
-    fontWeight: "600",
+    color: Colors.theme.secondaryDark,
+    fontWeight: "700",
     fontSize: 18,
     padding: 10,
     marginBottom: 10,

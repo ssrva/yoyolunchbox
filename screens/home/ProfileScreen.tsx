@@ -12,7 +12,7 @@ import { Text, View } from '../../components/Themed'
 import { notifyMessage, primaryColor } from "../../commonUtils"
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { Input, RadioGroup, Radio } from '@ui-kitten/components';
+import { Input, RadioGroup, Radio, Button } from '@ui-kitten/components';
 import commonStyles from "./styles"
 import * as api from "../../api"
 import moment from 'moment'
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
 })
 
 const ProfileScreen = (props) => {
+  const { navigation } = props
   const [loading, setLoading] = useState<boolean>(false)
   const user = useSelector(store => store.user)
   const [name, setName] = useState<string>(user.attributes?.name || "")
@@ -185,6 +186,12 @@ const ProfileScreen = (props) => {
     }
   }
 
+  const goToAddAddress = () => {
+    navigation.navigate("AddAddress", {
+      id: 1
+    })
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -221,6 +228,9 @@ const ProfileScreen = (props) => {
               <Radio>Veg</Radio>
               <Radio>Egg</Radio>
             </RadioGroup>
+            {/* <Button onPress={goToAddAddress}>
+              Add Address
+            </Button> */}
             <Text style={styles.label}>
               Choose Location on Map
             </Text>

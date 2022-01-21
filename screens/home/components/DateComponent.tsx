@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { StyleSheet, TouchableWithoutFeedback, ScrollView } from 'react-native'
 import { Text, View } from '../../../components/Themed'
 import { primaryColor } from '../../../commonUtils'
+import Colors from "yoyoconstants/Colors"
 
 const styles = StyleSheet.create({
   container: {
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
   },
   selectedDate: {
-    backgroundColor: primaryColor
+    backgroundColor: Colors.theme.primary
   },
   title: {
     fontSize: 18,
