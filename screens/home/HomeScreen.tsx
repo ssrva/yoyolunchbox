@@ -49,18 +49,22 @@ const HomeScreen = (props) => {
         grayOutDescription: "Order before 6AM"
       })
     }
-    result.push({
-      title: "Lunch",
-      data: selectedMenu["lunch"] || [],
-      grayOut: selectedDate === today && currentHour >= Constants.lunchCutoffHour,
-      grayOutDescription: "Order before 9AM"
-    })
-    result.push({
-      title: "Dinner",
-      data: selectedMenu["dinner"] || [],
-      grayOut: selectedDate === today && currentHour >= Constants.dinnerCutoffHour,
-      grayOutDescription: "Order before 4PM"
-    })
+    if (selectedMenu["lunch"] && selectedMenu["lunch"].length > 0) {
+      result.push({
+        title: "Lunch",
+        data: selectedMenu["lunch"] || [],
+        grayOut: selectedDate === today && currentHour >= Constants.lunchCutoffHour,
+        grayOutDescription: "Order before 9AM"
+      })
+    }
+    if (selectedMenu["dinner"] && selectedMenu["dinner"].length > 0) {
+      result.push({
+        title: "Dinner",
+        data: selectedMenu["dinner"] || [],
+        grayOut: selectedDate === today && currentHour >= Constants.dinnerCutoffHour,
+        grayOutDescription: "Order before 4PM"
+      })
+    }
     return result
   }
 
