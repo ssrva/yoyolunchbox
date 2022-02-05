@@ -270,7 +270,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
         {(!disabled && !grayOut) && (
           <>
             <View style={styles.selector} >
-              <Selector onChange={updateCount} />
+              <Selector count={quantity} onChange={updateCount} />
             </View>
           </>
         )}

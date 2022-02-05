@@ -1,5 +1,6 @@
 import * as React from 'react';
 import _ from "lodash"
+import moment from "moment"
 import { ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native'
 import { useDispatch } from 'react-redux';
 import { refreshBalance } from 'store/actions';
@@ -12,6 +13,7 @@ import { Button, Input } from "@ui-kitten/components"
 import * as api from "../../api"
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
+import Constants from 'yoyoconstants/Constants';
 
 type TOrderConfirmationProps = {
   route: Object,
@@ -91,7 +93,7 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [remarks, setRemarks] = useState<string>("")
   const username = useSelector(store => store.user.username)
-  const orders = route?.params?.orders || []
+  const [orders, setOrders] = useState<Array<Object>>(route?.params?.orders || [])
   const balance = useSelector(store => store.balance)
   const itemTotalPrice = orders.reduce((acc, order) => {
     return acc + (order.price * order.quantity)
@@ -108,6 +110,28 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
         remarks: remarks,
       }
     })
+
+    const currentDate = await api.getCurrentTime();
+    if (currentDate) {
+      const time = moment(currentDate.datetime);
+      const date = time.format("YYYY-MM-DD");
+      const hour = parseInt(time.format("HH"));
+      let invalidOrder = false;
+      orders.forEach(order => {
+        if (order.date == date) {
+          if ((order.type == Constants.dinner && hour > Constants.dinnerCutoffHour)
+              || (order.type == Constants.lunch && hour > Constants.lunchCutoffHour)
+              || (order.type == Constants.breakfast && hour > Constants.breakfastCutoffHour)) {
+              invalidOrder = true;
+          }
+        }
+      });
+      if (invalidOrder) {
+        const message = `Orders should be placed before 6AM for Brunch, 9AM for Lunch and 4PM for Dinner`;
+        notifyMessage(message)
+        return;
+      }
+    }
 
     const charges = {
       // delivery: 40,
@@ -127,6 +151,21 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
     }
   }
 
+  const onChange = (order) => {
+    if (order.quantity == 0) {
+      const newOrders = orders.filter(o => o.id != order.id)
+      setOrders(newOrders);
+    } else {
+      const newOrders = orders.map(o => {
+        if (o.id == order.id) {
+          o.quantity = order.quantity;
+        }
+        return o;
+      })
+      setOrders(newOrders);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView style={{ backgroundColor: "white" }}>
@@ -136,7 +175,7 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
           data={orders}
           renderItem={({item}) => {
             return (
-              <OrderListItem disabled {...item} />
+              <OrderListItem onChange={onChange} {...item} />
             )
           }}
         />

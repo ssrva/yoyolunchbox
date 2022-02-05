@@ -80,3 +80,8 @@ export const updateUserWalletBalance = async (
   })
   return response.data
 }
+
+export const getCurrentTime = async () => {
+  const response = await axios.get("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
+  return response.data;
+}

@@ -7,6 +7,7 @@ import { Text, View } from '../../../components/Themed';
 
 type TSelectorProps = {
   onChange: Function,
+  count: number
 }
 
 const styles = StyleSheet.create({
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
 
 const Selector = (props: TSelectorProps) => {
   const { onChange } = props
-  const [count, setCount] = useState<number>(0)
+  const [count, setCount] = useState<number>(props.count || 0)
 
   const updateCount = (offset: number) => {
     if (count == 0 && offset < 0) return
