@@ -14,6 +14,7 @@ import * as api from "../../api"
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import Constants from 'yoyoconstants/Constants';
+import * as Sentry from "@sentry/browser"
 
 type TOrderConfirmationProps = {
   route: Object,
@@ -111,26 +112,30 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
       }
     })
 
-    const currentDate = await api.getCurrentTime();
-    if (currentDate) {
-      const time = moment(currentDate.datetime);
-      const date = time.format("YYYY-MM-DD");
-      const hour = parseInt(time.format("HH"));
-      let invalidOrder = false;
-      orders.forEach(order => {
-        if (order.date == date) {
-          if ((order.type == Constants.dinner && hour > Constants.dinnerCutoffHour)
-              || (order.type == Constants.lunch && hour > Constants.lunchCutoffHour)
-              || (order.type == Constants.breakfast && hour > Constants.breakfastCutoffHour)) {
-              invalidOrder = true;
+    try {
+      const currentDate = await api.getCurrentTime();
+      if (currentDate) {
+        const time = moment(currentDate.datetime);
+        const date = time.format("YYYY-MM-DD");
+        const hour = parseInt(time.format("HH"));
+        let invalidOrder = false;
+        orders.forEach(order => {
+          if (order.date == date) {
+            if ((order.type == Constants.dinner && hour > Constants.dinnerCutoffHour)
+                || (order.type == Constants.lunch && hour > Constants.lunchCutoffHour)
+                || (order.type == Constants.breakfast && hour > Constants.breakfastCutoffHour)) {
+                invalidOrder = true;
+            }
           }
+        });
+        if (invalidOrder) {
+          const message = `Orders should be placed before 6AM for Brunch, 9AM for Lunch and 4PM for Dinner`;
+          notifyMessage(message)
+          return;
         }
-      });
-      if (invalidOrder) {
-        const message = `Orders should be placed before 6AM for Brunch, 9AM for Lunch and 4PM for Dinner`;
-        notifyMessage(message)
-        return;
       }
+    } catch (e) {
+      Sentry.captureException(e)
     }
 
     const charges = {
