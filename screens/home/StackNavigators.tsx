@@ -88,7 +88,7 @@ const headerOptions = ({route, navigation}) => ({
   headerLeft: () => {
     const routes = navigation?.getState()?.routes
     const currentRoute = routes?.[routes.length - 1]?.name
-    const backButtonScreens = ["Transactions"]
+    const backButtonScreens = ["Transactions", "AddAddress"]
     return backButtonScreens.includes(currentRoute) ? (
       <TouchableOpacity
         style={{ marginRight: 10 }}

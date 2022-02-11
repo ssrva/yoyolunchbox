@@ -1,13 +1,5 @@
 import * as React from 'react'
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
-import {
-  ActivityIndicator,
-  TouchableOpacity,
-  Image,
-  Keyboard,
-  StyleSheet,
-  TouchableWithoutFeedback
-} from 'react-native'
+import { ActivityIndicator, StyleSheet } from 'react-native'
 import { Text, View } from '../../components/Themed'
 import { notifyMessage, primaryColor } from "../../commonUtils"
 import { useSelector } from 'react-redux'
@@ -19,6 +11,10 @@ import moment from 'moment'
 import * as Location from 'expo-location'
 import { ScrollView } from 'react-native-gesture-handler'
 import * as Sentry from "@sentry/browser";
+import Colors from 'yoyoconstants/Colors'
+import { Ionicons } from '@expo/vector-icons'
+import { useFocusEffect } from '@react-navigation/native';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -35,13 +31,15 @@ const styles = StyleSheet.create({
   title: {
     color: "black",
     fontWeight: "bold",
-    fontSize: 24,
+    fontSize: 18,
+    textTransform: "uppercase",
     marginBottom: 10,
   },
   profileMetadata: {
     backgroundColor: "white",
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   formElements: {
     backgroundColor: "white",
@@ -53,27 +51,22 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: "white",
     display: "flex",
-    flexDirection: "row",
-    marginBottom: 20,
+    flexDirection: "column",
+    marginBottom: 10,
+    borderBottomWidth: 2,
+    paddingBottom: 15
   },
-  profilePictureContainer: {
-    height: 120,
-    width: 120,
-    padding: 5,
-    borderWidth: 5,
-    borderColor: "rgba(242, 201, 76, 0.5)",
-    borderRadius: 60,
-    marginRight: 20,
-  },
-  profilePicture: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    resizeMode: "cover",
+  section: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#E1E1E1",
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginBottom: 10
   },
   profileMetadataText: {
-    color: "black",
-    fontStyle: "italic"
+    color: Colors.theme.secondary,
+    fontSize: 12,
+    textTransform: "uppercase"
   },
   logoutButton: {
     borderRadius: 50,
@@ -93,10 +86,14 @@ const styles = StyleSheet.create({
     borderRadius: 4
   },
   mealPreferenceContainer: {
-    marginBottom: 20,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  button: {
+    alignSelf:"flex-start",
+    marginTop: 10,
+    marginBottom: 10,
   }
 })
 
@@ -104,13 +101,30 @@ const ProfileScreen = (props) => {
   const { navigation } = props
   const [loading, setLoading] = useState<boolean>(false)
   const user = useSelector(store => store.user)
-  const [name, setName] = useState<string>(user.attributes?.name || "")
-  const [address, setAddress] = useState<string>("")
+  const name = user.attributes?.name || ""
+  const [addressDetails, setAddressDetails] = useState<Array<Object>>()
   const [createdOn, setCreatedOn] = useState<string>()
+  const [phone, setPhone] = useState<string>()
   const [mealPreferenceIndex, setMealPreferenceIndex] = useState<number>(3)
-  const [userCoordinates, setUserCoordinates] = useState<Object>({
-    latitude: 13.067439, longitude: 80.237617
-  })
+  const [addressLoading, setAddressLoading] = useState<boolean>(false)
+
+
+  const fetchAddressDetails = async () => {
+    setAddressLoading(true)
+    const addressDetails = await api.getAddress(user.username);
+    setAddressDetails(addressDetails);
+    console.log(addressDetails)
+    setAddressLoading(false)
+  }
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchAddressDetails()
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
 
   const getLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync()
@@ -133,34 +147,24 @@ const ProfileScreen = (props) => {
   useEffect(() => {
     const fetchProfileData = async () => {
       const details = await api.getUserDetails(user.username)
-      setAddress(details.address)
       setCreatedOn(details.created_on)
-      if (!details.coordinates) {
-        const location = await getLocation()
-        setUserCoordinates(location)
-      } else {
-        setUserCoordinates(details.coordinates)
-      }
+      setPhone(details.phone)
       setMealPreferenceIndex(mealPreferenceToIndex(details.meal_preference))
     }
     fetchProfileData()
   }, [])
 
-  const updateProfile = async () => {
+  const updateMealPreference = async () => {
     const details = {
-      coordinates: userCoordinates,
-      address: address,
-      phone: user.attributes.phone_number,
       meal_preference: indexToMealPreference(mealPreferenceIndex)
     }
     setLoading(true)
     try {
-      await api.updateUserDetails(user.username, details)
-      notifyMessage("Updated user successfully")
+      await api.updateUserMealPreference(user.username, details)
+      notifyMessage("Updated successfully")
     } catch (e) {
       Sentry.captureException(e)
-      console.log("Sri - " + e.message)
-      notifyMessage("Failed to update user")
+      notifyMessage("Failed to update")
     } finally {
       setLoading(false)
     }
@@ -188,15 +192,18 @@ const ProfileScreen = (props) => {
 
   const goToAddAddress = () => {
     navigation.navigate("AddAddress", {
-      id: 1
+      add: true
     })
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <Text style={styles.title}>{name}</Text>
         <View style={styles.profileMetadata}>
-          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.profileMetadataText}>
+            {phone}
+          </Text>
           {createdOn && (
             <Text style={styles.profileMetadataText}>
               Member since {moment(createdOn).format("MMM DD, YYYY")}
@@ -204,70 +211,104 @@ const ProfileScreen = (props) => {
           )}
         </View>
       </View>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView>
-          <View style={styles.formElements}>
-            <Text style={styles.label}>
-              Address
-            </Text>
-            <Input
-              value={address}
-              textStyle={{ height: 100 }}
-              multiline
-              numberOfLines={4}
-              style={styles.input}
-              onChangeText={setAddress} />
-            <Text style={styles.label}>
-              Meal Preference
-            </Text>
-            <RadioGroup
-              style={styles.mealPreferenceContainer}
-              onChange={setMealPreferenceIndex}
-              selectedIndex={mealPreferenceIndex}>
-              <Radio>All (Non Veg)</Radio>
-              <Radio>Veg</Radio>
-              <Radio>Egg</Radio>
-            </RadioGroup>
-            {/* <Button onPress={goToAddAddress}>
+      <View style={styles.section}>
+        <Text style={styles.label}>
+          Meal Preference
+        </Text>
+        <RadioGroup
+          style={styles.mealPreferenceContainer}
+          onChange={setMealPreferenceIndex}
+          selectedIndex={mealPreferenceIndex}>
+          <Radio>All (Non Veg)</Radio>
+          <Radio>Veg</Radio>
+          <Radio>Egg</Radio>
+        </RadioGroup>
+        <Button
+          appearance="outline"
+          size="small"
+          disabled={loading}
+          onPress={updateMealPreference}
+          style={styles.button}>
+          UPDATE
+        </Button>
+      </View>
+      <ScrollView>
+        <View style={styles.section}>
+          <Text style={styles.label}>
+            Saved Address
+          </Text>
+          {addressLoading && (
+            <ActivityIndicator style={{ marginRight: 10 }} color="black" />
+          )}
+          {!addressLoading && addressDetails?.map(addressDetail => {
+            return (
+              <Address
+                id={addressDetail.id}
+                coordinates={addressDetail.coordinates}
+                label={addressDetail.label}
+                address={addressDetail.address}
+                navigation={navigation} />
+            )
+          })}
+          {!addressLoading && (!addressDetails || addressDetails.length == 0) && (
+            <Button
+              onPress={goToAddAddress}
+              appearance="outline"
+              size="small"
+              style={{ marginTop: 10 }}>
               Add Address
-            </Button> */}
-            <Text style={styles.label}>
-              Choose Location on Map
-            </Text>
-            <View style={styles.mapContainer}>
-              <MapView
-                provider={PROVIDER_GOOGLE}
-                region={{
-                  latitude: userCoordinates.latitude,
-                  longitude: userCoordinates.longitude,
-                  latitudeDelta: 0.001,
-                  longitudeDelta: 0.001,
-                }}
-                onPress={(coordinates) => {
-                  setUserCoordinates({
-                    latitude: coordinates.nativeEvent.coordinate.latitude,
-                    longitude: coordinates.nativeEvent.coordinate.longitude
-                  })
-                }}
-                style={styles.map}>
-                <Marker
-                  coordinate={{
-                    latitude : userCoordinates.latitude ,
-                    longitude : userCoordinates.longitude
-                  }}
-                  title="User Location"/>
-              </MapView>
-            </View>
-          </View>
-        </ScrollView>
-      </TouchableWithoutFeedback>
-      <TouchableOpacity
-        disabled={loading}
-        onPress={updateProfile}
-        style={commonStyles.mainButton}>
-        {loading && (<ActivityIndicator style={{ marginRight: 10 }} color="white" />)}
-        <Text style={{ color: "white" }}>Update Profile</Text>
-      </TouchableOpacity>
+            </Button>
+          )}
+        </View>
+      </ScrollView>
+    </View>
+  )
+}
+
+const addressStyles = StyleSheet.create({
+  container: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    display: "flex",
+    flexDirection: "row"
+  },
+  label: {
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    marginBottom: 5
+  },
+  address: {
+  }
+})
+
+const Address = (props) => {
+  const {id, label, address, coordinates, navigation} = props
+  const icon = label?.toLowerCase() === "home" ? "home-outline" : "location-outline";
+
+  const goToUpdateAddress = () => {
+    navigation.navigate("AddAddress", {
+      add: false,
+      id: id,
+      latitude: coordinates.latitude,
+      longitude: coordinates.longitude,
+      initialLabel: label,
+      initialAddress: address
+    })
+  }
+
+  return (
+    <View style={addressStyles.container}>
+      <View>
+        <Ionicons size={18} name={icon} color={"#4F4946"} />
+      </View>
+      <View style={{ marginLeft: 15, flexShrink: 1 }}>
+        <Text style={addressStyles.label}>{label}</Text>
+        <Text style={addressStyles.address}>{address}</Text>
+
+        <Button appearance="outline" size="small" style={styles.button} status="warning" onPress={goToUpdateAddress}>
+          UPDATE
+        </Button>
+      </View>
     </View>
   )
 }
