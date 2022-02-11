@@ -5,7 +5,8 @@
     "owner": "mssrivathsan",
     "version": "1.0.2",
     "extra": {
-      "jsPackageVersion": "1.2.1"
+      "jsPackageVersion": "1.3.0",
+      "distanceMatrixApiKey": "AIzaSyC7wpmuxP2-ZMr-P9V_2cqw0q4Bwb0G_hw"
     },
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

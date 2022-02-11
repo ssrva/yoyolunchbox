@@ -1,4 +1,5 @@
 import axios from "axios"
+import Constants from "expo-constants"
 
 export const getUserDetails = async (username: string) => {
   const response = await axios.get(`/user/${username}`)
@@ -9,6 +10,13 @@ export const updateUserDetails = async (username: string, details: Object) => {
   const response = await axios.put("/user", {
     username,
     ...details
+  })
+  return response.data
+}
+
+export const updateUserMealPreference = async (username: string, details: Object) => {
+  const response = await axios.put("/user/meal_preference", {
+    username, ...details
   })
   return response.data
 }
@@ -83,5 +91,27 @@ export const updateUserWalletBalance = async (
 
 export const getCurrentTime = async () => {
   const response = await axios.get("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
+  return response.data;
+}
+
+export const getDistance = async (latitude, longitude) => {
+  const apiKey = Constants.manifest.extra.distanceMatrixApiKey
+  const endpoint = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=12.9800217%2C80.213505&destinations=${latitude}%2C${longitude}&key=${apiKey}`
+  const response = await axios.get(endpoint);
+  return response.data;
+}
+
+export const getAddress = async (username) => {
+  const response = await axios.get(`/address/${username}`)
+  return response.data;
+}
+
+export const addAddress = async (data) => {
+  const response = await axios.post("/address", data)
+  return response.data;
+}
+
+export const updateAddress = async (data) => {
+  const response = await axios.put("/address", data)
   return response.data;
 }
