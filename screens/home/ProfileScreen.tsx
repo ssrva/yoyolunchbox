@@ -277,9 +277,11 @@ const addressStyles = StyleSheet.create({
   label: {
     textTransform: "uppercase",
     fontWeight: "bold",
-    marginBottom: 5
+    marginBottom: 5,
+    color: "black"
   },
   address: {
+    color: "black"
   }
 })
 
@@ -300,10 +302,10 @@ const Address = (props) => {
 
   return (
     <View style={addressStyles.container}>
-      <View>
+      <View style={{ backgroundColor: "white" }}>
         <Ionicons size={18} name={icon} color={"#4F4946"} />
       </View>
-      <View style={{ marginLeft: 15, flexShrink: 1 }}>
+      <View style={{ marginLeft: 15, flexShrink: 1, backgroundColor: "white" }}>
         <Text style={addressStyles.label}>{label}</Text>
         <Text style={addressStyles.address}>{address}</Text>
 

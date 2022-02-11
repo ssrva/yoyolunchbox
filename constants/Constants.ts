@@ -5,5 +5,5 @@ export default {
   breakfastCutoffHour: 6,
   lunchCutoffHour: 9,
   dinnerCutoffHour: 16,
-  maxDeliveryDistanceInMeters: 10000
+  maxDeliveryDistanceInMeters: 15000 // in meters
 }

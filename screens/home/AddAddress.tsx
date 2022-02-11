@@ -1,3 +1,4 @@
+import _ from "lodash"
 import * as React from 'react'
 import { useState } from 'react'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
@@ -88,9 +89,11 @@ const AddAddress = (props) => {
   })
   const [address, setAddress] = useState<string>(initialAddress)
   const [label, setLabel] = useState<string>(initialLabel)
+  const [loading, setLoading] = useState<boolean>(false)
   const username = useSelector(store => store.user.username)
 
   const addAddress = async (region, label, address) => {
+    setLoading(true)
     try {
       const distanceResponse = await api.getDistance(region.latitude, region.longitude)
       const distanceInMeters = distanceResponse?.rows?.[0]?.elements?.[0]?.distance?.value
@@ -137,6 +140,7 @@ const AddAddress = (props) => {
       Sentry.captureException(e)
       notifyMessage("Failed to add address, please try again later")
     }
+    setLoading(false)
   }
 
   return (
@@ -171,7 +175,9 @@ const AddAddress = (props) => {
                 value={address}
                 onChangeText={setAddress}
                 placeholder="Full address" />
-              <Button onPress={() => addAddress(region, label, address)}>
+              <Button
+                disabled={loading || _.isEmpty(address) || _.isEmpty(label)}
+                onPress={() => addAddress(region, label, address)}>
                 {add ? "Add Address" : "Update Address"}
               </Button>
             </View>
