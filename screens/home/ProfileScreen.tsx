@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15
   },
   section: {
+    backgroundColor: "white",
     borderBottomWidth: 1,
     borderBottomColor: "#E1E1E1",
     paddingTop: 10,
@@ -270,7 +271,8 @@ const addressStyles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    backgroundColor: "white"
   },
   label: {
     textTransform: "uppercase",

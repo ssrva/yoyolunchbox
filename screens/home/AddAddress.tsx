@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     width: "100%",
     borderColor: "#D1D1D1",
     borderWidth: 1,
-    flex: 1,
+    flex: 1
   },
   marker: {
     position: 'absolute',
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   markerData: {
     backgroundColor: "rgba(0,0,0,0.8)",
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
   dataContainer: {
+    backgroundColor: "white",
     padding: 20,
     paddingBottom: 50,
     shadowColor: "#171717",
@@ -80,8 +81,8 @@ const AddAddress = (props) => {
   const initialAddress = route?.params?.initialAddress
 
   const [region, setRegion] = useState<Object>({
-      latitude: latitude || 12.9800217,
-      longitude: longitude || 80.213505,
+      latitude: parseFloat(latitude) || 12.9800217,
+      longitude: parseFloat(longitude) || 80.213505,
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
   })
@@ -104,8 +105,8 @@ const AddAddress = (props) => {
               address: address,
               label: label,
               coordinates: {
-                latitude: region.latitude,
-                longitude: region.longitude
+                latitude: parseFloat(region.latitude),
+                longitude: parseFloat(region.longitude)
               }
             }
             await api.addAddress(addAddressInput)
@@ -118,8 +119,8 @@ const AddAddress = (props) => {
               address: address,
               label: label,
               coordinates: {
-                latitude: region.latitude,
-                longitude: region.longitude
+                latitude: parseFloat(region.latitude),
+                longitude: parseFloat(region.longitude)
               }
             }
             console.log(updateAddressInput);
@@ -142,16 +143,17 @@ const AddAddress = (props) => {
     <View style={{ width: "100%", height: "100%" }}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.main}>
-          <MapView
-            provider={PROVIDER_GOOGLE}
-            initialRegion={region}
-            onRegionChangeComplete={setRegion}
-            style={styles.map}>
+          <View style={{ flex: 1 }}>
+            <MapView
+              provider={PROVIDER_GOOGLE}
+              initialRegion={region}
+              onRegionChangeComplete={setRegion}
+              style={styles.map} />
             <View pointerEvents="none" style={styles.marker}>
               <Text style={styles.markerData}>Order will be delivered here</Text>
               <View style={styles.tooltip}><Text></Text></View>
             </View>
-          </MapView>
+          </View>
           
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
             <View style={styles.dataContainer}>

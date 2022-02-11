@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   locationText: {
     fontSize: 18,
     textDecorationLine: "underline",
-    color: Colors.theme.textColor
+    color: Colors.theme.text
   },
   wallet: {
     backgroundColor: Colors.theme.backgroundDark,
