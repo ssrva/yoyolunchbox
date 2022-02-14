@@ -145,10 +145,15 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
 
     setLoading(true)
     try {
-      await api.placeOrder(username, charges, apiInput)
-      notifyMessage("Order placed successfully")
-      dispatch(refreshBalance())
-      navigation.navigate("Home")
+      const address = await api.getAddress(username) || []
+      if (address.length == 0) {
+        notifyMessage("Please add address from profile page before ordering")
+      } else {
+        await api.placeOrder(username, charges, apiInput)
+        notifyMessage("Order placed successfully")
+        dispatch(refreshBalance())
+        navigation.navigate("Home")
+      }
     } catch (e) {
       notifyMessage("Error placing order")
     } finally {
