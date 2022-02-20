@@ -168,10 +168,6 @@ export const OrdersNavigator = () => {
 const OrderTabsNavigator = () => {
   return (
     <Tab.Navigator>
-      {/* <Tab.Screen
-        name="On Route"
-        component={Orders}
-        initialParams={{ status: "on_route" }} /> */}
       <Tab.Screen
         name="Upcoming"
         component={Orders}

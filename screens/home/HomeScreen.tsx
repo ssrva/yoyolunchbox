@@ -12,6 +12,17 @@ import { setMenu } from "../../store/actions"
 import * as api from "../../api"
 import Constants from "yoyoconstants/Constants"
 
+
+const getInitialDate = () => {
+  const today = moment().utcOffset("530").format("YYYY-MM-DD")
+  const currentHour = parseInt(moment().utcOffset("530").format("HH"))
+  if (currentHour >= Constants.dinnerCutoffHour) {
+    const tomorrow = moment(today).add(1, "day").format("YYYY-MM-DD")
+    return tomorrow
+  }
+  return today
+}
+
 const HomeScreen = (props) => {
   const { navigation } = props
   const dispatch = useDispatch()
@@ -20,10 +31,10 @@ const HomeScreen = (props) => {
   const user = useSelector(store => store.user.attributes)
   const today = moment().utcOffset("530").format("YYYY-MM-DD")
   const [loading, setLoading] = useState<boolean>(false)
-  const [selectedDate, setSelectedDate] = useState<string>(moment().format("YYYY-MM-DD"))
+  const [selectedDate, setSelectedDate] = useState<string>(getInitialDate())
   const [orders, setOrders] = useState<Object>({})
   const selectedMenu = (menu && _.groupBy(menu[selectedDate], "type")) || {}
-  
+
   const fetchMenuDetails = async () => {
     const datesToFetch = []
     setLoading(true)
@@ -96,7 +107,7 @@ const HomeScreen = (props) => {
             <Text style={{ fontFamily: "helvetica-neue-light", color: "black" }}>What would you like to order?</Text>
           </Text>
         </View>
-        <DateComponent onDateChange={setSelectedDate} />
+        <DateComponent initialDate={selectedDate} onDateChange={setSelectedDate} />
         <View style={styles.ordersContainer}>
           {(_.isNil(selectedMenu) || _.isEmpty(selectedMenu)) ? (
             <Text style={{ padding: 20, color: "black" }}>

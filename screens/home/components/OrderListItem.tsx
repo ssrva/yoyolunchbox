@@ -110,7 +110,8 @@ const styles = StyleSheet.create({
   },
   dangerTag: {
     backgroundColor: "#F8D7DA",
-    borderColor: "#F5C6CB",
+    borderColor: "#721C24",
+    borderWidth: 1,
     color: "#721C24"
   },
   grayOutDescription: {
@@ -240,15 +241,17 @@ const OrderListItem = (props: TOrderListItemProps) => {
         <View style={styles.tagsContainer}>
           {!hideDate && (
             <Text style={styles.tag}>
-              {moment(date).format("MMMM DD, YYYY")}
-            </Text>
-          )}
-          {status === "cancelled" && (
-            <Text style={{...styles.tag, ...styles.dangerTag}}>
-              CANCELLED
+              {moment(date).format("MMMM DD, YYYY")} ({type})
             </Text>
           )}
         </View>
+        {status === "cancelled" && (
+          <View style={styles.tagsContainer}>
+              <Text style={{...styles.tag, ...styles.dangerTag}}>
+                CANCELLED
+              </Text>
+          </View>
+        )}
         <Text style={styles.title}>
           {title}
           {disabled && (

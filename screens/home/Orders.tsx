@@ -1,15 +1,13 @@
 import _ from "lodash"
 import moment from "moment"
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { FlatList, SectionList, StyleSheet } from 'react-native';
-import { Text, View } from '../../components/Themed';
+import { useState } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
+import { View } from '../../components/Themed';
 import { COLORS } from "../../commonUtils"
 import OrderListItem from './components/OrderListItem';
 import * as api from "../../api"
 import { useSelector } from 'react-redux';
-import { Ionicons } from '@expo/vector-icons';
-import { ScrollView } from "react-native-gesture-handler";
 import { useFocusEffect } from "@react-navigation/native";
 
 const styles = StyleSheet.create({

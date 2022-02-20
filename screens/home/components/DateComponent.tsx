@@ -13,41 +13,29 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   date: {
-    backgroundColor: "rgba(255, 170, 0, 0.08)",
+    backgroundColor: Colors.theme.backgroundLight,
     marginRight: 10,
     padding: 10,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: "#edda9f"
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 1,
   },
   selectedDate: {
     backgroundColor: "#F2C94C"
   },
   title: {
     fontSize: 16,
-    color: "#4F4946",
+    color: Colors.theme.text,
     textTransform: "uppercase",
     fontWeight: "bold"
   },
   selectedDateTitle: {
     color: "#4F4946"
-  },
-  dateString: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: "rgb(255, 170, 0)"
   }
 })
 
 const DateComponent = (props) => {
-  const { onDateChange } = props
+  const { onDateChange, initialDate } = props
   const today = moment().utcOffset("530").format("YYYY-MM-DD")
   const tomorrow = moment(today).add(1, 'd').format("YYYY-MM-DD")
   const otherDates = []
@@ -56,8 +44,9 @@ const DateComponent = (props) => {
   });
 
   const dayAfter = moment(today).add(2, 'd').format("YYYY-MM-DD")
-  const [selectedDate, setSelectedDate] = useState<string>(today)
+  const [selectedDate, setSelectedDate] = useState<string>(initialDate)
 
+  console.log(selectedDate)
   const setDate = (date: string) => {
     onDateChange(date)
     setSelectedDate(date)
@@ -99,17 +88,11 @@ const DateComponent = (props) => {
         <TouchableWithoutFeedback onPress={() => setDate(today)}>
           <View style={getDateContainerStyles(today)}>
             <Text style={getDateTitleStyle(today)}>Today</Text>
-            {/* <Text style={styles.dateString}>
-              {moment(today).format("ddd DD, MMM")}
-            </Text> */}
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => setDate(tomorrow)}>
           <View style={getDateContainerStyles(tomorrow)}>
             <Text style={getDateTitleStyle(tomorrow)}>Tomorrow</Text>
-            {/* <Text style={styles.dateString}>
-              {moment(tomorrow).format("ddd DD, MMM")}
-            </Text> */}
           </View>
         </TouchableWithoutFeedback>
         {allDatesDom()}

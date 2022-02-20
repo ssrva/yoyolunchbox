@@ -2,8 +2,9 @@ const tintColorLight = '#2f95dc';
 const tintColorDark = '#fff';
 
 const background = "#FFFFFF"
+const backgroundLight = "rgba(255, 170, 0, 0.08)"
 const backgroundDark = "#D1D1D1"
-const text = "#171717"
+const text = "#4F4946"
 const textDark = "#000000"
 
 const primaryLight = "#f8e4a5"
@@ -17,6 +18,7 @@ export default {
   theme: {
     background,
     backgroundDark,
+    backgroundLight,
     text,
     textDark,
     primary,

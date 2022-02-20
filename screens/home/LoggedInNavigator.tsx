@@ -27,6 +27,7 @@ import { setMenu, setUser, setUserPreferences } from "../../store/actions"
 import * as api from "../../api"
 import { primaryColorDark } from "../../commonUtils"
 import { AppearanceProvider } from "react-native-appearance"
+import Colors from "yoyoconstants/Colors"
 
 const Drawer = createDrawerNavigator()
 
@@ -171,7 +172,10 @@ const CustomDrawerContent = (props) => {
         </Text>
       </View>
       <View style={styles.menu}>
-        <DrawerItemList {...props} />
+        <DrawerItemList
+          activeBackgroundColor={Colors.theme.backgroundLight}
+          activeTintColor={Colors.theme.text}
+          {...props} />
       </View>
       <View style={styles.footer}>
         <TouchableOpacity
