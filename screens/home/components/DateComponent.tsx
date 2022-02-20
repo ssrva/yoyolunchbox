@@ -13,31 +13,36 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   date: {
-    backgroundColor: "#F1F1F1",
+    backgroundColor: "rgba(255, 170, 0, 0.08)",
     marginRight: 10,
-    padding: 15,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 1,
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#edda9f"
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 1,
   },
   selectedDate: {
-    backgroundColor: Colors.theme.primary
+    backgroundColor: "#F2C94C"
   },
   title: {
-    fontSize: 18,
-    marginBottom: 10,
-    fontWeight: "bold",
-    color: "black"
+    fontSize: 16,
+    color: "#4F4946",
+    textTransform: "uppercase",
+    fontWeight: "bold"
+  },
+  selectedDateTitle: {
+    color: "#4F4946"
   },
   dateString: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "black"
+    color: "rgb(255, 170, 0)"
   }
 })
 
@@ -65,13 +70,20 @@ const DateComponent = (props) => {
     }
   }
 
+  const getDateTitleStyle = (date: string) => {
+    return {
+      ...styles.title,
+      ...(date === selectedDate) ? styles.selectedDateTitle : {}
+    }
+  }
+
   const allDatesDom = () => {
     return otherDates.map(date => (
       <TouchableWithoutFeedback onPress={() => setDate(date)}>
         <View style={getDateContainerStyles(date)}>
-          <Text style={styles.title}>{moment(date).format("dddd")}</Text>
-          <Text style={styles.dateString}>
-            {moment(date).format("ddd DD, MMM")}
+          {/* <Text style={styles.title}>{moment(date).format("dddd")}</Text> */}
+          <Text style={getDateTitleStyle(date)}>
+            {moment(date).format("MMM DD")}
           </Text>
         </View>
       </TouchableWithoutFeedback>
@@ -81,23 +93,23 @@ const DateComponent = (props) => {
   return (
     <View style={styles.container}>
       <ScrollView
-        style={{ paddingBottom: 10, backgroundColor: "white" }}
+        style={{ backgroundColor: "white" }}
         showsHorizontalScrollIndicator={false} 
         horizontal>
         <TouchableWithoutFeedback onPress={() => setDate(today)}>
           <View style={getDateContainerStyles(today)}>
-            <Text style={styles.title}>Today</Text>
-            <Text style={styles.dateString}>
+            <Text style={getDateTitleStyle(today)}>Today</Text>
+            {/* <Text style={styles.dateString}>
               {moment(today).format("ddd DD, MMM")}
-            </Text>
+            </Text> */}
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => setDate(tomorrow)}>
           <View style={getDateContainerStyles(tomorrow)}>
-            <Text style={styles.title}>Tomorrow</Text>
-            <Text style={styles.dateString}>
+            <Text style={getDateTitleStyle(tomorrow)}>Tomorrow</Text>
+            {/* <Text style={styles.dateString}>
               {moment(tomorrow).format("ddd DD, MMM")}
-            </Text>
+            </Text> */}
           </View>
         </TouchableWithoutFeedback>
         {allDatesDom()}

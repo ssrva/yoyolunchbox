@@ -257,11 +257,11 @@ const OrderListItem = (props: TOrderListItemProps) => {
         </Text>
         {disabled && (
           <Text style={styles.totalPrice}>
-            Rs. {parseInt(price) * parseInt(quantity)}
+            {'\u20B9'} {parseInt(price) * parseInt(quantity)}
           </Text>
         )}
         <Text style={styles.description}>{description}</Text>
-        <Text style={styles.price}>Rs. {price}</Text>
+        <Text style={styles.price}>{'\u20B9'} {price}</Text>
         {grayOut && !_.isNil(grayOutDescription) && (
           <View style={styles.grayOutDescription}>
             <Text style={styles.grayOutDescriptionText}>{grayOutDescription}</Text>

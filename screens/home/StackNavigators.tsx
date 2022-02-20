@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, TouchableOpacity, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { Platform, Image, TouchableOpacity, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "./HomeScreen"
@@ -11,6 +11,7 @@ import OrderConfirmation from "./OrderConfirmation";
 import { primaryColor } from "../../commonUtils"
 import { Text, View } from '../../components/Themed';
 import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import * as api from "../../api"
 import Transactions from "./Transactions"
@@ -30,20 +31,44 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.theme.background
   },
+  headerLogo: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    backgroundColor: Colors.theme.background
+  },
+  logo: {
+    width: 175,
+    height: 20,
+    resizeMode: "cover",
+    backgroundColor: "transparent"
+  },
   locationText: {
     fontSize: 18,
     textDecorationLine: "underline",
     color: Colors.theme.text
   },
   wallet: {
-    backgroundColor: Colors.theme.backgroundDark,
-    padding: 5,
-    paddingLeft: 10,
-    paddingRight: 10,
-    borderRadius: 5,
+    backgroundColor: "rgba(255, 170, 0, 0.08)",
+    borderColor: "#edda9f",
+    borderWidth: 1,
+    borderRadius: 15,
     display: "flex",
+    paddingRight: 10,
     flexDirection: "row",
     alignItems: "center"
+  },
+  walletIcon: {
+    backgroundColor: "#F2C94C",
+    padding: 5,
+    width: 25,
+    height: 25,
+    borderRadius: 12,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 5
   }
 })
 
@@ -60,12 +85,14 @@ const WalletBalanceComponent = (props) => {
   return (
     <TouchableWithoutFeedback onPress={() => navigation.navigate("Transactions")}>
       <View style={styles.wallet}>
-        <Ionicons
-          size={20}
-          name="wallet"
-          style={{ marginRight: 5 }}
-          color={Colors.theme.secondary} />
-        <Text style={{ fontWeight: "bold", color: Colors.theme.textDark }}>{'\u20B9'}{balance}</Text>
+        <View style={styles.walletIcon}>
+          <FontAwesome
+            name="inr"
+            size={15}
+            color="#4F4946" />
+        </View>
+        
+        <Text style={{ fontWeight: "bold", color: Colors.theme.textDark }}>{balance}</Text>
       </View>
     </TouchableWithoutFeedback>
   )
@@ -73,6 +100,7 @@ const WalletBalanceComponent = (props) => {
 
 const headerOptions = ({route, navigation}) => ({
   headerStyle: {
+    height: Platform.OS === 'android' ? 80 : 100,
     elevation: 0,
     shadowOpacity: 0,
     borderBottomWidth: 0,
@@ -80,9 +108,10 @@ const headerOptions = ({route, navigation}) => ({
   },
   headerTitleAlign: "left",
   headerTitle: () => (
-    <View style={styles.headerAddress}>
-      <Ionicons size={20} name="location" color={Colors.theme.secondary} style={styles.locationIcon} />
-      <Text style={styles.locationText}>Home</Text>
+    <View style={styles.headerLogo}>
+      <Image
+        style={styles.logo}
+        source={require("../../static/images/logo-header.png")} />
     </View>
   ),
   headerLeft: () => {
@@ -108,7 +137,7 @@ const headerOptions = ({route, navigation}) => ({
   ),
   headerTintColor: "#000",
   headerTitleContainerStyle: {
-    marginLeft: -10,
+    marginLeft: -20,
   },
   headerLeftContainerStyle: {
     marginLeft: 15,

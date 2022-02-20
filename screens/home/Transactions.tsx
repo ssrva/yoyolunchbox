@@ -102,7 +102,7 @@ const Transactions = (props) => {
               </View>
               <View>
                 <Text style={{ ...amountClass, ...styles.amount }}>
-                  {isDebit ? '-' : '+'} {'\u20A8'}.{amount}
+                  {isDebit ? '-' : '+'} {'\u20B9'}{amount}
                 </Text>
               </View>
             </View>
