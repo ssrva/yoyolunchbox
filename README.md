@@ -55,3 +55,16 @@ iOS development guide
 1. Instal cocoapods on your mac - `brew install cocoapods`
 2. Run `sudo xcode-select --switch /Applications/Xcode.app`
 3. cd into `ios` folder and run `pod install` to install the pods
+
+iOS Testing app through test flight
+TestFlight on iOS does not allow to have a separate build for testing. The idea is to have the same build as production to be used by testers too.
+In our use case we want to use a differente expo release channel for test flight builds. Here is the workaround
+
+1. Open Xcode, go to YOYOLunchbox > Supporting > Expo.
+2. Update EXUpdatesReleaseChannel variable to `beta`
+3. Go to Product > Archive
+4. Upload the archive to app store connect.
+5. Once the upload is done, the build should be visible on TestFlight app.
+6. Once all the testing is completed build another archive by switching back EXUpdatesReleaseChannel to production
+7. Upload to app store connect and make a release.
+
