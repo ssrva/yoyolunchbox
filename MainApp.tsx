@@ -7,7 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import useCachedResources from './hooks/useCachedResources'
 import { Auth } from 'aws-amplify'
 import MainNavigator from "./screens/MainNavigator"
-import { setUser } from './store/actions'
+import { setUserWithTracking } from './store/actions'
 import * as eva from '@eva-design/eva'
 import { Text } from "react-native"
 import { ApplicationProvider } from '@ui-kitten/components'
@@ -15,6 +15,7 @@ import { Appearance } from 'react-native-appearance';
 import * as Updates from 'expo-updates';
 import * as Sentry from "@sentry/browser"
 import * as Amplitude from 'expo-analytics-amplitude';
+import getEnvironmentVariables from "common/environments"
 
 const MainApp = () => {
   const isLoadingComplete = useCachedResources()
@@ -22,9 +23,8 @@ const MainApp = () => {
   const dispatch = useDispatch()
   Appearance.set({ colorScheme: 'light' })
 
-  axios.defaults.baseURL = "https://baqg6112pd.execute-api.us-east-1.amazonaws.com/production";
-  // axios.defaults.baseURL = "http://localhost:3000/dev";
-
+  axios.defaults.baseURL = getEnvironmentVariables().baseUrl;
+  
   const getJwtToken = async () => {
     const user = await Auth.currentAuthenticatedUser({ bypassCache: false })
     return user.signInUserSession.idToken.jwtToken
@@ -55,7 +55,7 @@ const MainApp = () => {
   }
 
   const initializeAmplitude = async () => {
-    await Amplitude.initializeAsync("5a597bc88401f8636ba7402669507433");
+    await Amplitude.initializeAsync(getEnvironmentVariables().amplitudeApiKey);
   }
 
   useEffect(() => {
@@ -64,8 +64,7 @@ const MainApp = () => {
       setLoading(true)
       try {
         const user = await Auth.currentAuthenticatedUser({ bypassCache: false })
-        dispatch(setUser({ user }))
-        await Amplitude.setUserIdAsync(user.username)
+        dispatch(setUserWithTracking({ user }))
       } catch(e) {
         console.log("Error in Main App", e)
       }

@@ -47,7 +47,7 @@ const Selector = (props: TSelectorProps) => {
     if (count == 0 && offset < 0) return
 
     setCount(count + offset)
-    onChange(count + offset)
+    onChange(count + offset, offset == 1)
   }
 
   return (

@@ -10,14 +10,14 @@ import {
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Text, View } from '../../components/Themed'
-import { notifyMessage, primaryColor } from "common/utils"
-import { useDispatch, useSelector } from 'react-redux'
+import { notifyMessage } from "common/utils"
+import { useDispatch } from 'react-redux'
 import { Input } from "@ui-kitten/components"
 import { Auth } from 'aws-amplify'
 import { useState } from 'react'
 import SignUp from './SignUp'
 import styles from "./styles"
-import { setUser } from '../../store/actions'
+import { setUserWithTracking } from '../../store/actions'
 import ForgotPassword from './ForgotPassword'
 import * as Sentry from "@sentry/browser"
 import * as Amplitude from 'expo-analytics-amplitude';
@@ -48,13 +48,12 @@ export default function Login(props) {
       const user = await Auth.signIn(phone, password);
       const jwtToken = user.signInUserSession.idToken.jwtToken
       axios.defaults.headers.common['Authorization'] = jwtToken
-      dispatch(setUser({
+      dispatch(setUserWithTracking({
         user: {
           ...user,
           details: user,
         }
       }))
-      await Amplitude.setUserIdAsync(user.username)
     } catch (error) {
       if (error.name == USER_NOT_CONFIRMED_EXCEPTION) {
         setUserUnconfirmed(true)

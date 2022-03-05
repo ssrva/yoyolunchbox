@@ -13,6 +13,8 @@ import RNPgReactNativeSdk from "react-native-pg-react-native-sdk/bridge";
 import Spinner from "./components/Spinner"
 import { setBalance } from "../../store/actions"
 import * as Sentry from "@sentry/browser"
+import * as Amplitude from "expo-analytics-amplitude"
+import getEnvironmentVariables from "common/environments";
 
 const styles = StyleSheet.create({
   container: {
@@ -101,11 +103,18 @@ const AddMoneyComponent = (props) => {
   const [responseMessage, setResponseMessage] = useState<string>()
   const [responseMessageStyle, setResponseMessageStyle] = useState<string>("messageBoxGreen")
 
-  const cashFreeAppId = "140167899dad3f999080d3ff3b761041";
+  const cashFreeAppId = getEnvironmentVariables().cashFreeAppId;
 
   const resetState = () => {
     setAmount("0")
     setResponseMessage(undefined)
+  }
+
+  const setAmountWithTracking = async (amount: string) => {
+    setAmount(amount)
+    await Amplitude.logEventWithPropertiesAsync("ADD_MONEY_QUICK_PRESET", {
+      amount: amount
+    })
   }
 
   const fetchNewBalance = async () => {
@@ -140,20 +149,24 @@ const AddMoneyComponent = (props) => {
   const responseHandler = async (result: CashfreeResponse) => {
     try {
       if(result.txStatus === "SUCCESS") {
+        await Amplitude.logEventWithPropertiesAsync("ADD_MONEY_PROCESSOR_CALLBACK_RECEIVED", { amount: amount })
         await api.updateUserWalletBalance(
           user.username,
           amount,
           result
         )
+        await Amplitude.logEventWithPropertiesAsync("ADD_MONEY_SUCCESS", { amount: amount })
         setResponseMessageStyle("messageBoxGreen")
         setResponseMessage("Trasaction successful!")
       } else {
         setResponseMessageStyle("messageBoxRed")
+        await Amplitude.logEventWithPropertiesAsync("ADD_MONEY_PROCESSOR_FAILURE", { amount: amount })
         setResponseMessage("Transaction failed. Please contact YOYO Lunchbox team if you think this is a mistake.")
       }
       fetchNewBalance()
     } catch (error) {
       Sentry.captureException(error)
+      await Amplitude.logEventWithPropertiesAsync("ADD_MONEY_FAILURE", { amount: amount })
       setResponseMessageStyle("messageBoxRed")
       setResponseMessage("Transaction failed. Please contact YOYO Lunchbox team if you think this is a mistake.")
     }
@@ -167,14 +180,17 @@ const AddMoneyComponent = (props) => {
     } else {
       try {
         const id = `${user.username}_${new Date().getTime()}`
-        const tokenResponse = await api.getCashfreeOrderToken(id, amount)
+        const cashFreeEnv = getEnvironmentVariables().cashFreeEnv
+        const tokenResponse = await api.getCashfreeOrderToken(id, amount, cashFreeEnv)
         console.log(tokenResponse);
         const token = tokenResponse.cfToken
         const paymentRequest = constructPaymentRequest(id, amount, token)
-        RNPgReactNativeSdk.startPaymentWEB(paymentRequest, 'PROD', async (result) => {
+        await Amplitude.logEventWithPropertiesAsync("ADD_MONEY_TRIGGERED", { amount: amount })
+        RNPgReactNativeSdk.startPaymentWEB(paymentRequest, cashFreeEnv, async (result) => {
           await responseHandler(JSON.parse(result))
         });
       } catch(e) {
+        console.log(e)
         console.log(e.message)
       }
     }
@@ -212,17 +228,17 @@ const AddMoneyComponent = (props) => {
                 placeholder="Amount to add" />
               <View style={styles.presetContainer}>
                 <TouchableOpacity
-                  onPress={() => setAmount("500")}
+                  onPress={() => setAmountWithTracking("500")}
                   style={styles.presetButton}>
                   <Text style={styles.presetText}>+ 500</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => setAmount("1000")}
+                  onPress={() => setAmountWithTracking("1000")}
                   style={styles.presetButton}>
                   <Text style={styles.presetText}>+ 1000</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => setAmount("3000")}
+                  onPress={() => setAmountWithTracking("3000")}
                   style={styles.presetButton}>
                   <Text style={styles.presetText}>+ 3000</Text>
                 </TouchableOpacity>
