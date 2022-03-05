@@ -9,7 +9,7 @@ import { Input, Button } from '@ui-kitten/components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as api from "../../api"
 import * as Sentry from "@sentry/browser"
-import { notifyMessage } from '../../commonUtils';
+import { notifyMessage } from "common/utils";
 import Constants from 'yoyoconstants/Constants';
 
 const styles = StyleSheet.create({

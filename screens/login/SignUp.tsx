@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import { Text, View } from '../../components/Themed';
-import { notifyMessage, primaryColor } from "../../commonUtils"
+import { notifyMessage } from "common/utils"
 import { useSelector } from 'react-redux';
 import { Input, Button } from "@ui-kitten/components"
 import { Auth } from 'aws-amplify';

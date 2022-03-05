@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { ActivityIndicator, StyleSheet } from 'react-native'
 import { Text, View } from '../../components/Themed'
-import { notifyMessage, primaryColor } from "../../commonUtils"
+import { notifyMessage, primaryColor } from "common/utils"
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { Input, RadioGroup, Radio, Button } from '@ui-kitten/components';

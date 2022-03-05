@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
 import * as api from "../../api"
 import { useSelector } from 'react-redux';
-import { secondaryColor } from "../../commonUtils";
+import { secondaryColor } from "common/utils";
 import * as Sentry from "@sentry/browser"
 
 const styles = StyleSheet.create({

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native"
-import { primaryColor, secondaryColor, COLORS } from "../../commonUtils"
+import { primaryColor, secondaryColor, COLORS } from "common/utils"
 import Colors from "yoyoconstants/Colors"
 
 const styles = StyleSheet.create({

@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
 import { useState } from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import { COLORS } from "../../../commonUtils";
+import { COLORS } from "common/utils";
 import { Text, View } from '../../../components/Themed';
 
 type TSelectorProps = {

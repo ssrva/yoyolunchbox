@@ -3,7 +3,7 @@ import * as React from 'react';
 import { StyleSheet, Image } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Text, View } from '../../../components/Themed';
-import { COLORS, notifyMessage } from "../../../commonUtils"
+import { COLORS, notifyMessage } from "common/utils"
 import Selector from "./Selector"
 import moment from "moment"
 import { useEffect, useState } from 'react';

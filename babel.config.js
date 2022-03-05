@@ -9,7 +9,8 @@ module.exports = function(api) {
         "alias": {
           "api": "./api",
           "store": "./store",
-          "yoyoconstants": "./constants"
+          "yoyoconstants": "./constants",
+          "common": "./common"
         }
       }
     ]

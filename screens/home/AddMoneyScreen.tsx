@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input } from "@ui-kitten/components";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from '@expo/vector-icons';
-import { notifyMessage, secondaryColor } from "../../commonUtils";
+import { notifyMessage, secondaryColor } from "common/utils";
 import RNPgReactNativeSdk from "react-native-pg-react-native-sdk/bridge";
 import Spinner from "./components/Spinner"
 import { setBalance } from "../../store/actions"

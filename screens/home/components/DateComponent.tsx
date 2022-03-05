@@ -4,8 +4,8 @@ import moment from 'moment'
 import { useState } from 'react'
 import { StyleSheet, TouchableWithoutFeedback, ScrollView } from 'react-native'
 import { Text, View } from '../../../components/Themed'
-import { primaryColor } from '../../../commonUtils'
 import Colors from "yoyoconstants/Colors"
+import * as Amplitude from 'expo-analytics-amplitude';
 
 const styles = StyleSheet.create({
   container: {
@@ -43,13 +43,19 @@ const DateComponent = (props) => {
     otherDates.push(moment(today).add(gap, 'd').format("YYYY-MM-DD"))
   });
 
-  const dayAfter = moment(today).add(2, 'd').format("YYYY-MM-DD")
   const [selectedDate, setSelectedDate] = useState<string>(initialDate)
 
-  console.log(selectedDate)
   const setDate = (date: string) => {
     onDateChange(date)
     setSelectedDate(date)
+    trackDateChange(date)
+  }
+
+  const trackDateChange = async (date: string) => {
+    const todayMoment = moment().utcOffset("530").format("YYYY-MM-DD");
+    const selectedDate = moment(date);
+    const selectedDateOffset = selectedDate.diff(todayMoment, "days");
+    await Amplitude.logEventWithPropertiesAsync("DATE_CHANGED", { "selectedDateOffset": selectedDateOffset })
   }
 
   const getDateContainerStyles = (date: string) => {
