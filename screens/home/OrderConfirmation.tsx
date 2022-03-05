@@ -8,7 +8,7 @@ import { Text, View } from '../../components/Themed'
 import commonStyles from "./styles"
 import OrderListItem from './components/OrderListItem'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
-import { COLORS, notifyMessage } from "../../commonUtils"
+import { COLORS, notifyMessage } from "common/utils"
 import { Button, Input } from "@ui-kitten/components"
 import * as api from "../../api"
 import { useSelector } from 'react-redux'

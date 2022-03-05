@@ -8,7 +8,6 @@ import ProfileScreen from "./ProfileScreen"
 import AddAddress from './AddAddress';
 import AddMoneyScreen from "./AddMoneyScreen"
 import OrderConfirmation from "./OrderConfirmation";
-import { primaryColor } from "../../commonUtils"
 import { Text, View } from '../../components/Themed';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';

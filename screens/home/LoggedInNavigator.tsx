@@ -23,9 +23,9 @@ import {
   AddMoneyNavigator
 } from "./StackNavigators"
 import { useDispatch, useSelector } from 'react-redux';
-import { setMenu, setUser, setUserPreferences } from "../../store/actions"
+import { setMenu, setUser } from "../../store/actions"
 import * as api from "../../api"
-import { primaryColorDark } from "../../commonUtils"
+import { primaryColorDark } from "common/utils"
 import { AppearanceProvider } from "react-native-appearance"
 import Colors from "yoyoconstants/Colors"
 

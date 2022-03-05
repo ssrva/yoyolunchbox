@@ -14,6 +14,7 @@ import { ApplicationProvider } from '@ui-kitten/components'
 import { Appearance } from 'react-native-appearance';
 import * as Updates from 'expo-updates';
 import * as Sentry from "@sentry/browser"
+import * as Amplitude from 'expo-analytics-amplitude';
 
 const MainApp = () => {
   const isLoadingComplete = useCachedResources()
@@ -53,6 +54,10 @@ const MainApp = () => {
     }
   }
 
+  const initializeAmplitude = async () => {
+    await Amplitude.initializeAsync("5a597bc88401f8636ba7402669507433");
+  }
+
   useEffect(() => {
     const fetchUserData = async () => {
       console.log("Fetching user data");
@@ -60,6 +65,7 @@ const MainApp = () => {
       try {
         const user = await Auth.currentAuthenticatedUser({ bypassCache: false })
         dispatch(setUser({ user }))
+        await Amplitude.setUserIdAsync(user.username)
       } catch(e) {
         console.log("Error in Main App", e)
       }
@@ -67,6 +73,7 @@ const MainApp = () => {
     }
     fetchUserData()
     checkJsBundleUpdate()
+    initializeAmplitude()
   }, [])
 
   if (loading || !isLoadingComplete) {

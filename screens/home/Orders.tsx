@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import { View } from '../../components/Themed';
-import { COLORS } from "../../commonUtils"
+import { COLORS } from "common/utils"
 import OrderListItem from './components/OrderListItem';
 import * as api from "../../api"
 import { useSelector } from 'react-redux';

@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Text, View } from '../../components/Themed'
-import { notifyMessage, primaryColor } from "../../commonUtils"
+import { notifyMessage, primaryColor } from "common/utils"
 import { useDispatch, useSelector } from 'react-redux'
 import { Input } from "@ui-kitten/components"
 import { Auth } from 'aws-amplify'
@@ -20,7 +20,7 @@ import styles from "./styles"
 import { setUser } from '../../store/actions'
 import ForgotPassword from './ForgotPassword'
 import * as Sentry from "@sentry/browser"
-import ExploreMenu from "../home/states/loggedOut/ExploreMenu"
+import * as Amplitude from 'expo-analytics-amplitude';
 
 const USER_NOT_CONFIRMED_EXCEPTION = "UserNotConfirmedException"
 
@@ -54,6 +54,7 @@ export default function Login(props) {
           details: user,
         }
       }))
+      await Amplitude.setUserIdAsync(user.username)
     } catch (error) {
       if (error.name == USER_NOT_CONFIRMED_EXCEPTION) {
         setUserUnconfirmed(true)

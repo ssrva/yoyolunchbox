@@ -29,6 +29,7 @@
     "aws-amplify-react-native": "^5.0.3",
     "axios": "^0.21.1",
     "expo": "~41.0.1",
+    "expo-analytics-amplitude": "~10.1.0",
     "expo-application": "~3.1.2",
     "expo-asset": "~8.3.1",
     "expo-constants": "~10.1.3",
