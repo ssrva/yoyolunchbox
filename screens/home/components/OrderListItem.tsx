@@ -12,6 +12,7 @@ import { Button } from "@ui-kitten/components";
 import Constants from "yoyoconstants/Constants"
 import * as api from "api"
 import { refreshBalance } from "store/actions"
+import * as Amplitude from 'expo-analytics-amplitude';
 
 type TOrderListItemProps = {
   id: number,
@@ -29,6 +30,7 @@ type TOrderListItemProps = {
   onChange: Function,
   grayOut: boolean,
   grayOutDescription: string,
+  source: string
 }
 
 const styles = StyleSheet.create({
@@ -146,6 +148,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
     status,
     grayOut,
     grayOutDescription,
+    source
   } = props
 
   const dispatch = useDispatch()
@@ -154,7 +157,8 @@ const OrderListItem = (props: TOrderListItemProps) => {
   const [imageUrl, setImageUrl] = useState<string>();
   const [cancelling, setCancelling] = useState<boolean>(false);
 
-  const updateCount = (newCount: number) => {
+  const updateCount = (newCount: number, increase: boolean) => {
+    trackUpdateCount(newCount, increase)
     onChange({
       id: id,
       type: type,
@@ -165,6 +169,16 @@ const OrderListItem = (props: TOrderListItemProps) => {
       description: description,
       quantity: newCount,
       status: status
+    })
+  }
+
+  const trackUpdateCount = async (newCount: number, increase: boolean) => {
+    const eventName = increase ? "ITEM_ADD" : "ITEM_REMOVE"
+    await Amplitude.logEventWithPropertiesAsync(eventName, {
+      source: source,
+      updatedQuantity: newCount,
+      itemName: title,
+      date: date
     })
   }
 
@@ -225,6 +239,11 @@ const OrderListItem = (props: TOrderListItemProps) => {
     try {
       setCancelling(true)
       await api.cancelOrder(orderId, username)
+      await Amplitude.logEventWithPropertiesAsync("CANCEL_ORDER", {
+        orderId: orderId,
+        name: title,
+        amount: price
+      })
       dispatch(refreshBalance())
       onChange()
       notifyMessage("Order cancelled")

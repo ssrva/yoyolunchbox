@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import Constants from 'yoyoconstants/Constants';
 import * as Sentry from "@sentry/browser"
+import * as Amplitude from "expo-analytics-amplitude"
 
 type TOrderConfirmationProps = {
   route: Object,
@@ -150,6 +151,7 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
         notifyMessage("Please add address from profile page before ordering")
       } else {
         await api.placeOrder(username, charges, apiInput)
+        trackOrderInfo(orders)
         notifyMessage("Order placed successfully")
         dispatch(refreshBalance())
         navigation.navigate("Home")
@@ -159,6 +161,21 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
     } finally {
       setLoading(false)
     }
+  }
+
+  const trackOrderInfo = async (orderData) => {
+    const dates = _.uniq(orderData.map(o => o.date))
+    const orderTypes = _.uniq(orderData.map(o => o.type))
+    const orderAmount = _.sum(orderData.map(o => parseInt(o.price)))
+    const itemCount = orderData.length
+    const trackingInfo = {
+      uniqueDatesInOrder: dates.length,
+      menuTypes: orderTypes,
+      itemCount: itemCount,
+      orderAmount: orderAmount
+    }
+    console.log(trackingInfo)
+    await Amplitude.logEventWithPropertiesAsync("PLACE_ORDER", trackingInfo)
   }
 
   const onChange = (order) => {
@@ -185,7 +202,10 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
           data={orders}
           renderItem={({item}) => {
             return (
-              <OrderListItem onChange={onChange} {...item} />
+              <OrderListItem
+                source="ORDER_CONFIRMATION_PAGE"
+                onChange={onChange}
+                {...item} />
             )
           }}
         />

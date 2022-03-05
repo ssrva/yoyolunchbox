@@ -127,6 +127,7 @@ const HomeScreen = (props) => {
                       hideDate
                       onChange={updateOrder}
                       grayOut={section.grayOut}
+                      source="MENU_PAGE" // this is used for amplitude tracking info
                       grayOutDescription={section.grayOutDescription}
                       {...item} />
                   )
