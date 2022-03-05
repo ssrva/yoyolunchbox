@@ -175,7 +175,7 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
       orderAmount: orderAmount
     }
     console.log(trackingInfo)
-    await Amplitude.logEventWithPropertiesAsync("PLACE_ORDER", trackingInfo)
+    Amplitude.logEventWithPropertiesAsync("PLACE_ORDER", trackingInfo)
   }
 
   const onChange = (order) => {

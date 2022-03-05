@@ -174,7 +174,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
 
   const trackUpdateCount = async (newCount: number, increase: boolean) => {
     const eventName = increase ? "ITEM_ADD" : "ITEM_REMOVE"
-    await Amplitude.logEventWithPropertiesAsync(eventName, {
+    Amplitude.logEventWithPropertiesAsync(eventName, {
       source: source,
       updatedQuantity: newCount,
       itemName: title,
@@ -239,7 +239,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
     try {
       setCancelling(true)
       await api.cancelOrder(orderId, username)
-      await Amplitude.logEventWithPropertiesAsync("CANCEL_ORDER", {
+      Amplitude.logEventWithPropertiesAsync("CANCEL_ORDER", {
         orderId: orderId,
         name: title,
         amount: price

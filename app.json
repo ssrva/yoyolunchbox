@@ -5,7 +5,7 @@
     "owner": "mssrivathsan",
     "version": "1.0.2",
     "extra": {
-      "jsPackageVersion": "1.3.6",
+      "jsPackageVersion": "1.3.8",
       "distanceMatrixApiKey": "AIzaSyC7wpmuxP2-ZMr-P9V_2cqw0q4Bwb0G_hw"
     },
     "orientation": "portrait",
@@ -33,7 +33,7 @@
     },
     "android": {
       "package": "com.yoyolunchbox.app",
-      "versionCode": 8,
+      "versionCode": 10,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/ic_launcher_foreground.png",
         "backgroundColor": "#ffffff"

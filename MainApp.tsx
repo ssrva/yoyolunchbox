@@ -55,7 +55,7 @@ const MainApp = () => {
   }
 
   const initializeAmplitude = async () => {
-    await Amplitude.initializeAsync(getEnvironmentVariables().amplitudeApiKey);
+    Amplitude.initializeAsync(getEnvironmentVariables().amplitudeApiKey);
   }
 
   useEffect(() => {

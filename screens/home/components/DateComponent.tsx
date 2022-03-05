@@ -55,7 +55,7 @@ const DateComponent = (props) => {
     const todayMoment = moment().utcOffset("530").format("YYYY-MM-DD");
     const selectedDate = moment(date);
     const selectedDateOffset = selectedDate.diff(todayMoment, "days");
-    await Amplitude.logEventWithPropertiesAsync("DATE_CHANGED", { "selectedDateOffset": selectedDateOffset })
+    Amplitude.logEventWithPropertiesAsync("DATE_CHANGED", { "selectedDateOffset": selectedDateOffset })
   }
 
   const getDateContainerStyles = (date: string) => {

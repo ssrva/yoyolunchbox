@@ -112,7 +112,7 @@ const AddMoneyComponent = (props) => {
 
   const setAmountWithTracking = async (amount: string) => {
     setAmount(amount)
-    await Amplitude.logEventWithPropertiesAsync("ADD_MONEY_QUICK_PRESET", {
+    Amplitude.logEventWithPropertiesAsync("ADD_MONEY_QUICK_PRESET", {
       amount: amount
     })
   }
@@ -149,24 +149,24 @@ const AddMoneyComponent = (props) => {
   const responseHandler = async (result: CashfreeResponse) => {
     try {
       if(result.txStatus === "SUCCESS") {
-        await Amplitude.logEventWithPropertiesAsync("ADD_MONEY_PROCESSOR_CALLBACK_RECEIVED", { amount: amount })
+        Amplitude.logEventWithPropertiesAsync("ADD_MONEY_PROCESSOR_CALLBACK_RECEIVED", { amount: amount })
         await api.updateUserWalletBalance(
           user.username,
           amount,
           result
         )
-        await Amplitude.logEventWithPropertiesAsync("ADD_MONEY_SUCCESS", { amount: amount })
+        Amplitude.logEventWithPropertiesAsync("ADD_MONEY_SUCCESS", { amount: amount })
         setResponseMessageStyle("messageBoxGreen")
         setResponseMessage("Trasaction successful!")
       } else {
         setResponseMessageStyle("messageBoxRed")
-        await Amplitude.logEventWithPropertiesAsync("ADD_MONEY_PROCESSOR_FAILURE", { amount: amount })
+        Amplitude.logEventWithPropertiesAsync("ADD_MONEY_PROCESSOR_FAILURE", { amount: amount })
         setResponseMessage("Transaction failed. Please contact YOYO Lunchbox team if you think this is a mistake.")
       }
       fetchNewBalance()
     } catch (error) {
       Sentry.captureException(error)
-      await Amplitude.logEventWithPropertiesAsync("ADD_MONEY_FAILURE", { amount: amount })
+      Amplitude.logEventWithPropertiesAsync("ADD_MONEY_FAILURE", { amount: amount })
       setResponseMessageStyle("messageBoxRed")
       setResponseMessage("Transaction failed. Please contact YOYO Lunchbox team if you think this is a mistake.")
     }
@@ -185,7 +185,7 @@ const AddMoneyComponent = (props) => {
         console.log(tokenResponse);
         const token = tokenResponse.cfToken
         const paymentRequest = constructPaymentRequest(id, amount, token)
-        await Amplitude.logEventWithPropertiesAsync("ADD_MONEY_TRIGGERED", { amount: amount })
+        Amplitude.logEventWithPropertiesAsync("ADD_MONEY_TRIGGERED", { amount: amount })
         RNPgReactNativeSdk.startPaymentWEB(paymentRequest, cashFreeEnv, async (result) => {
           await responseHandler(JSON.parse(result))
         });
