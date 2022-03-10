@@ -127,24 +127,6 @@ const ProfileScreen = (props) => {
     return unsubscribe;
   }, [navigation]);
 
-  const getLocation = async () => {
-    let { status } = await Location.requestForegroundPermissionsAsync()
-    if (status !== "granted") {
-      console.log("Permission not granted")
-      // General location in Chennai if user does not grant location permission
-      return {
-        latitude: 13.067439,
-        longitude: 80.237617
-      }
-    }
-
-    let location = await Location.getCurrentPositionAsync({})
-    return {
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude
-    }
-  }
-
   useEffect(() => {
     const fetchProfileData = async () => {
       const details = await api.getUserDetails(user.username)

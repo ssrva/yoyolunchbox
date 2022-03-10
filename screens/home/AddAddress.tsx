@@ -1,16 +1,19 @@
 import _ from "lodash"
 import * as React from 'react'
 import { useState } from 'react'
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { useSelector } from 'react-redux'
 import { Text, View } from '../../components/Themed'
-import { StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, TouchableNativeFeedback } from 'react-native';
 import { Input, Button } from '@ui-kitten/components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as api from "../../api"
 import * as Sentry from "@sentry/browser"
 import { notifyMessage } from "common/utils";
 import Constants from 'yoyoconstants/Constants';
+import * as Location from "expo-location";
+import { MaterialIcons } from '@expo/vector-icons'
+import { TouchableOpacity } from "react-native-gesture-handler"
 
 const styles = StyleSheet.create({
   main: {
@@ -34,6 +37,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'transparent'
+  },
+  locateMe: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: "transparent",
+    borderRadius: 5,
+    overflow: "hidden"
+  },
+  locateMeButton: {
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#d1d1d1",
+    borderRadius: 5,
+    padding: 10
   },
   markerData: {
     backgroundColor: "rgba(0,0,0,0.8)",
@@ -143,6 +163,24 @@ const AddAddress = (props) => {
     setLoading(false)
   }
 
+  const setMapToCurrentLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync()
+    let data = {
+      latitude: 13.067439,
+      longitude: 80.237617
+    }
+    if (status !== "granted") {
+      console.log("Permission not granted")
+    } else {
+      const location = await Location.getCurrentPositionAsync({})
+      data = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      }
+    }
+    setRegion({ ...region, ...data })
+  }
+
   return (
     <View style={{ width: "100%", height: "100%" }}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -150,12 +188,20 @@ const AddAddress = (props) => {
           <View style={{ flex: 1 }}>
             <MapView
               provider={PROVIDER_GOOGLE}
+              region={region}
               initialRegion={region}
               onRegionChangeComplete={setRegion}
               style={styles.map} />
             <View pointerEvents="none" style={styles.marker}>
               <Text style={styles.markerData}>Order will be delivered here</Text>
               <View style={styles.tooltip}><Text></Text></View>
+            </View>
+            <View style={styles.locateMe}>
+              <TouchableOpacity
+                style={styles.locateMeButton}
+                onPress={setMapToCurrentLocation}>
+                <MaterialIcons size={25} name="my-location" />
+              </TouchableOpacity>
             </View>
           </View>
           
