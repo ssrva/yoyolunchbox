@@ -1,7 +1,7 @@
 import * as React from 'react';
 import _ from "lodash"
 import moment from "moment"
-import { TouchableWithoutFeedback } from "react-native"
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshBalance } from 'store/actions';
@@ -16,6 +16,7 @@ import { useState } from 'react'
 import Constants from 'yoyoconstants/Constants';
 import * as Sentry from "@sentry/browser"
 import * as Amplitude from "expo-analytics-amplitude"
+import ConnectedMiniOrderListItem from './components/ConnectedMiniOrderListItem';
 
 type TOrderConfirmationProps = {
   route: Object,
@@ -27,22 +28,23 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flex: 1,
     display: "flex",
-    paddingTop: 0,
-    padding: 15,
+    paddingTop: 0
   },
   title: {
     color: "black",
     marginBottom: 0,
-    fontWeight: "600",
+    fontWeight: "bold",
     fontSize: 18,
     backgroundColor: "white",
   },
   subtitle: {
     color: "black",
+    marginTop: 10,
     marginBottom: 10,
-    fontWeight: "600",
-    fontSize: 16,
-    backgroundColor: "white"
+    fontWeight: "normal",
+    fontSize: 15,
+    backgroundColor: "transparent",
+    textTransform: "uppercase"
   },
   billDetailsContainer: {
     backgroundColor: "white",
@@ -94,6 +96,19 @@ const styles = StyleSheet.create({
     color: "red",
     fontStyle: "italic",
     marginBottom: 10
+  },
+  instructions: {
+    marginBottom: 10
+  },
+  section: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    backgroundColor: "#FFFFFF"
+  },
+  alternateSection: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: "#F7F7F7"
   }
 })
 
@@ -113,11 +128,25 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
   const hasSufficientBalance = itemTotalPrice <= balance
   const dispatch = useDispatch();
   const menu = useSelector(store => store.menu)
-  let uniqueDatesInOrder = 1
+  const uniqueDatesInOrder = _.uniq(orders.map(o => o.date)).length
+  const uniqueMenuTypeInOrder = _.uniq(orders.map(o => o.type)).length
 
-  React.useEffect(() => {
-    uniqueDatesInOrder = _.uniq(orders.map(o => o.date)).length
-  }, [orders])
+  const getAddonsToShow = () => {
+    if (uniqueDatesInOrder != 1 || uniqueMenuTypeInOrder != 1) {
+      return [];
+    }
+    if (orders && orders[0]) {
+      const date = orders[0].date
+      const menuType = orders[0].type
+      const existingItems = orders.map(o => o.id)
+      return _.filter(menu[date], (menuItem) => {
+        return !existingItems.includes(menuItem.id) &&
+          menuItem.type == menuType &&
+          menuItem.addon 
+      })
+    }
+    return []
+  }
 
   const confirmOrder = async () => {
     const apiInput = orders.map(order => {
@@ -194,78 +223,96 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={{ backgroundColor: "white" }}>
-        <Text style={styles.title}>Order Summary</Text>
-        <FlatList
-          style={{flex: 1}}
-          data={orders}
-          renderItem={({item}) => {
-            return (
-              <ConnectedOrderListItem
-                source="ORDER_CONFIRMATION_PAGE"
-                {...item} />
-            )
-          }}
-        />
-        {/* <Text style={styles.subtitle}>Would you like to add some addon?</Text>
-        <ScrollView
-          style={{ backgroundColor: "white" }}
-          showsHorizontalScrollIndicator={false} 
-          horizontal>
-          <TouchableWithoutFeedback>
-            <View>
-              <Text>Today</Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback>
-            <View>
-              <Text>Tomorrow</Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </ScrollView> */}
-        <Input
-          value={remarks}
-          multiline
-          placeholder="Any instructions?"
-          numberOfLines={4}
-          onChangeText={setRemarks} />
-        <View style={styles.billDetailsContainer}>
-          <Text style={styles.billTitle}>Bill Details</Text>
-          <View style={styles.tableContainer}>
-            <View style={styles.tableRow}>
-              <Text style={{ fontWeight: "bold", color: "black" }}>Item Total</Text>
-              <Text style={{ color: "black" }}>{'\u20B9'}{itemTotalPrice}</Text>
-            </View>
-            {/* <View style={styles.tableRow}>
-              <Text style={{ fontWeight: "bold" }}>Packing charges</Text>
-              <Text>{'\u20B9'}6</Text>
-            </View>
-            <View style={styles.tableRow}>
-              <Text style={{ fontWeight: "bold" }}>Delivery charges</Text>
-              <Text>{'\u20B9'}40</Text>
-            </View> */}
-            <View style={{...styles.tableRow, ...styles.lastRow}}>
-              <Text style={{ fontWeight: "bold", color: "black" }}>Total</Text>
-              <Text style={{ color: "black" }}>{'\u20B9'}{itemTotalPrice}</Text>
+      <KeyboardAwareScrollView style={{ backgroundColor: "white" }}>
+        <View style={styles.section}>
+          <Text style={styles.title}>Order Summary</Text>
+          <FlatList
+            data={orders}
+            renderItem={({item}) => {
+              return (
+                <ConnectedOrderListItem
+                  source="ORDER_CONFIRMATION_PAGE"
+                  {...item} />
+              )
+            }}
+          />
+        </View>
+        
+        {getAddonsToShow().length > 0 && (
+          <View style={{ ...styles.section, ...styles.alternateSection }}>
+            <Text style={styles.subtitle}>Complete your meal with addons</Text>
+            <FlatList
+              horizontal
+              data={getAddonsToShow()}
+              ItemSeparatorComponent={
+                () => <View style={{ width: 15, backgroundColor: "transparent" }}/>
+              }
+              renderItem={({item}) => {
+                return (
+                  <ConnectedMiniOrderListItem
+                    key={item.name}
+                    hideDate
+                    source="ADDON_CONFIRMATION_PAGE" // this is used for amplitude tracking info
+                    {...item} />
+                )
+              }}
+            />
+          </View>
+        )}
+
+        <View style={styles.section}>
+          <Text style={styles.subtitle}>Got any instructions?</Text>
+          <Input
+            value={remarks}
+            multiline
+            style={styles.instructions}
+            placeholder="Any instructions?"
+            numberOfLines={4}
+            onChangeText={setRemarks} />
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.subtitle}>Bill Details</Text>
+          <View style={styles.billDetailsContainer}>
+            <View style={styles.tableContainer}>
+              <View style={styles.tableRow}>
+                <Text style={{ fontWeight: "bold", color: "black" }}>Item Total</Text>
+                <Text style={{ color: "black" }}>{'\u20B9'}{itemTotalPrice}</Text>
+              </View>
+              {/* <View style={styles.tableRow}>
+                <Text style={{ fontWeight: "bold" }}>Packing charges</Text>
+                <Text>{'\u20B9'}6</Text>
+              </View>
+              <View style={styles.tableRow}>
+                <Text style={{ fontWeight: "bold" }}>Delivery charges</Text>
+                <Text>{'\u20B9'}40</Text>
+              </View> */}
+              <View style={{...styles.tableRow, ...styles.lastRow}}>
+                <Text style={{ fontWeight: "bold", color: "black" }}>Total</Text>
+                <Text style={{ color: "black" }}>{'\u20B9'}{itemTotalPrice}</Text>
+              </View>
             </View>
           </View>
         </View>
-      </ScrollView>
-      <View style={commonStyles.footer}>
-        {!hasSufficientBalance && (
-          <View style={{ backgroundColor: "white" }}>
-            <Text style={styles.warningText}>
-              Your balance is insufficient to place this order. Please recharge your wallet to continue ordering.
-            </Text>
-          </View>
-        )}
-        <TouchableOpacity
-          disabled={loading || !hasSufficientBalance}
-          style={commonStyles.mainButton}
-          onPress={confirmOrder}>
-          {loading && (<ActivityIndicator style={{ marginRight: 10 }} color="white" />)}
-          <Text style={{ color: "white" }}>Confirm Order</Text>
-        </TouchableOpacity>
+
+      </KeyboardAwareScrollView>
+      <View style={{ ...styles.section, paddingTop: 15, paddingBottom: 15 }}>
+        <View style={commonStyles.footer}>
+          {!hasSufficientBalance && (
+            <View style={{ backgroundColor: "white" }}>
+              <Text style={styles.warningText}>
+                Your balance is insufficient to place this order. Please recharge your wallet to continue ordering.
+              </Text>
+            </View>
+          )}
+          <TouchableOpacity
+            disabled={loading || !hasSufficientBalance}
+            style={commonStyles.mainButton}
+            onPress={confirmOrder}>
+            {loading && (<ActivityIndicator style={{ marginRight: 10 }} color="white" />)}
+            <Text style={{ color: "white" }}>Confirm Order</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   )
