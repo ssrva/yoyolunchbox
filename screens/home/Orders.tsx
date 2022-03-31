@@ -89,7 +89,7 @@ const Orders = (props) => {
           return (
             <OrderListItem
               cancellable={isOrderCancellable()}
-              onChange={refreshDataAfterCancellation}
+              onCancel={refreshDataAfterCancellation}
               disabled {...item} />
           )
         }}

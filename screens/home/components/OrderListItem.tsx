@@ -3,7 +3,7 @@ import * as React from 'react';
 import { StyleSheet, Image } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Text, View } from '../../../components/Themed';
-import { COLORS, notifyMessage } from "common/utils"
+import { COLORS, notifyMessage, getItemFromAsyncStorage, putItemInAsyncStorage } from "common/utils"
 import Selector from "./Selector"
 import moment from "moment"
 import { useEffect, useState } from 'react';
@@ -13,25 +13,8 @@ import Constants from "yoyoconstants/Constants"
 import * as api from "api"
 import { refreshBalance } from "store/actions"
 import * as Amplitude from 'expo-analytics-amplitude';
-
-type TOrderListItemProps = {
-  id: number,
-  title: string,
-  type: string,
-  date: string,
-  image: string,
-  description: string,
-  price: string,
-  quantity: string,
-  hideDate: boolean,
-  cancellable: boolean,
-  disabled: boolean,
-  status: string,
-  onChange: Function,
-  grayOut: boolean,
-  grayOutDescription: string,
-  source: string
-}
+import { TOrderListItemProps } from "common/types"
+import * as Sentry from "@sentry/browser"
 
 const styles = StyleSheet.create({
   container: {
@@ -143,6 +126,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
     quantity,
     price,
     onChange,
+    onCancel,
     disabled,
     cancellable,
     status,
@@ -154,7 +138,6 @@ const OrderListItem = (props: TOrderListItemProps) => {
   const dispatch = useDispatch()
   const username = useSelector(store => store.user.username)
   const [imageBase64, setImageBase64] = useState<string>();
-  const [imageUrl, setImageUrl] = useState<string>();
   const [cancelling, setCancelling] = useState<boolean>(false);
 
   const updateCount = (newCount: number, increase: boolean) => {
@@ -184,28 +167,22 @@ const OrderListItem = (props: TOrderListItemProps) => {
 
   useEffect(() => {
     const getImage = async () => {
-      let url = `https://yoyo-food-images.s3.ap-south-1.amazonaws.com/${image}`
-      setImageUrl(encodeURI(url))
-
-      // Commenting this out for now. Figure out a better way for
-      // fetching images without having to make then public.
-      //
-      // let data = await getItemFromAsyncStorage(image)
-      // if(_.isNil(data)) {
-      //   try {
-      //     let data = await api.getFoodimage(image)
-      //     console.log("FETCHED DATA " + data)
-      //     if (!_.isNil(data)) {
-      //       await putItemInAsyncStorage(image, data)
-      //       setImageBase64(data)
-      //     }
-      //   } catch (e) {
-      //     console.log("Error fetching/storing image " + e)
-      //     Sentry.captureException(e)
-      //   }
-      // } else {
-      //   setImageBase64(data)
-      // } 
+      let data = await getItemFromAsyncStorage(image)
+      if(_.isNil(data)) {
+        try {
+          let data = await api.getFoodimage(image.trim())
+          if (!_.isNil(data)) {
+            await putItemInAsyncStorage(image, data)
+            setImageBase64(data)
+          }
+        } catch (e) {
+          console.log(image)
+          console.log("Error fetching/storing image " + e)
+          Sentry.captureException(e)
+        }
+      } else {
+        setImageBase64(data)
+      } 
     }
     getImage()
   }, [])
@@ -245,7 +222,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
         amount: price
       })
       dispatch(refreshBalance())
-      onChange()
+      onCancel()
       notifyMessage("Order cancelled")
     } catch (error) {
       notifyMessage("Failed to cancel order, please reach out to us on whatsapp")
@@ -297,7 +274,7 @@ const OrderListItem = (props: TOrderListItemProps) => {
           </>
         )}
       </View>
-      {!_.isNil(imageUrl) && (
+      {!_.isNil(imageBase64) && (
         <View style={{ backgroundColor: "white" }}>
           {grayOut && (
             <View style={{
@@ -311,9 +288,8 @@ const OrderListItem = (props: TOrderListItemProps) => {
             }} />
           )}
           <Image
-            source={{ uri: imageUrl }}
-            style={styles.image}/>
-            {/* // source={{uri: `data:image/jpg;base64,${imageBase64}`}}/> */}
+            style={styles.image}
+            source={{uri: `data:image/jpg;base64,${imageBase64}`}}/>
           {canCancelOrder() && (
             <Button status='danger'
               accessoryLeft={CancelIcon}

@@ -1,17 +1,17 @@
 import * as React from 'react';
 import _ from "lodash"
 import moment from "moment"
+import { TouchableWithoutFeedback } from "react-native"
 import { ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { refreshBalance } from 'store/actions';
 import { Text, View } from '../../components/Themed'
 import commonStyles from "./styles"
-import OrderListItem from './components/OrderListItem'
+import ConnectedOrderListItem from './components/ConnectedOrderListItem'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { COLORS, notifyMessage } from "common/utils"
 import { Button, Input } from "@ui-kitten/components"
 import * as api from "../../api"
-import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import Constants from 'yoyoconstants/Constants';
 import * as Sentry from "@sentry/browser"
@@ -36,6 +36,13 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 18,
     backgroundColor: "white",
+  },
+  subtitle: {
+    color: "black",
+    marginBottom: 10,
+    fontWeight: "600",
+    fontSize: 16,
+    backgroundColor: "white"
   },
   billDetailsContainer: {
     backgroundColor: "white",
@@ -93,15 +100,24 @@ const styles = StyleSheet.create({
 const OrderConfirmation = (props: TOrderConfirmationProps) => {
   const { route, navigation } = props
   const [loading, setLoading] = useState<boolean>(false)
+  const [showAddon, setShowAddon] = useState<boolean>(false)
   const [remarks, setRemarks] = useState<string>("")
   const username = useSelector(store => store.user.username)
-  const [orders, setOrders] = useState<Array<Object>>(route?.params?.orders || [])
+  const cart = useSelector(store => store.cart)
+  const orders = _.values(cart)
+
   const balance = useSelector(store => store.balance)
   const itemTotalPrice = orders.reduce((acc, order) => {
     return acc + (order.price * order.quantity)
   }, 0)
   const hasSufficientBalance = itemTotalPrice <= balance
   const dispatch = useDispatch();
+  const menu = useSelector(store => store.menu)
+  let uniqueDatesInOrder = 1
+
+  React.useEffect(() => {
+    uniqueDatesInOrder = _.uniq(orders.map(o => o.date)).length
+  }, [orders])
 
   const confirmOrder = async () => {
     const apiInput = orders.map(order => {
@@ -164,33 +180,16 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
   }
 
   const trackOrderInfo = async (orderData) => {
-    const dates = _.uniq(orderData.map(o => o.date))
     const orderTypes = _.uniq(orderData.map(o => o.type))
     const orderAmount = _.sum(orderData.map(o => parseInt(o.price)))
     const itemCount = orderData.length
     const trackingInfo = {
-      uniqueDatesInOrder: dates.length,
+      uniqueDatesInOrder: uniqueDatesInOrder,
       menuTypes: orderTypes,
       itemCount: itemCount,
       orderAmount: orderAmount
     }
-    console.log(trackingInfo)
     Amplitude.logEventWithPropertiesAsync("PLACE_ORDER", trackingInfo)
-  }
-
-  const onChange = (order) => {
-    if (order.quantity == 0) {
-      const newOrders = orders.filter(o => o.id != order.id)
-      setOrders(newOrders);
-    } else {
-      const newOrders = orders.map(o => {
-        if (o.id == order.id) {
-          o.quantity = order.quantity;
-        }
-        return o;
-      })
-      setOrders(newOrders);
-    }
   }
 
   return (
@@ -202,13 +201,28 @@ const OrderConfirmation = (props: TOrderConfirmationProps) => {
           data={orders}
           renderItem={({item}) => {
             return (
-              <OrderListItem
+              <ConnectedOrderListItem
                 source="ORDER_CONFIRMATION_PAGE"
-                onChange={onChange}
                 {...item} />
             )
           }}
         />
+        {/* <Text style={styles.subtitle}>Would you like to add some addon?</Text>
+        <ScrollView
+          style={{ backgroundColor: "white" }}
+          showsHorizontalScrollIndicator={false} 
+          horizontal>
+          <TouchableWithoutFeedback>
+            <View>
+              <Text>Today</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback>
+            <View>
+              <Text>Tomorrow</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView> */}
         <Input
           value={remarks}
           multiline

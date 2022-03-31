@@ -11,7 +11,8 @@ import DateComponent from './components/DateComponent';
 import { setMenu } from "../../store/actions"
 import * as api from "../../api"
 import Constants from "yoyoconstants/Constants"
-
+import ConnectedOrderListItem from './components/ConnectedOrderListItem';
+import { useFocusEffect } from '@react-navigation/native';
 
 const getInitialDate = () => {
   const today = moment().utcOffset("530").format("YYYY-MM-DD")
@@ -34,6 +35,7 @@ const HomeScreen = (props) => {
   const [selectedDate, setSelectedDate] = useState<string>(getInitialDate())
   const [orders, setOrders] = useState<Object>({})
   const selectedMenu = (menu && _.groupBy(menu[selectedDate], "type")) || {}
+  const cart = useSelector(store => store.cart)
 
   const fetchMenuDetails = async () => {
     const datesToFetch = []
@@ -79,16 +81,6 @@ const HomeScreen = (props) => {
     return result
   }
 
-  const updateOrder = (order) => {
-    const currentOrders = _.clone(orders)
-    if(order.quantity == 0) {
-      delete currentOrders[order.id]
-    } else {
-      currentOrders[order.id] = order
-    }
-    setOrders(currentOrders)
-  }
-
   const placeOrder = () => {
     navigation.navigate("Confirm Order", {
       orders: _.values(orders)
@@ -122,10 +114,10 @@ const HomeScreen = (props) => {
                 sections={menuData()}
                 renderItem={({item, index, section}) => {
                   return (
-                    <OrderListItem
+                    <ConnectedOrderListItem
+                      navigation={navigation}
                       key={item.name}
                       hideDate
-                      onChange={updateOrder}
                       grayOut={section.grayOut}
                       source="MENU_PAGE" // this is used for amplitude tracking info
                       grayOutDescription={section.grayOutDescription}
@@ -140,7 +132,7 @@ const HomeScreen = (props) => {
               />
               <View style={styles.footer}>
                 <TouchableOpacity
-                  disabled={Object.keys(orders).length == 0}
+                  disabled={Object.keys(cart || {}).length == 0}
                   style={styles.mainButton}
                   onPress={placeOrder}>
                   <Text style={{ color: "white" }}>Place Order</Text>

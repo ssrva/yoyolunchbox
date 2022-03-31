@@ -8,9 +8,13 @@ import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
 import * as Sentry from 'sentry-expo';
 import sagas from "store/saga";
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 const sagaMiddleware = createSagaMiddleware()
-const store = createStore(reducer, applyMiddleware(sagaMiddleware))
+const store = createStore(
+  reducer,
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
+)
 sagaMiddleware.run(sagas);
 
 const App = () => {
