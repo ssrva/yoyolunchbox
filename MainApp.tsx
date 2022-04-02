@@ -16,6 +16,7 @@ import * as Updates from 'expo-updates';
 import * as Sentry from "@sentry/browser"
 import * as Amplitude from 'expo-analytics-amplitude';
 import getEnvironmentVariables from "common/environments"
+import * as api from "api"
 
 const MainApp = () => {
   const isLoadingComplete = useCachedResources()
@@ -60,11 +61,16 @@ const MainApp = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      console.log("Fetching user data");
       setLoading(true)
       try {
         const user = await Auth.currentAuthenticatedUser({ bypassCache: false })
-        dispatch(setUserWithTracking({ user }))
+        const postgresUserDetails = await api.getUserDetails(user.username)
+        dispatch(setUserWithTracking({
+          user: {
+            ...user,
+            ...postgresUserDetails
+          }
+        }))
       } catch(e) {
         console.log("Error in Main App", e)
       }

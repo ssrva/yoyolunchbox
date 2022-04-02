@@ -14,6 +14,14 @@ export const updateUserDetails = async (username: string, details: Object) => {
   return response.data
 }
 
+export const updateUserExpoPushKey = async (username: string, expoPushkey: string) => {
+  const response = await axios.patch("/user/expo_push_key", {
+    username,
+    expo_push_key: expoPushkey
+  })
+  return response.data
+}
+
 export const updateUserMealPreference = async (username: string, details: Object) => {
   const response = await axios.put("/user/meal_preference", {
     username, ...details
