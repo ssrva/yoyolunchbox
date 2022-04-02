@@ -1,21 +1,33 @@
 import * as React from 'react';
 import _ from "lodash"
 import { useState, useEffect } from 'react';
-import { SectionList, TouchableOpacity } from 'react-native';
+import { SectionList, TouchableOpacity, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Text, View } from '../../components/Themed';
 import styles from "./styles"
 import moment from "moment"
-import OrderListItem from './components/OrderListItem';
 import DateComponent from './components/DateComponent';
 import { setMenu } from "../../store/actions"
 import * as api from "api"
 import Constants from "yoyoconstants/Constants"
 import ConnectedOrderListItem from './components/ConnectedOrderListItem';
-import * as Notifications from 'expo-notifications';
 import ExpoConstants  from 'expo-constants';
 import * as Amplitude from 'expo-analytics-amplitude';
-import { getNotificationBody } from "common/utils"
+import { getNotificationBody, eligibleForNotifications } from "common/utils"
+import * as Application from "expo-application"
+import * as Sentry from "@sentry/browser"
+
+
+// ugly hack, clean up after 1.0.5 ios version and version code 11 (1.0.8) android
+// is rolled out to everyone
+const getNotification = () => {
+  if (eligibleForNotifications()) {
+    Amplitude.logEventWithPropertiesAsync("ELIGIBLE_FOR_NOTIFICATION", { os: Platform.OS, version: Application.nativeApplicationVersion })
+    return require("expo-notifications")
+  }
+  Amplitude.logEventWithPropertiesAsync("NOT_ELIGIBLE_FOR_NOTIFICATION", { os: Platform.OS, version: Application.nativeApplicationVersion })
+  return null;
+}
 
 const getInitialDate = () => {
   const today = moment().utcOffset("530").format("YYYY-MM-DD")
@@ -40,30 +52,35 @@ const HomeScreen = (props) => {
   const selectedMenu = (menu && _.groupBy(menu[selectedDate], "type")) || {}
   const cart = useSelector(store => store.cart)
 
-  async function registerForPushNotificationsAsync() {
-    if (ExpoConstants.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== 'granted') {
-        Amplitude.logEventAsync("NOTIFICATION_PERMISSION_REJECTED")
-        return;
-      }
-      const token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log("Expo token - " + token);
+  async function registerForPushNotificationsAsync(notifications) {
+    const { status: existingStatus } = await notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      Amplitude.logEventAsync("NOTIFICATION_PERMISSION_REJECTED")
+      return;
+    }
+    try {
+      const token = (await notifications.getExpoPushTokenAsync()).data;
       if (token && token != user.expo_push_key) {
-        console.log("Updating expo token")
+        Amplitude.logEventAsync("NOTIFICATION_KEY_UPDATED")
         await api.updateUserExpoPushKey(username, token)
       }
+    } catch (e) {
+      console.error(e)
+      Sentry.captureException(e)
     }
   }
 
   useEffect(() => {
-    registerForPushNotificationsAsync()
-    Notifications.addNotificationResponseReceivedListener(handleNotificationResponse);
+    const Notifications = getNotification();
+    if (Notifications != null) {
+      registerForPushNotificationsAsync(Notifications)
+      Notifications.addNotificationResponseReceivedListener(handleNotificationResponse);
+    }
   }, [])
 
   const handleNotificationResponse = (response) => {
@@ -74,6 +91,8 @@ const HomeScreen = (props) => {
         setSelectedDate(date)
       }
       Amplitude.logEventWithPropertiesAsync("NOTIFICATION_CLICKED", { "type": notificationBody.type })
+    } else {
+      Amplitude.logEventAsync("NOTIFICATION_CLICKED")
     }
   }
 

@@ -1,10 +1,11 @@
 import {
-    ToastAndroid,
-    Platform,
-    Alert,
-  } from 'react-native'
-  import AsyncStorage from '@react-native-async-storage/async-storage'
-  
+  ToastAndroid,
+  Platform,
+  Alert,
+} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as Application from 'expo-application';
+
 export const primaryColor = "#F2C94C"
 export const secondaryColor = "#4F4946"
 export const primaryColorDark = "#134f56"
@@ -18,6 +19,15 @@ export function notifyMessage(message: string) {
   } else {
     console.log(message)
   }
+}
+
+export const eligibleForNotifications = () => {
+  if (Platform.OS === "android") {
+    return Application.nativeBuildVersion && Application.nativeBuildVersion >= "12";
+  } else if (Platform.OS === "ios") {
+    return Application.nativeApplicationVersion && Application.nativeApplicationVersion >= "1.0.5";
+  }
+  return false;
 }
 
 export const getNotificationBody = (notification) => {
