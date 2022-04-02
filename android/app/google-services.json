@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "944749552942",
+    "project_id": "yoyolunchbox-b21af",
+    "storage_bucket": "yoyolunchbox-b21af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944749552942:android:89947670042f9f6ce246bf",
+        "android_client_info": {
+          "package_name": "com.yoyolunchbox.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944749552942-0isn0j1h7goseb4rsboc9ilr3afnbhfa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeoN8N0Oi67LtN3DP9UtPM-_vEUgZNtAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944749552942-0isn0j1h7goseb4rsboc9ilr3afnbhfa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

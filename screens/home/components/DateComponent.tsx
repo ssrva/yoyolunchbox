@@ -1,7 +1,7 @@
 import _ from "lodash"
 import * as React from 'react'
 import moment from 'moment'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { StyleSheet, TouchableWithoutFeedback, ScrollView } from 'react-native'
 import { Text, View } from '../../../components/Themed'
 import Colors from "yoyoconstants/Colors"
@@ -50,6 +50,10 @@ const DateComponent = (props) => {
     setSelectedDate(date)
     trackDateChange(date)
   }
+
+  useEffect(() => {
+    setSelectedDate(initialDate)
+  }, [initialDate])
 
   const trackDateChange = async (date: string) => {
     const todayMoment = moment().utcOffset("530").format("YYYY-MM-DD");
