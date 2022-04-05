@@ -1,15 +1,15 @@
 {
   "prod": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-yoyolunchbox-prod-153100-authRole",
-      "UnauthRoleArn": "arn:aws:iam::321082332978:role/amplify-yoyolunchbox-prod-153100-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::321082332978:role/amplify-yoyolunchbox-prod-153100-authRole",
+      "AuthRoleName": "amplify-yoyolunchbox-prod-164800-authRole",
+      "UnauthRoleArn": "arn:aws:iam::321082332978:role/amplify-yoyolunchbox-prod-164800-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::321082332978:role/amplify-yoyolunchbox-prod-164800-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-yoyolunchbox-prod-153100-deployment",
-      "UnauthRoleName": "amplify-yoyolunchbox-prod-153100-unauthRole",
-      "StackName": "amplify-yoyolunchbox-prod-153100",
-      "StackId": "arn:aws:cloudformation:us-east-1:321082332978:stack/amplify-yoyolunchbox-prod-153100/e45c7b30-f053-11eb-bf4b-0a8b3100efad",
-      "AmplifyAppId": "d2pvylua29wmcw"
+      "DeploymentBucketName": "amplify-yoyolunchbox-prod-164800-deployment",
+      "UnauthRoleName": "amplify-yoyolunchbox-prod-164800-unauthRole",
+      "StackName": "amplify-yoyolunchbox-prod-164800",
+      "StackId": "arn:aws:cloudformation:us-east-1:321082332978:stack/amplify-yoyolunchbox-prod-164800/bccd1070-b33f-11ec-811b-1253657321e5",
+      "AmplifyAppId": "d3vjqe9e4892tb"
     },
     "categories": {
       "auth": {

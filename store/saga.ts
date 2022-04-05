@@ -3,6 +3,7 @@ import { setUserWithTracking, refreshBalance, setBalance, setUser } from "./acti
 import { select, put, call, takeEvery, all } from 'redux-saga/effects'
 import * as Amplitude from 'expo-analytics-amplitude'
 import Constants from "expo-constants"
+import * as Application from "expo-application"
 
 /**
  * Makes api call to refresh the user balance in app.
@@ -29,7 +30,11 @@ export function* setUserAndInitializeAmplitude(action) {
 
     const user = action.payload.user
     yield Amplitude.setUserIdAsync(user.username)
-    yield Amplitude.setUserPropertiesAsync({ jsBundleVersion: Constants.manifest.extra?.jsPackageVersion })
+    yield Amplitude.setUserPropertiesAsync({
+      jsBundleVersion: Constants.manifest.extra?.jsPackageVersion,
+      nativeAppVersion: Application.nativeApplicationVersion,
+      nativeBuildVersion: Application.nativeBuildVersion
+    })
   } catch (error) {
     console.error("Failed to set the user")
   }
