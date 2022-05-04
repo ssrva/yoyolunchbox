@@ -175,6 +175,10 @@ const OrderTabsNavigator = () => {
         name="Cancelled"
         component={Orders}
         initialParams={{ status: "cancelled" }} />
+      <Tab.Screen
+        name="Completed"
+        component={Orders}
+        initialParams={{ status: "delivered" }} />
     </Tab.Navigator>
   );
 }
