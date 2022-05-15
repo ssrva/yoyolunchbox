@@ -215,7 +215,7 @@ const AddMoneyComponent = (props) => {
               <Text style={styles.offerTitle}>Limited Time Offer!</Text>
             </View>
             <Text>
-              Recharge over Rs. 3000 to get a 10% cashback added to your YOYO wallet
+              Recharge over Rs. 3000 to get a 5% cashback added to your YOYO wallet
             </Text>
           </View>
           <View style={styles.innerContainer}>
