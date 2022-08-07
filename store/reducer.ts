@@ -23,10 +23,14 @@ const storeReducer = (state = initialState, action) => {
         ...state,
         balance: payload.balance,
       }
+    case actions.clearCart.toString():
+      return {
+        ...state,
+        cart: {}
+      }
     case actions.updateCart.toString():
       const cart = Object.assign({}, state.cart)
       if (payload.quantity == 0) {
-        console.log(cart)
         delete cart[payload.id]
         console.log(cart)
         return {

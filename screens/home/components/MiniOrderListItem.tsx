@@ -4,7 +4,6 @@ import { StyleSheet, Image } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Text, View } from '../../../components/Themed';
 import { COLORS, notifyMessage, getItemFromAsyncStorage, putItemInAsyncStorage } from "common/utils"
-import Selector from "./Selector"
 import { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from "@ui-kitten/components";
