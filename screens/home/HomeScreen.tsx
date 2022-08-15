@@ -141,9 +141,7 @@ const HomeScreen = (props) => {
   }
 
   const placeOrder = () => {
-    navigation.navigate("Confirm Order", {
-      orders: _.values(orders)
-    })
+    navigation.navigate("Confirm Order")
   }
 
   return (

@@ -73,8 +73,8 @@ export const getFoodimage = async (imageKey: string) => {
   return response.data
 }
 
-export const placeOrder = async (username: string, charges: Object, orders: Object[]) => {
-  const response = await axios.post("/orders", { username, charges, orders })
+export const placeOrder = async (username: string, charges: Object, orders: Object[], subscription_id?: number) => {
+  const response = await axios.post("/orders", { username, charges, orders, subscription_id })
   return response.data
 }
 
@@ -123,4 +123,20 @@ export const addAddress = async (data) => {
 export const updateAddress = async (data) => {
   const response = await axios.put("/address", data)
   return response.data;
+}
+
+export const createSubscription = async (username, plan, validity, free_deliveries, price) => {
+  const response = await axios.post("/subscription", {
+    username: username,
+    plan: plan,
+    validity: validity,
+    free_deliveries: free_deliveries,
+    price: price
+  })
+  return response.data
+}
+
+export const getSubscription = async (username) => {
+  const response = await axios.get(`/subscription/${username}`)
+  return response.data
 }

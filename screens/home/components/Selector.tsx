@@ -118,7 +118,7 @@ const Selector = (props: TSelectorProps) => {
     <View style={{ backgroundColor: "white" }}>
       <View style={{ backgroundColor: "white" }}>
         <Modal
-          animationType="slide"
+          animationType="fade"
           transparent={true}
           visible={showModal}>
           <View style={styles.modalContainer}>

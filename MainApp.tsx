@@ -46,7 +46,6 @@ const MainApp = () => {
   const checkJsBundleUpdate = async () => {
     try {
       const update = await Updates.checkForUpdateAsync();
-      console.log(update)
       if (update.isAvailable) {
         console.log("YOYO Lunchbox JS Bundle update available")
         await Updates.fetchUpdateAsync();

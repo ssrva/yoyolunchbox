@@ -7,6 +7,7 @@ import Orders from "./Orders"
 import ProfileScreen from "./ProfileScreen"
 import AddAddress from './AddAddress';
 import AddMoneyScreen from "./AddMoneyScreen"
+import SubscriptionsScreen from "../subscriptions/SubscriptionsScreen"
 import OrderConfirmation from "./OrderConfirmation";
 import { Text, View } from '../../components/Themed';
 import { Ionicons } from '@expo/vector-icons';
@@ -196,6 +197,14 @@ export const AddMoneyNavigator = () => {
   return (
     <Stack.Navigator screenOptions={headerOptions}>
       <Stack.Screen name="Add Money" component={AddMoneyScreen} />
+    </Stack.Navigator>
+  );
+};
+
+export const SubscriptionNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={headerOptions}>
+      <Stack.Screen name="Subscriptions" component={SubscriptionsScreen} />
     </Stack.Navigator>
   );
 };

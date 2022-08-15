@@ -17,3 +17,12 @@ export type TOrderListItemProps = {
   grayOutDescription: string,
   source: string
 }
+
+export type TSubscription = {
+  id?: number,
+  start_date?: string,
+  end_date?: string,
+  plan?: string,
+  free_deliveries_left?: number,
+  active: boolean
+}

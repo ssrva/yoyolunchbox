@@ -94,7 +94,7 @@ const Transactions = (props) => {
           const amount = isDebit ? item.amount.toString().substring(1) : item.amount
           return (
             <View style={styles.rowContainer}>
-              <View>
+              <View style={{ flex: 1 }}>
                 <Text style={styles.description}>{item.description}</Text>
                 <Text style={styles.time}>
                   {moment(item.created_at).format("MMM DD, YYYY hh:mm A")}

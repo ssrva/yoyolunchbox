@@ -20,7 +20,8 @@ import {
   HomeNavigator,
   OrdersNavigator,
   ProfileNavigator,
-  AddMoneyNavigator
+  AddMoneyNavigator,
+  SubscriptionNavigator
 } from "./StackNavigators"
 import { useDispatch, useSelector } from 'react-redux';
 import { setMenu, setUser } from "../../store/actions"
@@ -144,6 +145,14 @@ const LoggedInNavigator = (props) => {
             ),
           }}
           component={ProfileNavigator} />
+        <Drawer.Screen
+          name="Subscriptions"
+          options={{
+            drawerIcon: ({focused, size}) => (
+              <Ionicons size={20} name="logo-rss" color={primaryColorDark} />
+            ),
+          }}
+          component={SubscriptionNavigator} />
         <Drawer.Screen
           name="Add Money"
           options={{
