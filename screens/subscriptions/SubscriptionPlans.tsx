@@ -148,7 +148,7 @@ const SubscriptionPlans = (props) => {
     },
     {
       name: "Gold",
-      price: 1199,
+      price: 1299,
       deliveries: 90,
       validity: 130,
       popular: false,

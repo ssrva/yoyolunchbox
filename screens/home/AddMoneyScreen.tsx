@@ -202,7 +202,7 @@ const AddMoneyComponent = (props) => {
       <Spinner visible={loading} message="Transaction in progress"/>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <View style={styles.messageBoxGreen}>
+          {/* <View style={styles.messageBoxGreen}>
             <View style={{
               display: "flex",
               flexDirection: "row",
@@ -217,7 +217,7 @@ const AddMoneyComponent = (props) => {
             <Text>
               Recharge over Rs. 3000 to get a 5% cashback added to your YOYO wallet
             </Text>
-          </View>
+          </View> */}
           <View style={styles.innerContainer}>
             <View style={{ flex: 1 }}>
               <Input
