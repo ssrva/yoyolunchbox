@@ -13,7 +13,7 @@ module.exports.exportOrder = async (order) => {
     "customerPhoneNumber": order.phone,
     "restaurantName": "YOYO LunchBox",
     "restaurantAddress": "1st Floor, No. 17, 6th Main Rd, MGR Nagar, Venkateswara Nagar, Velachery, Chennai, Tamil Nadu 600042",
-    "restaurantPhoneNumber": "9916699112",
+    "restaurantPhoneNumber": "9916699113",
     "pickupLatitude": "12.9798434",
     "pickupLongitude": "80.2113789",
     "deliveryLatitude": order.coordinates.latitude,

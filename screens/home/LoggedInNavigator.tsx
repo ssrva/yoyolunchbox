@@ -191,7 +191,7 @@ const CustomDrawerContent = (props) => {
           style={{ ...styles.logout, backgroundColor: "green" }}
           onPress={() => {
             Linking.openURL(
-              "https://api.whatsapp.com/send/?phone=919916699112&text=I+am+a+customer+of+YOYO+LunchBox+and+want+help+with+my+order.&app_absent=0"
+              "https://wa.me/919916699113?text=I+am+a+customer+of+YOYO+LunchBox+and+want+help+with+my+order"
             )
           }}>
           <Ionicons
