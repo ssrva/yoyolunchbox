@@ -132,15 +132,14 @@ const SubscriptionPlans = (props) => {
   const plans = [
     {
       name: "Bronze",
-      price: 149,
+      price: 199,
       deliveries: 7,
       validity: 10,
-      popular: false,
-      actualPrice: "199"
+      popular: false
     },
     {
       name: "Silver",
-      price: 499,
+      price: 599,
       deliveries: 30,
       validity: 40,
       popular: true,
@@ -148,7 +147,7 @@ const SubscriptionPlans = (props) => {
     },
     {
       name: "Gold",
-      price: 1299,
+      price: 1499,
       deliveries: 90,
       validity: 130,
       popular: false,
@@ -211,7 +210,17 @@ const SubscriptionPlans = (props) => {
                 <View style={styles.planContainer}>
                     <View style={{ flex: 1 }}>
                       <View style={{ display: "flex", flexDirection: "row" }}>
-                        <Text style={styles.planTitle}>{plan.name} - <Text style={{ textDecorationLine: "line-through", color: "green" }}>{'\u20B9'}{plan.actualPrice}</Text> <Text style={{ color: "green" }}>{'\u20B9'}{plan.price}</Text></Text>
+                        <Text style={styles.planTitle}>
+                          {plan.name} - 
+                          {plan.actualPrice && (
+                            <Text style={{ textDecorationLine: "line-through", color: "green" }}>
+                              {'\u20B9'}{plan.actualPrice}
+                            </Text>
+                          )}
+                          <Text style={{ color: "green" }}>
+                            {'\u20B9'}{plan.price}
+                          </Text>
+                        </Text>
                         {plan.popular && (<Text style={styles.tag}>MOST POPULAR</Text>)}
                       </View>
                       <Text style={styles.planDescription}>Vaildity: {plan.validity} Days</Text>

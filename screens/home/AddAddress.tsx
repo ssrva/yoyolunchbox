@@ -118,10 +118,10 @@ const AddAddress = (props) => {
       const distanceResponse = await api.getDistance(region.latitude, region.longitude)
       const distanceInMeters = distanceResponse?.rows?.[0]?.elements?.[0]?.distance?.value
       console.log(distanceResponse)
-      if (distanceInMeters != null) {
-        if (distanceInMeters > Constants.maxDeliveryDistanceInMeters) {
-          notifyMessage("Sorry, we don't deliver to your location yet. If you think this is a mistake please contact us.")
-        } else {
+      // if (distanceInMeters != null) {
+        // if (distanceInMeters > Constants.maxDeliveryDistanceInMeters) {
+          // notifyMessage("Sorry, we don't deliver to your location yet. If you think this is a mistake please contact us.")
+        // } else {
           if (add) {
             const addAddressInput = {
               username: username,
@@ -151,10 +151,10 @@ const AddAddress = (props) => {
             notifyMessage("Address Updated")
             navigation.goBack()
           }
-        }
-      } else {
-        notifyMessage("Failed to add address, please try again later")
-      }
+      //   }
+      // } else {
+      //   notifyMessage("Failed to add address, please try again later")
+      // }
     } catch (e) {
       console.log(e.message)
       Sentry.captureException(e)
