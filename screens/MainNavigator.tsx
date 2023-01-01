@@ -24,13 +24,13 @@ const MyTheme = {
 
 const MainNavigator = (props) => {
   const user = useSelector(store => store.user)
-
+  console.log(user)
   return (
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator screenOptions={{
         headerShown: false
       }}>
-        {_.isNil(user) || _.isEmpty(user) ? (
+        {_.isNil(user) || _.isEmpty(user) || user?.["addresses"]?.length == 0 ? (
           // No token found, user isn't signed in
           <Stack.Screen name="Login" component={LoggedOutNavigator} />
         ) : (

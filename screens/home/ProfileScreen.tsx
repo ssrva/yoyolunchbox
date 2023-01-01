@@ -114,7 +114,6 @@ const ProfileScreen = (props) => {
     setAddressLoading(true)
     const addressDetails = await api.getAddress(user.username);
     setAddressDetails(addressDetails);
-    console.log(addressDetails)
     setAddressLoading(false)
   }
 
@@ -227,9 +226,9 @@ const ProfileScreen = (props) => {
             return (
               <Address
                 id={addressDetail.id}
-                coordinates={addressDetail.coordinates}
                 label={addressDetail.label}
                 address={addressDetail.address}
+                pincode={addressDetail.pincode}
                 navigation={navigation} />
             )
           })}
@@ -268,17 +267,16 @@ const addressStyles = StyleSheet.create({
 })
 
 const Address = (props) => {
-  const {id, label, address, coordinates, navigation} = props
+  const {id, label, address, pincode, navigation} = props
   const icon = label?.toLowerCase() === "home" ? "home-outline" : "location-outline";
 
   const goToUpdateAddress = () => {
     navigation.navigate("AddAddress", {
       add: false,
       id: id,
-      latitude: coordinates.latitude,
-      longitude: coordinates.longitude,
       initialLabel: label,
-      initialAddress: address
+      initialAddress: address,
+      initialPincode: pincode
     })
   }
 
@@ -290,6 +288,7 @@ const Address = (props) => {
       <View style={{ marginLeft: 15, flexShrink: 1, backgroundColor: "white" }}>
         <Text style={addressStyles.label}>{label}</Text>
         <Text style={addressStyles.address}>{address}</Text>
+        <Text style={addressStyles.address}>Pincode - {pincode}</Text>
 
         <Button appearance="outline" size="small" style={styles.button} status="warning" onPress={goToUpdateAddress}>
           UPDATE

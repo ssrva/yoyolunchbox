@@ -21,6 +21,7 @@ import { setUserWithTracking } from '../../store/actions'
 import ForgotPassword from './ForgotPassword'
 import * as Sentry from "@sentry/browser"
 import * as Amplitude from 'expo-analytics-amplitude';
+import * as api from "../../api"
 
 const USER_NOT_CONFIRMED_EXCEPTION = "UserNotConfirmedException"
 
@@ -46,14 +47,19 @@ export default function Login(props) {
         await Auth.confirmSignUp(phone, otp);
       }
       const user = await Auth.signIn(phone, password);
+      const addresses = await api.getAddress(user["username"])
       const jwtToken = user.signInUserSession.idToken.jwtToken
       axios.defaults.headers.common['Authorization'] = jwtToken
       dispatch(setUserWithTracking({
         user: {
           ...user,
+          addresses: addresses || [],
           details: user,
         }
       }))
+      if (addresses.length == 0) {
+        navigation.navigate("AddAddress")
+      }
     } catch (error) {
       if (error.name == USER_NOT_CONFIRMED_EXCEPTION) {
         setUserUnconfirmed(true)

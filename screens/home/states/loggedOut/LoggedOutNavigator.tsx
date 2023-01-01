@@ -7,6 +7,7 @@ import Login from "../../../login/Login"
 import ExploreMenu from "./ExploreMenu"
 import { Ionicons } from '@expo/vector-icons'
 import { Text, View } from '../../../../components/Themed';
+import AddAddress from "../../../login/AddAddress";
 
 const Stack = createStackNavigator()
 
@@ -66,6 +67,7 @@ const LoggedOutNavigator = (props) => {
     <AppearanceProvider>
         <Stack.Navigator screenOptions={headerOptions}>
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            <Stack.Screen name="AddAddress" component={AddAddress} options={{ headerShown: false }} />
             <Stack.Screen name="Explore" component={ExploreMenu} />
         </Stack.Navigator>
     </AppearanceProvider>
