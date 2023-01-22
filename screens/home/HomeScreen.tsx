@@ -126,7 +126,7 @@ const HomeScreen = (props) => {
         title: "Lunch",
         data: selectedMenu["lunch"] || [],
         grayOut: selectedDate === today && currentHour >= Constants.lunchCutoffHour,
-        grayOutDescription: "Order before 9AM"
+        grayOutDescription: "Order before 10AM"
       })
     }
     if (selectedMenu["dinner"] && selectedMenu["dinner"].length > 0) {
@@ -134,7 +134,7 @@ const HomeScreen = (props) => {
         title: "Dinner",
         data: selectedMenu["dinner"] || [],
         grayOut: selectedDate === today && currentHour >= Constants.dinnerCutoffHour,
-        grayOutDescription: "Order before 4PM"
+        grayOutDescription: "Order before 5PM"
       })
     }
     return result

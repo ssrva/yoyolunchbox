@@ -134,14 +134,14 @@ const SubscriptionPlans = (props) => {
       name: "Bronze",
       price: 199,
       deliveries: 7,
-      validity: 10,
+      validity: 12,
       popular: false
     },
     {
       name: "Silver",
       price: 599,
       deliveries: 30,
-      validity: 40,
+      validity: 45,
       popular: true,
       actualPrice: "749"
     },
@@ -149,7 +149,7 @@ const SubscriptionPlans = (props) => {
       name: "Gold",
       price: 1499,
       deliveries: 90,
-      validity: 130,
+      validity: 125,
       popular: false,
       actualPrice: "1799"
     }

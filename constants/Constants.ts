@@ -3,7 +3,7 @@ export default {
   lunch: "lunch",
   dinner: "dinner",
   breakfastCutoffHour: 6,
-  lunchCutoffHour: 9,
-  dinnerCutoffHour: 16,
+  lunchCutoffHour: 10,
+  dinnerCutoffHour: 17,
   maxDeliveryDistanceInMeters: 15000 // in meters
 }
